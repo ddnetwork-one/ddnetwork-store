@@ -441,28 +441,44 @@
         .form-input:read-only { background: rgba(0,0,0,0.2); color: var(--text-tertiary); cursor: not-allowed; border-color: transparent; }
         
         .radio-group { display: grid; gap: 1rem; }
+        
+        /* --- IMPROVED RADIO / SELECTION STYLE --- */
         .radio-option { 
             border: 1px solid var(--border-color); 
-            padding: 1rem; 
+            padding: 1rem 1.2rem; 
             border-radius: 12px; 
             display: flex; 
             align-items: center; 
             gap: 12px; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: all 0.2s ease; 
             background: var(--bg-surface); 
-            min-height: 48px; 
-            position: relative;
+            min-height: 56px; 
+            position: relative; 
+            user-select: none;
         }
-        .radio-option:hover { border-color: var(--border-color); background: rgba(255,255,255,0.02); }
-        .radio-option.selected { border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.1); }
-        
-        /* UX: Hide actual radio input to make whole div clickable */
+        .radio-option:hover { 
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.03); 
+            border-color: rgba(255,255,255,0.2); 
+        }
+        .radio-option.selected { 
+            border-color: var(--accent-primary); 
+            background: rgba(59, 130, 246, 0.08); /* Subtle blue tint */
+            box-shadow: 0 0 0 1px var(--accent-primary); /* Glow effect */
+        }
+        .radio-option.selected span {
+            color: white; /* Pop text */
+            font-weight: 600;
+        }
+        /* Hide actual radio input completely */
         .radio-option input[type="radio"] {
-            width: 18px; height: 18px;
-            cursor: pointer;
-            pointer-events: none; /* Important: Lets click pass to parent div */
-            accent-color: var(--accent-primary);
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+            /* Keep for functionality, but visual is gone */
         }
 
         /* Voucher Card Styles */
@@ -483,7 +499,7 @@
         /* Toast */
         .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 3000; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: var(--bg-card); color: white; padding: 16px 24px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; transform: translateY(100px); opacity: 0; transition: 0.4s var(--ease-out); }
-        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.show { transform: translateY(0); }
         .toast.success i { color: #10b981; }
         .toast.error i { color: #ef4444; }
 
@@ -1959,7 +1975,7 @@
                 await configRef.set({
                     maintenance_active: false,
                     maintenance_message: "We are currently performing scheduled maintenance.",
-                    prices: { html: 199, frontend:599 },
+                    prices: { html: 199, frontend: 599 },
                     packageDetails: {
                         frontend: ["Up to 5 Pages", "Animations", "Contact Forms", "WhatsApp Integration"],
                         ai: ["All Front-End Features", "AI Chatbot Integration", "Lead Auto-Response", "Smart Analytics"]
@@ -2155,7 +2171,7 @@
                   snapshot.forEach((doc) => {
                       const data = doc.data();
                       
-                      // Construct the card HTML
+                      // Construct to card HTML
                       const cardHTML = `
                           <div class="checkout-card reveal" style="padding: 0; overflow: hidden; background: var(--bg-surface);">
                               <div style="height: 200px; overflow: hidden;">
@@ -3182,7 +3198,7 @@
             spinner.style.display = 'none';
             checkIcon.style.display = 'none';
             
-            msgEl.innerText = "Please ensure the payment amount is correct. You may enter either a deposit or the full payment amount. Kindly Screenshot the payment for proof.";
+            msgEl.innerText = "Please ensure to payment amount is correct. You may enter either a deposit or full payment amount. Kindly Screenshot payment for proof.";
             msgEl.style.color = "white";
 
             // Add a temporary close button to the overlay if not exists
