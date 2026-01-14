@@ -322,6 +322,7 @@
         .mobile-drawer.open li:nth-child(5) a { transition-delay: 0.5s; }
         .mobile-drawer.open li:nth-child(6) a { transition-delay: 0.6s; }
         .mobile-drawer.open li:nth-child(7) a { transition-delay: 0.7s; }
+        .mobile-drawer.open li:nth-child(8) a { transition-delay: 0.8s; } /* For updates link */
 
         /* --- MOBILE & DESKTOP FLOATING ACTION BUTTON (FAB) --- */
         .mobile-fab {
@@ -577,14 +578,14 @@
         }
         
         .search-box {
-            display: flex,
+            display: flex;
             gap: 10px;
             margin-bottom: 2rem;
         }
 
         .ticket-list {
-            display: flex,
-            flex-direction: column,
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
         }
 
@@ -694,8 +695,8 @@
         .promo-badge.show { opacity: 1; transform: scale(1); pointer-events: auto; }
 
         .discounted-price-container {
-            display: flex,
-            flex-direction: column,
+            display: flex;
+            flex-direction: column;
             align-items: center; 
         }
         
@@ -825,6 +826,51 @@
         }
         .dock-icon:hover { transform: scale(1.2) translateY(-8px); background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); z-index: 10; color: white; }
 
+        /* --- FILE INPUT STYLING --- */
+        .file-upload-wrapper {
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 1.5rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        
+        .file-upload-label:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-name-display {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--accent-success);
+            font-weight: 600;
+            display: none;
+        }
+
         /* --- MOBILE OPTIMIZATION --- */
         @media(max-width: 991px) {
             h1 { font-size: 2.2rem !important; } 
@@ -913,6 +959,7 @@
             <a href="/pricing" onclick="routeLink(event, '/pricing')">Pricing</a>
             <a href="/clients" onclick="routeLink(event, '/clients')">Clients</a>
             <a href="/founder" onclick="routeLink(event, '/founder')">Founder</a>
+            <a href="/updates" onclick="routeLink(event, '/updates')">Updates</a> <!-- NEW LINK -->
             <a href="#" onclick="openTermsModal()">Terms</a>
             
             <div class="auth-buttons" id="desktopAuthLinks">
@@ -932,6 +979,7 @@
             <li><a href="/pricing" onclick="routeLink(event, '/pricing'); toggleDrawer()">Pricing</a></li>
             <li><a href="/clients" onclick="routeLink(event, '/clients'); toggleDrawer()">Clients</a></li>
             <li><a href="/founder" onclick="routeLink(event, '/founder'); toggleDrawer()">Founder</a></li>
+            <li><a href="/updates" onclick="routeLink(event, '/updates'); toggleDrawer()">Updates</a></li> <!-- NEW LINK -->
             <li><a href="#" onclick="openTermsModal(); toggleDrawer()">Terms</a></li>
             
             <li id="mobileAuthLinks">
@@ -1515,6 +1563,142 @@
             </div>
         </section>
 
+        <!-- === PAGE: UPDATES (NEW) === -->
+        <section id="updates" class="page-section">
+            <div class="auth-container reveal" style="max-width: 800px;">
+                <div class="auth-card" style="text-align: left;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <i class="ri-edit-circle-line" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                        <h2>Customer Requests</h2>
+                        <p>Need to update content, upgrade, renew, or remove features? Submit your request here.</p>
+                    </div>
+
+                    <form onsubmit="handleRequestSubmit(event)">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Personal Details</label>
+                            <div class="profile-details-grid">
+                                <input type="text" id="req-name" class="form-input" placeholder="Full Name" required>
+                                <input type="tel" id="req-phone" class="form-input" placeholder="Phone Number" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Request Type</label>
+                            <div class="radio-group">
+                                <div class="radio-option" onclick="handleUpdateTypeChange('content', this)">
+                                    <input type="radio" name="req_type" value="content" checked>
+                                    <div>
+                                        <div style="font-weight: 700; color: white;">Update Content</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Change text, images, or add new info.</div>
+                                    </div>
+                                </div>
+                                <div class="radio-option" onclick="handleUpdateTypeChange('upgrade', this)">
+                                    <input type="radio" name="req_type" value="upgrade">
+                                    <div>
+                                        <div style="font-weight: 700; color: white;">Upgrade Plan</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Move to a higher tier package.</div>
+                                    </div>
+                                </div>
+                                <div class="radio-option" onclick="handleUpdateTypeChange('renew', this)">
+                                    <input type="radio" name="req_type" value="renew">
+                                    <div>
+                                        <div style="font-weight: 700; color: white;">Renew Plan</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Extend your current subscription.</div>
+                                    </div>
+                                </div>
+                                <div class="radio-option" onclick="handleUpdateTypeChange('remove', this)">
+                                    <input type="radio" name="req_type" value="remove">
+                                    <div>
+                                        <div style="font-weight: 700; color: white;">Remove Content</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Delete specific pages or features.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC FIELDS BASED ON TYPE -->
+                        <div id="dynamic-fields-container">
+                            <!-- Content: Description + File Upload -->
+                            <div id="field-content" class="req-type-fields">
+                                <div class="form-group">
+                                    <label class="form-label">Describe Changes</label>
+                                    <textarea id="req-desc-content" class="form-input" rows="4" placeholder="e.g. Change phone number to +6012..., Update logo to new file..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Attach New Files (Optional)</label>
+                                    <div class="file-upload-wrapper">
+                                        <label for="req-file-upload" class="file-upload-label">
+                                            <i class="ri-upload-cloud-2-line"></i> Click to select files
+                                        </label>
+                                        <input type="file" id="req-file-upload" onchange="handleFileSelect(this)">
+                                    </div>
+                                    <div id="file-name-display" class="file-name-display">No file selected</div>
+                                    <p style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 5px;">*Supported: JPG, PNG, PDF. Max 5MB.</p>
+                                </div>
+                            </div>
+
+                            <!-- Upgrade: Current Plan -> New Plan -->
+                            <div id="field-upgrade" class="req-type-fields hidden">
+                                <div class="profile-details-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Current Plan</label>
+                                        <select id="req-current-plan" class="form-select">
+                                            <option value="HTML Only">HTML Only</option>
+                                            <option value="Front-End Website">Front-End Website</option>
+                                            <option value="AI Powered">AI Powered</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Desired Plan</label>
+                                        <select id="req-new-plan" class="form-select">
+                                            <option value="HTML Only">HTML Only</option>
+                                            <option value="Front-End Website">Front-End Website</option>
+                                            <option value="AI Powered">AI Powered</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Additional Notes</label>
+                                    <textarea id="req-desc-upgrade" class="form-input" rows="3" placeholder="Any specific features you want to add?"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Renew: Plan Selection -->
+                            <div id="field-renew" class="req-type-fields hidden">
+                                <div class="form-group">
+                                    <label class="form-label">Plan to Renew</label>
+                                    <select id="req-renew-plan" class="form-select">
+                                        <option value="HTML Only">HTML Only</option>
+                                        <option value="Front-End Website">Front-End Website</option>
+                                        <option value="AI Powered">AI Powered</option>
+                                        <option value="Maintenance Only">Maintenance Only</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Duration</label>
+                                    <select id="req-renew-duration" class="form-select">
+                                        <option value="1 Year">1 Year</option>
+                                        <option value="2 Years">2 Years</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Remove: Description -->
+                            <div id="field-remove" class="req-type-fields hidden">
+                                <div class="form-group" style="background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                                    <label class="form-label" style="color: #ef4444;">What to Remove?</label>
+                                    <textarea id="req-desc-remove" class="form-input" rows="3" placeholder="Please specify exactly which page or content to remove..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="btn-submit-request" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Submit Request</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -1535,6 +1719,7 @@
                     <h4>Support</h4>
                     <ul class="footer-links">
                         <li><a href="#" onclick="navigateTo('/helpdesk')">Contact Support</a></li>
+                        <li><a href="#" onclick="navigateTo('/updates')">Customer Updates</a></li>
                         <li><a href="#" onclick="openTermsModal()">Terms & Conditions</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
@@ -1606,7 +1791,8 @@
             '/helpdesk': 'helpdesk',
             '/contact': 'contact',
             '/forgot-password': 'forgot-password',
-            '/thank-you': 'thank-you'
+            '/thank-you': 'thank-you',
+            '/updates': 'updates' // NEW ROUTE
         };
 
         // Helper to handle <a> tags preventing reload
@@ -1697,6 +1883,11 @@
                     
                     if(targetSectionId === 'profile') loadProfilePageData();
                     if(targetSectionId === 'buynow' && auth && auth.currentUser) {
+                        fetchAndSyncUserData(auth.currentUser.uid);
+                    }
+                    
+                    // NEW: Load user data for Updates Page
+                    if(targetSectionId === 'updates' && auth && auth.currentUser) {
                         fetchAndSyncUserData(auth.currentUser.uid);
                     }
                     
@@ -2186,7 +2377,8 @@
                     const coEmail = document.getElementById('co-email');
                     const coCompany = document.getElementById('co-company');
                     const autoFillLabel = document.getElementById('auto-fill-label');
-
+                    
+                    // Checkout Auto-fill
                     if(data.name && coName) coName.value = data.name;
                     if(data.phone && coPhone) coPhone.value = data.phone;
                     if(data.email && coEmail) coEmail.value = data.email;
@@ -2204,6 +2396,14 @@
                     } else {
                         hideCheckoutVoucher();
                     }
+
+                    // NEW: Updates Page Auto-fill
+                    const reqName = document.getElementById('req-name');
+                    const reqPhone = document.getElementById('req-phone');
+                    
+                    if(data.name && reqName) reqName.value = data.name;
+                    if(data.phone && reqPhone) reqPhone.value = data.phone;
+
                 }
             }).catch((error) => {
                 console.error("Error fetching user data:", error);
@@ -2361,7 +2561,7 @@
         }
 
         function clearUserData() {
-            const inputs = ['prof-name', 'prof-phone', 'prof-email', 'prof-company', 'co-name', 'co-phone', 'co-email', 'co-company'];
+            const inputs = ['prof-name', 'prof-phone', 'prof-email', 'prof-company', 'co-name', 'co-phone', 'co-email', 'co-company', 'req-name', 'req-phone'];
             inputs.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.value = '';
@@ -2865,6 +3065,121 @@
         function updatePaymentSelection() {
             const select = document.getElementById('payment-method-select');
             state.paymentMethodId = select.value;
+        }
+
+        // ==========================================
+        // NEW: CUSTOMER REQUEST / UPDATES LOGIC
+        // ==========================================
+        
+        function handleUpdateTypeChange(type, element) {
+            // Visual selection update
+            const options = element.parentElement.querySelectorAll('.radio-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            // Hide all field blocks
+            document.querySelectorAll('.req-type-fields').forEach(el => el.classList.add('hidden'));
+
+            // Show relevant block
+            if(type === 'content') document.getElementById('field-content').classList.remove('hidden');
+            if(type === 'upgrade') document.getElementById('field-upgrade').classList.remove('hidden');
+            if(type === 'renew') document.getElementById('field-renew').classList.remove('hidden');
+            if(type === 'remove') document.getElementById('field-remove').classList.remove('hidden');
+        }
+
+        function handleFileSelect(input) {
+            const display = document.getElementById('file-name-display');
+            if (input.files && input.files[0]) {
+                display.style.display = 'block';
+                display.innerText = `Selected: ${input.files[0].name}`;
+                display.style.color = 'var(--accent-primary)';
+            } else {
+                display.style.display = 'none';
+            }
+        }
+
+        function handleRequestSubmit(e) {
+            e.preventDefault();
+            if(!db) return showToast("Database offline", "error");
+
+            const btn = document.getElementById('btn-submit-request');
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Processing...';
+
+            // Get Common Fields
+            const name = document.getElementById('req-name').value;
+            const phone = document.getElementById('req-phone').value;
+            
+            // Get Selected Type
+            const typeInput = document.querySelector('input[name="req_type"]:checked');
+            if(!typeInput) {
+                showToast("Please select a request type.", "error");
+                btn.disabled = false;
+                btn.innerText = originalText;
+                return;
+            }
+            const type = typeInput.value;
+
+            let requestData = {
+                name: name,
+                phone: phone,
+                type: type,
+                status: 'Pending',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                userId: auth.currentUser ? auth.currentUser.uid : null
+            };
+
+            // Gather Specific Data based on type
+            try {
+                if (type === 'content') {
+                    const desc = document.getElementById('req-desc-content').value;
+                    requestData.details = desc;
+                    requestData.hasFile = document.getElementById('req-file-upload').files.length > 0;
+                    // Note: In a real app, you would upload file to Firebase Storage here and save the URL.
+                    // For this single-file demo, we just flag it.
+                } else if (type === 'upgrade') {
+                    requestData.currentPlan = document.getElementById('req-current-plan').value;
+                    requestData.newPlan = document.getElementById('req-new-plan').value;
+                    requestData.details = document.getElementById('req-desc-upgrade').value;
+                } else if (type === 'renew') {
+                    requestData.plan = document.getElementById('req-renew-plan').value;
+                    requestData.duration = document.getElementById('req-renew-duration').value;
+                } else if (type === 'remove') {
+                    requestData.details = document.getElementById('req-desc-remove').value;
+                }
+
+                // Save to Firebase
+                db.collection("customer_requests").add(requestData).then(() => {
+                    showToast("Request Submitted Successfully!", "success");
+                    e.target.reset();
+                    document.getElementById('file-name-display').style.display = 'none';
+                    // Reset to default content view
+                    handleUpdateTypeChange('content', document.querySelector('input[value="content"]').parentElement);
+                    
+                    // WhatsApp Notification
+                    let waMsg = `Hi Admin,\n*New Customer Request*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Type:* ${type.toUpperCase()}`;
+                    
+                    if(type === 'upgrade') waMsg += `\nFrom: ${requestData.currentPlan} To: ${requestData.newPlan}`;
+                    if(requestData.details) waMsg += `\n*Details:* ${requestData.details}`;
+                    if(requestData.hasFile) waMsg += `\n(Note: User attached a file)`;
+
+                    setTimeout(() => {
+                        window.open(`https://wa.me/${ADMIN_PHONE_NO}?text=${encodeURIComponent(waMsg)}`, '_blank');
+                    }, 1000);
+
+                }).catch((err) => {
+                    console.error(err);
+                    showToast("Error submitting request.", "error");
+                });
+
+            } catch (error) {
+                console.error(error);
+                showToast("Invalid form data.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
         }
 
         // ==========================================
