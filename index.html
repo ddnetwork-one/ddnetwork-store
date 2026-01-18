@@ -122,6 +122,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9999; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            will-change: transform;
         }
 
         /* --- HEADER --- */
@@ -143,6 +144,7 @@
             justify-content: space-between;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: all 0.4s var(--ease-smooth);
+            will-change: top, background, border-color;
         }
         header.scrolled {
             top: 10px;
@@ -156,6 +158,7 @@
         .logo-img { height: 50px; width: auto; display: block; object-fit: contain; }
         .company-name { font-size: 1.25rem; font-weight: 800; color: white; letter-spacing: -0.5px; line-height: 1; }
 
+        /* Default Mobile State */
         .nav-desktop { display: none; gap: 2rem; }
         .nav-desktop a { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); position: relative; padding: 5px 0; }
         .nav-desktop a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent-primary); transition: width 0.3s ease; }
@@ -168,8 +171,15 @@
         .admin-link { font-size: 1.2rem; color: var(--accent-warn); background: rgba(245, 158, 11, 0.15); padding: 8px; border-radius: 50%; transition: 0.2s; border: 1px solid rgba(245, 158, 11, 0.3); }
         .admin-link:hover { background: var(--accent-warn); color: black; transform: rotate(15deg) scale(1.1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
 
+        /* Mobile Toggle (Visible on Mobile) */
         .mobile-toggle { display: block; font-size: 1.5rem; cursor: pointer; color: white; z-index: 2101; transition: transform 0.4s var(--ease-elastic); }
         .mobile-toggle.open { transform: rotate(90deg); }
+
+        /* DESKTOP MEDIA QUERY */
+        @media(min-width: 992px) {
+            .nav-desktop { display: flex; } /* Show Desktop Nav */
+            .mobile-toggle { display: none; }  /* Hide Menu Button */
+        }
 
         /* --- MOBILE DRAWER --- */
         .mobile-drawer-overlay {
@@ -222,7 +232,7 @@
 
         /* --- HERO --- */
         .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 0; overflow: hidden; margin-top: -100px; }
-        #globe-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; pointer-events: none; opacity: 0.6; }
+        #globe-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; pointer-events: none; opacity: 0.6; will-change: transform; }
         .hero-glow { position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%); transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
         .hero-content { position: relative; z-index: 10; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
         .hero h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom:1.5rem; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
@@ -342,20 +352,73 @@
         .glass-modal-btn.primary { background: var(--accent-primary); color: white; }
         .glass-modal-btn.primary:hover { background: #2563eb; }
 
-        /* --- TOAST NOTIFICATIONS --- */
-        .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
-        .toast { 
-            background: var(--bg-glass-heavy); color: white; padding: 16px 24px; border-radius: 12px; 
-            border: 1px solid var(--border-glass); border-left: 4px solid var(--accent-primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; 
-            transform: translateX(120%); opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            backdrop-filter: blur(15px); pointer-events: auto;
+        /* --- UPDATED TOAST NOTIFICATIONS --- */
+        .toast-container { 
+            position: fixed; 
+            top: 100px; /* Moved to Top-Right to avoid FAB and Footer */
+            right: 30px; 
+            z-index: 100000; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            pointer-events: none;
         }
+        
+        .toast { 
+            pointer-events: auto;
+            min-width: 300px;
+            max-width: 400px;
+            background: rgba(20, 20, 20, 0.85); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-left: 4px solid var(--accent-primary); 
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            color: white; 
+            font-size: 0.95rem; 
+            font-weight: 500;
+            transform: translateX(150%); 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
         .toast.show { transform: translateX(0); }
+        
+        .toast-content { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+        
+        .toast-icon { 
+            font-size: 1.4rem; 
+            display: flex;
+            align-items: center;
+        }
+        
+        .toast-close { 
+            margin-left: 15px;
+            cursor: pointer; 
+            color: rgba(255,255,255,0.4); 
+            transition: 0.2s; 
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        .toast-close:hover { color: white; }
+
         .toast.success { border-left-color: var(--accent-success); }
-        .toast.success i { color: var(--accent-success); }
+        .toast.success .toast-icon { color: var(--accent-success); }
+        
         .toast.error { border-left-color: #ef4444; }
-        .toast.error i { color: #ef4444; }
+        .toast.error .toast-icon { color: #ef4444; }
+        
+        .toast.warning { border-left-color: var(--accent-warn); }
+        .toast.warning .toast-icon { color: var(--accent-warn); }
 
         /* --- PRICING CARDS --- */
         .pricing-toggle-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 3rem; }
@@ -517,6 +580,8 @@
         }
         .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--accent-warn); }
         .status-completed { background: rgba(16, 185, 129, 0.2); color: var(--accent-success); }
+        .status-paid { background: rgba(59, 130, 246, 0.2); color: var(--accent-primary); }
+        .status-cancelled { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
 
         /* --- FOOTER --- */
         footer { background-color: #020202; border-top: 1px solid var(--border-glass); padding: 5rem 0 2rem; margin-top: auto; position: relative; z-index: 5; }
@@ -531,11 +596,11 @@
         .footer-contact-item i { color: var(--accent-primary); }
         .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border-glass); }
         .copyright { font-size: 0.85rem; color: var(--text-tertiary); }
-        .mac-dock { display: flex; gap: 1rem; background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .mac-dock { display: flex; gap: 1rem; background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
         .dock-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(30, 30, 30, 0.8); color: white; font-size: 1.2rem; transition: all 0.3s; }
         .dock-icon:hover { transform: scale(1.2) translateY(-8px); background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); z-index: 10; color: white; }
 
-        /* --- RESPONSIVE --- */
+        /* --- RESPONSIVE (General) --- */
         @media(max-width: 991px) {
             h1 { font-size: 2.2rem !important; } h2 { font-size: 1.5rem !important; } body { font-size: 0.95rem !important; } 
             .hero p { font-size: 1rem !important; margin-bottom: 1.5rem !important; }
@@ -551,6 +616,61 @@
             .footer-bottom { flex-direction: column; gap: 1.5rem; }
             .mac-dock { display: none; }
             .mobile-fab { bottom: 25px; right: 25px; }
+            .toast-container { top: auto; bottom: 100px; right: 20px; left: 20px; } /* Stack at bottom on mobile */
+        }
+
+        /* --- RESPONSIVE (Small Card Optimization) --- */
+        @media(max-width: 600px) {
+            /* Specific compact styling for pricing cards */
+            #services .glass-card { 
+                padding: 1rem !important; /* Compact padding */
+            }
+            
+            .pkg-icon { 
+                width: 40px; height: 40px; font-size: 1rem; margin-bottom: 0.8rem; 
+            }
+            
+            .pkg-title { 
+                font-size: 1.1rem; margin-bottom: 0.2rem; 
+            }
+            
+            .pkg-desc { 
+                font-size: 0.75rem; margin-bottom: 0.8rem; min-height: auto; 
+            }
+            
+            .pkg-price { 
+                font-size: 1.8rem; margin-bottom: 0.2rem; 
+            }
+            
+            .pkg-period { 
+                font-size: 0.8rem; 
+            }
+
+            .pkg-features li { 
+                font-size: 0.8rem; margin-bottom: 0.4rem; padding-left: 20px; 
+            }
+
+            .setup-fee-tag { 
+                font-size: 0.7rem; padding: 2px; margin-bottom: 0.3rem; 
+            }
+
+            .bundle-tag { 
+                font-size: 0.6rem; padding: 3px 8px; top: 10px; right: 10px; 
+            }
+
+            .html-opt-btn { 
+                padding: 0.4rem; font-size: 0.75rem; 
+            }
+
+            /* Ensure single column stack */
+            #services > div {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .btn { 
+                font-size: 0.75rem !important; padding: 0.6rem 1rem !important; 
+            }
         }
     </style>
 </head>
@@ -965,7 +1085,8 @@
                             </div>
                         </div>
 
-                        <ul class="pkg-features">
+                        <ul class="pkg-features" id="frontend-feats-list">
+                            <!-- Populated by JS or Config -->
                             <li>Up to 5 Pages</li>
                             <li>Animations & Interactive Elements</li>
                             <li>Contact Forms</li>
@@ -1018,7 +1139,8 @@
                             </div>
                         </div>
 
-                        <ul class="pkg-features">
+                        <ul class="pkg-features" id="ai-feats-list">
+                             <!-- Populated by JS or Config -->
                             <li>Everything in Front-End Package</li>
                             <li>AI Chatbot Integration</li>
                             <li>Priority Support</li>
@@ -1567,7 +1689,8 @@
         // ==========================================
         // PRICING DATA & TOGGLE LOGIC
         // ==========================================
-        const PRICING_DATA = {
+        // Default values will be overwritten by Firebase Config if available
+        let PRICING_DATA = {
             html: { 
                 oneTime: 249, 
                 setupFee: 80, 
@@ -1739,6 +1862,7 @@
             const targetSection = document.getElementById(targetSectionId);
             if (currentSection === targetSection) return; 
 
+            // Stop animation if leaving home
             if(currentSection && currentSection.id === 'home') {
                 if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
             }
@@ -1786,7 +1910,7 @@
             { id: 'fpx', name: 'Online Banking (FPX)', link: 'https://toyyibpay.com', active: true } 
         ];
 
-        let siteConfig = { maintenance_active: false, payment_methods: [] };
+        let siteConfig = { maintenance_active: false, payment_methods: [], packageDetails: {} };
         let currentUserRole = 'user'; 
         
         try {
@@ -1797,20 +1921,52 @@
             }
         } catch(e) { console.error("Firebase init error:", e); }
 
+        // ==========================================
+        // UPDATED TOAST FUNCTION
+        // ==========================================
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
+            if (!container) return;
+
             const toast = document.createElement('div');
+            
+            // Icon mapping based on type
+            let iconClass = 'ri-information-line';
+            if (type === 'success') iconClass = 'ri-checkbox-circle-line';
+            if (type === 'error') iconClass = 'ri-error-warning-line';
+            if (type === 'warning') iconClass = 'ri-alert-line';
+
             toast.className = `toast ${type}`;
-            let icon = 'ri-information-line';
-            if (type === 'success') icon = 'ri-checkbox-circle-line';
-            if (type === 'error') icon = 'ri-error-warning-line';
-            toast.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <i class="toast-icon ${iconClass}"></i>
+                    <span>${message}</span>
+                </div>
+                <i class="ri-close-line toast-close" onclick="dismissToast(this.parentElement)"></i>
+            `;
+
             container.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
+
+            // Trigger animation
+            requestAnimationFrame(() => {
+                toast.classList.add('show');
+            });
+
+            // Auto dismiss after 3.5 seconds
             setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400);
-            }, 3000);
+                dismissToast(toast);
+            }, 3500);
+        }
+
+        function dismissToast(toastElement) {
+            if (!toastElement) return;
+            toastElement.classList.remove('show');
+            // Wait for transition to finish before removing from DOM
+            setTimeout(() => {
+                if (toastElement.parentElement) {
+                    toastElement.parentElement.removeChild(toastElement);
+                }
+            }, 400); // Match CSS transition duration
         }
 
         async function initializeDatabase() {
@@ -1830,6 +1986,43 @@
                 ];
                 defaults.forEach(pm => db.collection("payment_methods").add(pm));
             }
+        }
+
+        // NEW: Listen to Config for Dynamic Pricing & Content
+        function listenToConfig() {
+            if(!db) return;
+            db.collection("config").doc("site_settings").onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    
+                    // Maintenance
+                    if(data.maintenance_active) document.getElementById('maintenance-overlay').classList.add('active');
+                    else document.getElementById('maintenance-overlay').classList.remove('active');
+
+                    // Dynamic Pricing Updates
+                    if(data.prices) {
+                        if(data.prices.html) PRICING_DATA.html.monthly = data.prices.html;
+                        if(data.prices.frontend) PRICING_DATA.frontend.monthly = data.prices.frontend;
+                        if(data.prices.ai) PRICING_DATA.ai.monthly = data.prices.ai;
+                        updatePricingUI(); // Refresh UI
+                    }
+
+                    // Dynamic Feature Lists
+                    if(data.packageDetails) {
+                        const featContainerFront = document.getElementById('frontend-feats-list');
+                        const featContainerAi = document.getElementById('ai-feats-list');
+                        
+                        if(featContainerFront && data.packageDetails.frontend && data.packageDetails.frontend.features) {
+                            featContainerFront.innerHTML = data.packageDetails.frontend.features
+                                .map(f => `<li>${f}</li>`).join('');
+                        }
+                        if(featContainerAi && data.packageDetails.ai && data.packageDetails.ai.features) {
+                            featContainerAi.innerHTML = data.packageDetails.ai.features
+                                .map(f => `<li>${f}</li>`).join('');
+                        }
+                    }
+                }
+            });
         }
 
         function listenToPaymentMethods() {
@@ -1903,6 +2096,7 @@
                 snapshot.forEach(doc => PROMO_CODES[doc.id] = doc.data().discount);
             });
             listenToPaymentMethods();
+            listenToConfig(); // NEW: Listen for config changes
             loadPortfolio();
         }
 
@@ -1961,12 +2155,13 @@
                     if(data.company) document.getElementById('prof-company').value = data.company;
                     if(data.personalVoucher) showVoucherCard(data.personalVoucher); else hideVoucherCard();
                     
-                    // Load Order History
+                    // Load Order History (Syncs Status from Admin)
                     loadOrderHistory(auth.currentUser.uid);
                 }
             }).catch((error) => showToast("Error loading profile data.", "error"));
         }
 
+        // UPDATED: Order History now syncs status changes from Admin
         function loadOrderHistory(uid) {
             if(!db) return;
             const tbody = document.getElementById('order-history-body');
@@ -1976,8 +2171,8 @@
             container.style.display = 'block';
             tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
-            db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(10).get()
-                .then((snapshot) => {
+            db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(10)
+                .onSnapshot((snapshot) => {
                     tbody.innerHTML = '';
                     if (snapshot.empty) {
                         noMsg.classList.remove('hidden');
@@ -1990,8 +2185,13 @@
                             const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
                             const total = data.total || 'RM 0';
                             const pkg = data.package || 'Unknown Package';
+                            
+                            // Admin can change status; we display it here
                             const status = data.status || 'Pending';
-                            const statusClass = status === 'Pending' ? 'status-pending' : 'status-completed';
+                            let statusClass = 'status-pending';
+                            if(status === 'Paid') statusClass = 'status-paid';
+                            if(status === 'Completed') statusClass = 'status-completed';
+                            if(status === 'Cancelled') statusClass = 'status-cancelled';
                             
                             const row = `
                                 <tr>
@@ -2004,10 +2204,6 @@
                             tbody.innerHTML += row;
                         });
                     }
-                })
-                .catch((error) => {
-                    console.error("Error loading history:", error);
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ef4444;">Error loading orders.</td></tr>';
                 });
         }
 
@@ -2163,7 +2359,7 @@
                     const lastTicket = snapshot.docs[0].data();
                     const parts = lastTicket.ticketId.split('-');
                     const lastNum = parseInt(parts[1]);
-                    if (!isNaN(lastNum)) nextNumber = lastNum + 1;
+                    if (!isNaN(lastNum)) nextNum = lastNum + 1;
                 }
                 const idString = String(nextNumber).padStart(4, '0');
                 return `#Ticket-${idString}`;
@@ -2227,7 +2423,7 @@
                         const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
                         const item = document.createElement('div');
                         item.className = 'glass-card'; item.style.padding = '1rem'; item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
-                        item.innerHTML = `<div><div style="color:white; font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background:${data.status==='Open'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)'}; color:${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div>`;
+                        item.innerHTML = `<div><div style="color:white; font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background:${data.status==='Open'?'rgba(245,158,11,0.2)':'rgba(16,185,129,0.2)'}; color:${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div></div>`;
                         listContainer.appendChild(item);
                     });
                 }).catch((error) => { console.error(error); listContainer.innerHTML = '<div style="text-align:center; color: #ef4444;">Error loading ticket.</div>'; });
@@ -2299,7 +2495,7 @@
             state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
             document.getElementById('payment-method-select').value = ""; document.getElementById('terms-check').checked = false;
             if(auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
-            else { document.getElementById('auto-fill-label').style.display = 'none'; hideCheckoutVoucher(); }
+            else { document.getElementById('auto-fill-label').style.display = 'none'; hideVoucherCard(); }
             updateSummaryText(); updateUI(); navigateTo('/order');
         }
 
@@ -2342,14 +2538,25 @@
             updateTotal();
         }
 
+        // ==========================================
+        // IMPROVED PROMO CODE VALIDATION
+        // ==========================================
         function applyPromo() {
-            // UPDATE 1: Promo Code Validation
+            // 1. Check Login Status
             if(!auth || !auth.currentUser) return showToast("Please login to use Promo Codes.", "error");
+
+            // 2. Get and Clean Input
             const input = document.getElementById('promo-input');
             const code = input.value.trim().toUpperCase();
             
-            if(!code) return showToast("Please enter a promo code.", "error");
+            // 3. Check if Input is Empty
+            if(!code || code === "") {
+                showToast("Please enter a voucher code first.", "error");
+                input.focus(); // Focus back to input
+                return;
+            }
             
+            // 4. Check Code Validity in Object
             if(PROMO_CODES.hasOwnProperty(code)) {
                 state.discountType = 'percent';
                 state.discountRate = PROMO_CODES[code];
@@ -2359,7 +2566,12 @@
                 document.getElementById('summary-promo-code').innerText = code;
                 document.getElementById('summary-discount-val').innerText = `-${state.discountRate * 100}%`;
                 updateTotal();
-            } else { showToast('Invalid Promo Code', 'error'); }
+            } else {
+                // 5. Invalid Code Feedback
+                showToast("Invalid code. Please check and try again.", "error");
+                // Optional: clear input on error to force user to retype correctly
+                // input.value = ""; 
+            }
         }
 
         function applyPersonalVoucher() {
@@ -2508,7 +2720,7 @@
             const methodId = select.value;
 
             if(!methodId) {
-                showGlassModal("Payment Method Required", "Please select a payment method from the dropdown list before proceeding.", "warning", "Select Method");
+                showGlassModal("Payment Method Required", "Please select a payment method from dropdown list before proceeding.", "warning", "Select Method");
                 return;
             }
 
@@ -2551,7 +2763,7 @@
             const termsCheck = document.getElementById('terms-check');
             
             if(!termsCheck.checked) {
-                showGlassModal("Agreement Required", "Please agree to the Terms & Conditions to proceed with your order.", "warning", "I Agree", () => {
+                showGlassModal("Agreement Required", "Please agree to Terms & Conditions to proceed with your order.", "warning", "I Agree", () => {
                     document.getElementById('terms-check').checked = true;
                 });
                 return;
@@ -2616,12 +2828,18 @@
         }
 
         // ==========================================
-        // GLOBE ANIMATION
+        // GLOBE ANIMATION (OPTIMIZED)
         // ==========================================
         const canvas = document.getElementById('globe-canvas');
         const ctx = canvas.getContext('2d');
         let dots = [];
-        const DOT_COUNT = 850; 
+        
+        // PERFORMANCE OPTIMIZATION: Detect screen size for dot count
+        // Use fewer dots on mobile to prevent lagging
+        const DOT_COUNT_DESKTOP = 700; // Reduced from 850
+        const DOT_COUNT_MOBILE = 350;  // Reduced significantly for mobile
+        let DOT_COUNT = window.innerWidth < 768 ? DOT_COUNT_MOBILE : DOT_COUNT_DESKTOP;
+
         const GLOBE_RADIUS = 380; 
         let rotation = 0;
         let animationId;
@@ -2636,9 +2854,14 @@
         }
 
         function animate() {
-            ctx.clearRect(0,0, 1200, 1200); 
+            // OPTIMIZATION: Stop rendering immediately if home section isn't active
             const homeSection = document.getElementById('home');
-            if(!homeSection || !homeSection.classList.contains('active')) { return; }
+            if(!homeSection || !homeSection.classList.contains('active')) { 
+                return; 
+            }
+
+            // Clear Canvas
+            ctx.clearRect(0,0, 1200, 1200); 
 
             rotation +=0.002;
             dots.forEach(dot => {
@@ -2659,6 +2882,15 @@
             if (animationId) cancelAnimationFrame(animationId);
             animate();
         }
+
+        // Handle resize to adjust dot count if needed
+        window.addEventListener('resize', () => {
+             const newCount = window.innerWidth < 768 ? DOT_COUNT_MOBILE : DOT_COUNT_DESKTOP;
+             if(newCount !== DOT_COUNT) {
+                 DOT_COUNT = newCount;
+                 initDots();
+             }
+        });
 
         initDots();
         animate();
