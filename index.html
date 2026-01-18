@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDNetwork One (MY)</title>
+    <title>DDNetwork One</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png">
@@ -479,6 +479,45 @@
         .modal-text ul { list-style: disc; margin-left: 25px; margin-bottom: 1.5rem; }
         .modal-text li { margin-bottom: 0.8rem; }
 
+        /* --- ORDER HISTORY TABLE --- */
+        .history-table-container {
+            margin-top: 2rem;
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .history-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            padding: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .history-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-glass);
+            color: var(--text-main);
+        }
+        .history-table tr:last-child td { border-bottom: none; }
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-pending { background: rgba(245, 158, 11, 0.2); color: var(--accent-warn); }
+        .status-completed { background: rgba(16, 185, 129, 0.2); color: var(--accent-success); }
+
         /* --- FOOTER --- */
         footer { background-color: #020202; border-top: 1px solid var(--border-glass); padding: 5rem 0 2rem; margin-top: auto; position: relative; z-index: 5; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
@@ -633,7 +672,7 @@
 
         <!-- === PAGE: PROFILE === -->
         <section id="profile" class="page-section">
-            <div class="auth-container">
+            <div class="auth-container" style="max-width: 900px;">
                 <div class="glass-card auth-card">
                     <i class="ri-user-settings-line" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
                     <h2>My Profile</h2>
@@ -670,6 +709,28 @@
                             <div id="profile-voucher-action">
                                 <button type="button" class="btn btn-danger" style="width: auto; padding: 0.6rem 1.2rem;" onclick="deletePersonalVoucher()">Delete</button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- PURCHASE HISTORY SECTION -->
+                    <div id="profile-history-section" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 2rem; text-align: left;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main);">Purchase History</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Track your previous orders and status.</p>
+                        <div class="history-table-container">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Package</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order-history-body">
+                                    <!-- Orders injected here -->
+                                </tbody>
+                            </table>
+                            <div id="no-orders-msg" class="text-center hidden" style="padding: 2rem; color: var(--text-tertiary);">No orders found.</div>
                         </div>
                     </div>
 
@@ -1092,7 +1153,7 @@
                             
                             <div id="input-subdomain" style="margin-top: 10px;">
                                 <input type="text" id="subdomain-text" class="form-input" placeholder="yourname" oninput="updateSummaryText()">
-                                <span style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px; display: block;">URL: <span id="url-preview" style="color: var(--accent-primary); font-weight: 700;">.ddn.one</span></span>
+                                <span style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px; display: block;">URL: <span id="url-preview" style="color: var(--accent-primary); font-weight: 700;">.ddnet.my</span></span>
                             </div>
                             
                             <div id="input-custom" style="display: none; margin-top: 10px;">
@@ -1158,7 +1219,7 @@
                     </div>
                     <h2 style="margin-bottom: 1rem;">Order Placed Successfully!</h2>
                     <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">
-                        Thank you for choosing DDNetwork One (MY). We have received your order and payment details.<br>
+                        Thank you for choosing DDNetwork One. We have received your order and payment details.<br>
                         Our team will review your order and contact you via WhatsApp/Email within 24 hours.
                     </p>
                     
@@ -1219,7 +1280,7 @@
                 <h2 style="margin-bottom: 0.5rem;">Danial Danish</h2>
                 <p style="color: var(--accent-primary); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1.5rem;">Founder & Lead Developer</p>
                 <p style="color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 1.5rem;">
-                    "My journey started with a curiosity for code. Today, DDNetwork One (MY) is result of years of experimentation, late-night coding sessions, and a genuine passion for helping local businesses succeed in digital age. I believe in simplicity, speed, and smart design."
+                    "My journey started with a curiosity for code. Today, DDNetwork One is result of years of experimentation, late-night coding sessions, and a genuine passion for helping local businesses succeed in digital age. I believe in simplicity, speed, and smart design."
                 </p>
                 <div style="display: flex; gap: 1rem;">
                     <a href="#" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-linkedin-fill"></i></a>
@@ -1383,7 +1444,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="copyright">&copy; 2025-2026 DDNetwork One (MY). PG0572133-K All rights reserved.</p>
+                <p class="copyright">&copy; 2025-2026 DDNetwork One. PG0572133-K All rights reserved.</p>
                 
                 <div class="mac-dock">
                     <a href="https://linkedin.com" target="_blank" class="dock-icon"><i class="ri-linkedin-fill"></i></a>
@@ -1428,25 +1489,25 @@
                 <p>Late payments may result in suspension of services until payment is received.</p>
 
                 <h3>6. Revisions & Changes</h3>
-                <p>Minor revisions may be provided at DDNetwork One (MY)’s discretion.</p>
+                <p>Minor revisions may be provided at DDNetwork One’s discretion.</p>
                 <p>Repeated revisions, content rewrites, or design changes are not included unless stated.</p>
                 <p>Additional changes will be billed separately.</p>
 
                 <h3>7. Client Responsibilities</h3>
                 <p>Clients are responsible for providing accurate content, images, and information.</p>
                 <p>Delays caused by missing content or approvals may affect delivery timelines.</p>
-                <p>DDNetwork One (MY) is not responsible for issues caused by third-party services or client-provided materials.</p>
+                <p>DDNetwork One is not responsible for issues caused by third-party services or client-provided materials.</p>
 
                 <h3>8. Delivery Timeline</h3>
                 <p>Estimated timelines are provided as guidelines only.</p>
-                <p>Delays caused by client-side feedback, content submission, or external dependencies are not responsibility of DDNetwork One (MY).</p>
+                <p>Delays caused by client-side feedback, content submission, or external dependencies are not responsibility of DDNetwork One.</p>
 
                 <h3>9. Intellectual Property</h3>
                 <p>Ownership of final website or system is transferred to client only after full payment is received.</p>
-                <p>DDNetwork One (MY) retains right to showcase completed projects for portfolio and promotional purposes unless otherwise agreed in writing.</p>
+                <p>DDNetwork One retains right to showcase completed projects for portfolio and promotional purposes unless otherwise agreed in writing.</p>
 
                 <h3>10. Termination</h3>
-                <p>DDNetwork One (MY) reserves right to terminate services if payments are overdue, terms are violated, or abusive behavior occurs.</p>
+                <p>DDNetwork One reserves right to terminate services if payments are overdue, terms are violated, or abusive behavior occurs.</p>
                 <p>No refunds will be issued for work already completed.</p>
 
                 <h3>11. Refund Policy</h3>
@@ -1454,14 +1515,14 @@
                 <p>Setup fees and completed work are strictly non-refundable.</p>
 
                 <h3>12. Limitation of Liability</h3>
-                <p>DDNetwork One (MY) shall not be held liable for loss of data, revenue, or business arising from use or inability to use services.</p>
+                <p>DDNetwork One shall not be held liable for loss of data, revenue, or business arising from use or inability to use services.</p>
                 <p>Clients are advised to maintain their own backups and business continuity plans.</p>
 
                 <h3>13. Changes to Terms</h3>
-                <p>DDNetwork One (MY) reserves right to update or modify these Terms & Conditions at any time.</p>
+                <p>DDNetwork One reserves right to update or modify these Terms & Conditions at any time.</p>
                 <p>Continued use of services constitutes acceptance of the updated terms.</p>
                 
-                <p style="margin-top: 3rem; font-weight: 700; text-align:center;">&copy; DDNetwork One (MY). All rights reserved.</p>
+                <p style="margin-top: 3rem; font-weight: 700; text-align:center;">&copy; DDNetwork One. All rights reserved.</p>
             </div>
         </div>
     </div>
@@ -1554,12 +1615,16 @@
             if(cycle === 'yearly') toggle.checked = true;
             else toggle.checked = false;
             updatePricingUI();
+            // Important: Update domain price if already selected
+            if(state.domainType === 'sub') updateDomain('sub', document.querySelector('input[name="domain_type"][value="sub"]').parentElement);
         }
 
         function toggleBilling() {
             const toggle = document.getElementById('billing-toggle');
             billingCycle = toggle.checked ? 'yearly' : 'monthly';
             updatePricingUI();
+            // Important: Update domain price if already selected
+            if(state.domainType === 'sub') updateDomain('sub', document.querySelector('input[name="domain_type"][value="sub"]').parentElement);
         }
 
         function setHtmlMode(mode) {
@@ -1895,8 +1960,55 @@
                     if(data.email) document.getElementById('prof-email').value = data.email || auth.currentUser.email;
                     if(data.company) document.getElementById('prof-company').value = data.company;
                     if(data.personalVoucher) showVoucherCard(data.personalVoucher); else hideVoucherCard();
+                    
+                    // Load Order History
+                    loadOrderHistory(auth.currentUser.uid);
                 }
             }).catch((error) => showToast("Error loading profile data.", "error"));
+        }
+
+        function loadOrderHistory(uid) {
+            if(!db) return;
+            const tbody = document.getElementById('order-history-body');
+            const container = document.getElementById('profile-history-section');
+            const noMsg = document.getElementById('no-orders-msg');
+            
+            container.style.display = 'block';
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
+
+            db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(10).get()
+                .then((snapshot) => {
+                    tbody.innerHTML = '';
+                    if (snapshot.empty) {
+                        noMsg.classList.remove('hidden');
+                        tbody.parentElement.style.display = 'none';
+                    } else {
+                        noMsg.classList.add('hidden');
+                        tbody.parentElement.style.display = 'table';
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
+                            const total = data.total || 'RM 0';
+                            const pkg = data.package || 'Unknown Package';
+                            const status = data.status || 'Pending';
+                            const statusClass = status === 'Pending' ? 'status-pending' : 'status-completed';
+                            
+                            const row = `
+                                <tr>
+                                    <td>${date}</td>
+                                    <td style="font-weight:600; color:white;">${pkg}</td>
+                                    <td>${total}</td>
+                                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                                </tr>
+                            `;
+                            tbody.innerHTML += row;
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading history:", error);
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ef4444;">Error loading orders.</td></tr>';
+                });
         }
 
         function fetchAndSyncUserData(uid) {
@@ -1926,7 +2038,7 @@
             if (voucher.status === 'redeemed') {
                 document.getElementById('profile-voucher-title').innerText = "Voucher Redeemed";
                 text.style.textDecoration = 'line-through';
-                actionBtn.innerHTML = '<span style="color:var(--success); font-weight:700; border:1px solid var(--success); padding:4px 12px; border-radius:20px; font-size:0.8rem;">USED</span>';
+                actionBtn.innerHTML = '<span style="color:var(--accent-success); font-weight:700; border:1px solid var(--accent-success); padding:4px 12px; border-radius:20px; font-size:0.8rem;">USED</span>';
             } else {
                 document.getElementById('profile-voucher-title').innerText = "You have a Gift Voucher!";
                 actionBtn.innerHTML = '<button type="button" class="btn btn-danger" style="width: auto; padding: 0.6rem 1.2rem;" onclick="deletePersonalVoucher()">Delete</button>';
@@ -2180,7 +2292,10 @@
             priceArea.innerHTML = priceHTML;
 
             // Defaults
-            state.domainType = 'sub'; state.domainPrice = 55; state.maintenancePrice = 0;
+            state.domainType = 'sub'; 
+            // Trigger domain update to check yearly free status
+            updateDomain('sub', document.querySelector('input[name="domain_type"][value="sub"]').parentElement); 
+            state.maintenancePrice = 0;
             state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
             document.getElementById('payment-method-select').value = ""; document.getElementById('terms-check').checked = false;
             if(auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
@@ -2190,13 +2305,23 @@
 
         function updateDomain(type, element) {
             state.domainType = type;
-            const options = element.parentElement.querySelectorAll('.radio-option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
+            if(element) {
+                const options = element.parentElement.querySelectorAll('.radio-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                element.classList.add('selected');
+            }
+            
+            // UPDATE 4: Changed .ddn.one to ddnet.my
+            // UPDATE 3: Free Domain Logic (First Year / Yearly Billing)
             if(type === 'sub') {
                 document.getElementById('input-subdomain').style.display = 'block';
                 document.getElementById('input-custom').style.display = 'none';
-                state.domainPrice = 55; 
+                
+                if(state.billingCycle === 'yearly') {
+                    state.domainPrice = 0; // Free for first year / yearly billing
+                } else {
+                    state.domainPrice = 55;
+                }
             } else {
                 document.getElementById('input-subdomain').style.display = 'none';
                 document.getElementById('input-custom').style.display = 'block';
@@ -2218,9 +2343,13 @@
         }
 
         function applyPromo() {
+            // UPDATE 1: Promo Code Validation
             if(!auth || !auth.currentUser) return showToast("Please login to use Promo Codes.", "error");
             const input = document.getElementById('promo-input');
             const code = input.value.trim().toUpperCase();
+            
+            if(!code) return showToast("Please enter a promo code.", "error");
+            
             if(PROMO_CODES.hasOwnProperty(code)) {
                 state.discountType = 'percent';
                 state.discountRate = PROMO_CODES[code];
@@ -2276,11 +2405,12 @@
         }
 
         function updateSummaryText() {
+            // UPDATE 4: Change .ddn.one to ddnet.my
             if(state.domainType === 'sub') {
                 const val = document.getElementById('subdomain-text').value;
-                state.domainName = val ? `${val}.ddn.one` : '';
-                document.getElementById('url-preview').innerText = state.domainName || '.ddn.one';
-                document.getElementById('summary-domain').innerText = state.domainPrice > 0 ? `RM ${state.domainPrice}/yr` : 'RM 0';
+                state.domainName = val ? `${val}.ddnet.my` : '';
+                document.getElementById('url-preview').innerText = state.domainName || '.ddnet.my';
+                document.getElementById('summary-domain').innerText = state.domainPrice > 0 ? `RM ${state.domainPrice}/yr` : 'FREE (1st Year)';
             } else {
                 const val = document.getElementById('custom-domain-text').value;
                 state.domainName = val;
@@ -2427,7 +2557,11 @@
                 return;
             }
             if(!state.packageType) return showToast("Please select a package first.", "error");
-            if(!state.paymentMethodId) return showToast("Please select a Payment Method.", "error");
+            
+            // UPDATE 2: Validation check with specific message
+            if(!state.paymentMethodId) {
+                return showToast("Please select and proceed payment to place an order.", "error");
+            }
 
             const name = document.getElementById('co-name').value;
             const phone = document.getElementById('co-phone').value;
@@ -2472,7 +2606,7 @@
             }
 
             setTimeout(() => {
-                msgEl.innerHTML = `Thank you for choosing DDNetwork One (MY). We have received your order and payment details. Our team will review your order and contact you via WhatsApp or email within 24 hours.`;
+                msgEl.innerHTML = `Thank you for choosing DDNetwork One. We have received your order and payment details. Our team will review your order and contact you via WhatsApp or email within 24 hours.`;
                 setTimeout(() => {
                     const voucherText = state.discountCode ? state.discountCode : "None";
                     const whatsappMessage = `Hi Admin Team,\nI have just placed a new order. Please find my details below:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nVoucher: ${voucherText}\nPlan: ${pkgName} (${state.billingCycle})\nPayment Type: ${paymentLabel}\n\nKindly let me know if any additional information is required.\nThank you.`;
