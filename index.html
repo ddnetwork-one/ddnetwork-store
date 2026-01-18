@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DDNetwork(MY)</title>
+    <title>DDNetwork One (MY)</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png">
@@ -144,7 +144,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: all 0.4s var(--ease-smooth);
         }
-        /* Header Scroll State */
         header.scrolled {
             top: 10px;
             padding: 0 1.5rem;
@@ -159,21 +158,14 @@
 
         .nav-desktop { display: none; gap: 2rem; }
         .nav-desktop a { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); position: relative; padding: 5px 0; }
-        .nav-desktop a::after { 
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; 
-            background: var(--accent-primary); transition: width 0.3s ease; 
-        }
+        .nav-desktop a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent-primary); transition: width 0.3s ease; }
         .nav-desktop a:hover { color: white; }
         .nav-desktop a:hover::after { width: 100%; }
 
         .auth-buttons { display: flex; gap: 15px; align-items: center; }
         .logout-btn { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: 0.2s; }
         .logout-btn:hover { color: white; text-decoration: underline; }
-        
-        .admin-link { 
-            font-size: 1.2rem; color: var(--accent-warn); background: rgba(245, 158, 11, 0.15); 
-            padding: 8px; border-radius: 50%; transition: 0.2s; border: 1px solid rgba(245, 158, 11, 0.3);
-        }
+        .admin-link { font-size: 1.2rem; color: var(--accent-warn); background: rgba(245, 158, 11, 0.15); padding: 8px; border-radius: 50%; transition: 0.2s; border: 1px solid rgba(245, 158, 11, 0.3); }
         .admin-link:hover { background: var(--accent-warn); color: black; transform: rotate(15deg) scale(1.1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
 
         .mobile-toggle { display: block; font-size: 1.5rem; cursor: pointer; color: white; z-index: 2101; transition: transform 0.4s var(--ease-elastic); }
@@ -183,8 +175,7 @@
         .mobile-drawer-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
-            z-index: 1999;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+            z-index: 1999; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
         .mobile-drawer-overlay.active { opacity: 1; pointer-events: all; }
 
@@ -197,13 +188,8 @@
             overflow-y: auto; padding-top: 100px; border-left: 1px solid var(--border-glass);
         }
         .mobile-drawer.open { transform: translateX(0); }
-        .mobile-drawer ul { 
-            text-align: center; display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 80px; 
-        }
-        .mobile-drawer a { 
-            font-size: 1.5rem; font-weight: 800; color: var(--text-main); 
-            opacity: 0; transform: translateY(20px); transition: 0.4s var(--ease-smooth); display: block;
-        }
+        .mobile-drawer ul { text-align: center; display: flex; flex-direction: column; gap: 1.5rem; padding-bottom: 80px; }
+        .mobile-drawer a { font-size: 1.5rem; font-weight: 800; color: var(--text-main); opacity: 0; transform: translateY(20px); transition: 0.4s var(--ease-smooth); display: block; }
         .mobile-drawer.open a { opacity: 1; transform: translateY(0); }
         .mobile-drawer.open li:nth-child(1) a { transition-delay: 0.1s; }
         .mobile-drawer.open li:nth-child(2) a { transition-delay: 0.2s; }
@@ -225,31 +211,21 @@
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
             border: 2px solid var(--accent-primary); opacity: 0; animation: fabPulse 2s infinite;
         }
-        @keyframes fabPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(2); opacity: 0; }
-        }
+        @keyframes fabPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
 
         /* --- MAIN CONTENT AREA --- */
         main { flex:1; width: 100%; position: relative; overflow-x: hidden; }
 
         /* --- PAGE ROUTING --- */
-        .page-section { 
-            display: none; min-height: calc(100vh - 80px); padding-top: 100px; padding-bottom: 60px; 
-            opacity: 0; transform: translateY(20px); transition: all 0.6s var(--ease-smooth); 
-        }
+        .page-section { display: none; min-height: calc(100vh - 80px); padding-top: 100px; padding-bottom: 60px; opacity: 0; transform: translateY(20px); transition: all 0.6s var(--ease-smooth); }
         .page-section.active { display: block; opacity: 1; transform: translateY(0); }
 
         /* --- HERO --- */
         .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 0; overflow: hidden; margin-top: -100px; }
         #globe-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; pointer-events: none; opacity: 0.6; }
-        .hero-glow { 
-            position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; 
-            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%); 
-            transform: translate(-50%, -50%); z-index: 0; pointer-events: none; 
-        }
+        .hero-glow { position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%); transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
         .hero-content { position: relative; z-index: 10; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
-        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 1.5rem; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
+        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom:1.5rem; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
         .hero p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
 
         /* --- GLASS CARDS & AUTH --- */
@@ -267,12 +243,7 @@
             position: relative;
             overflow: hidden;
         }
-        
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-card-hover); border-color: rgba(255, 255, 255, 0.2); }
 
         .auth-container { width: 100%; max-width: 600px; margin: 0 auto; padding-top: 40px; }
         .auth-card { text-align: center; }
@@ -290,8 +261,6 @@
             transition: all 0.3s var(--ease-smooth); z-index: 1; border: 1px solid transparent;
             white-space: nowrap;
         }
-        
-        /* Shine Effect */
         .btn::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
@@ -301,35 +270,27 @@
 
         .btn-primary { background: white; color: black; border: 1px solid white; }
         .btn-primary:hover { background: transparent; color: white; transform: translateY(-2px); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-        
-        .btn-glass { 
-            background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--border-glass); 
-            backdrop-filter: blur(10px);
-        }
+        .btn-glass { background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--border-glass); backdrop-filter: blur(10px); }
         .btn-glass:hover { background: rgba(255, 255, 255, 0.1); border-color: white; transform: translateY(-2px); }
-
         .btn-secondary { background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border-glass); }
         .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.1); }
-
         .btn-success { background: #25D366; color: white; border: 1px solid #25D366; }
         .btn-success:hover { background: #128C7E; border-color: #128C7E; }
-        
         .btn-danger { background: var(--accent-warn); color: black; border: 1px solid var(--accent-warn); }
         .btn-danger:hover { background: #d97706; border-color: #d97706; color: white; }
+        .btn-sm { padding: 0.6rem 1rem; font-size: 0.75rem; }
 
         /* --- FORM ELEMENTS --- */
-        .form-group { margin-bottom: 1.5rem; text-align: left; position: relative; }
+        .form-group { margin-bottom:1.5rem; text-align: left; position: relative; }
         .form-label { display: block; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
         .form-input, .form-select, textarea {
             width: 100%; padding: 1rem;
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);
             color: white; border-radius: 12px; font-size: 1rem; 
-            min-height: 48px; transition: 0.3s;
-            appearance: none;
+            min-height: 48px; transition: 0.3s; appearance: none;
         }
         .form-input:focus, .form-select:focus, textarea:focus {
-            background: rgba(59, 130, 246, 0.05);
-            border-color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.05); border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         .form-select {
@@ -337,8 +298,6 @@
             background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2rem;
             cursor: pointer;
         }
-        
-        /* Radio Options */
         .radio-group { display: grid; gap: 1rem; }
         .radio-option { 
             border: 1px solid var(--border-glass); padding: 1rem 1.2rem; border-radius: 12px; 
@@ -346,15 +305,8 @@
             transition: all 0.2s ease; background: rgba(255,255,255,0.02); 
             min-height: 56px; position: relative; user-select: none;
         }
-        .radio-option:hover { 
-            transform: scale(1.01);
-            background: rgba(255,255,255,0.05); 
-            border-color: rgba(255,255,255,0.2); 
-        }
-        .radio-option.selected { 
-            border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.1); 
-            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2); 
-        }
+        .radio-option:hover { transform: scale(1.01); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+        .radio-option.selected { border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.1); box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2); }
         .radio-option.selected span { color: white; font-weight: 600; }
         .radio-option input[type="radio"] { width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none; }
 
@@ -363,48 +315,28 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
-            z-index: 100001;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 100001; display: none; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
         }
         #glass-modal-overlay.active { display: flex; opacity: 1; }
-        
         .glass-modal-content {
-            width: 90%; max-width: 450px;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 90%; max-width: 450px; text-align: center;
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         #glass-modal-overlay.active .glass-modal-content { transform: scale(1); }
-        
         .glass-modal-icon {
             width: 70px; height: 70px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.05); display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 2.5rem;
             border: 1px solid var(--border-glass);
         }
         .glass-modal-icon.warning { color: var(--accent-warn); background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
         .glass-modal-icon.success { color: var(--accent-success); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
-
         .glass-modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: white; }
-        .glass-modal-desc { color: var(--text-secondary); font-size: 1rem; margin-bottom: 2rem; line-height: 1.6; }
-        
+        .glass-modal-desc { color: var(--text-secondary); font-size:1rem; margin-bottom: 2rem; line-height: 1.6; }
         .glass-modal-btn {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 12px;
-            background: white;
-            color: black;
-            font-weight: 700;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
+            width: 100%; padding: 1rem; border-radius: 12px; background: white; color: black;
+            font-weight: 700; text-transform: uppercase; border: none; cursor: pointer; transition: 0.3s;
         }
         .glass-modal-btn:hover { background: #e0e0e0; }
         .glass-modal-btn.primary { background: var(--accent-primary); color: white; }
@@ -413,11 +345,9 @@
         /* --- TOAST NOTIFICATIONS --- */
         .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 100000; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
         .toast { 
-            background: var(--bg-glass-heavy); color: white; 
-            padding: 16px 24px; border-radius: 12px; 
+            background: var(--bg-glass-heavy); color: white; padding: 16px 24px; border-radius: 12px; 
             border: 1px solid var(--border-glass); border-left: 4px solid var(--accent-primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            display: flex; align-items: center; gap: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; 
             transform: translateX(120%); opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             backdrop-filter: blur(15px); pointer-events: auto;
         }
@@ -443,10 +373,8 @@
         }
         input:checked + .slider { background-color: var(--accent-primary); border-color: var(--accent-primary); }
         input:checked + .slider:before { transform: translateX(28px); }
-
         .toggle-label { font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: 0.3s; }
         .toggle-label.active { color: white; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-
         .save-badge {
             background: linear-gradient(45deg, #f59e0b, #d97706); color: white;
             padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 800;
@@ -454,12 +382,19 @@
             transition: all 0.3s; display: inline-block;
         }
         .save-badge.show { opacity: 1; transform: scale(1); }
+        
+        /* Setup Fee Tag */
+        .setup-fee-tag {
+            display: block; text-align: center; font-size: 0.8rem; color: var(--accent-warn);
+            font-weight: 700; margin-bottom: 0.5rem; background: rgba(245, 158, 11, 0.1);
+            padding: 4px; border-radius: 4px; border: 1px solid rgba(245, 158, 11, 0.3);
+        }
 
         .pkg-header { text-align: center; margin-bottom: 2rem; position: relative; z-index: 2; }
         .pkg-icon {
             width: 60px; height: 60px; border-radius: 16px;
             background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem; font-size: 1.5rem; color: white;
+            margin: 0 auto 1rem; font-size: 1.5rem; color: white;
             border: 1px solid var(--border-glass); transition: 0.3s;
         }
         .glass-card:hover .pkg-icon {
@@ -467,7 +402,7 @@
             box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.1) rotate(5deg);
         }
         .pkg-title { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 800; }
-        .pkg-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.5rem; min-height: 42px; }
+        .pkg-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; min-height: 42px; }
         .pkg-price { font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 0.5rem; letter-spacing: -1px; }
         .pkg-period { font-size: 0.9rem; color: var(--text-tertiary); font-weight: 500; }
         .pkg-features { list-style: none; text-align: left; margin-bottom: 2rem; flex-grow: 1; }
@@ -486,12 +421,22 @@
             border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
             z-index: 5; box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
         }
+        
+        /* HTML Only Toggle Logic */
+        .html-toggle-wrapper { margin-bottom: 1rem; display: flex; gap: 10px; justify-content: center; }
+        .html-opt-btn {
+            flex: 1; padding: 0.5rem; border-radius: 8px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass); color: var(--text-secondary);
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+            text-align: center;
+        }
+        .html-opt-btn:hover { background: rgba(255,255,255,0.1); }
+        .html-opt-btn.active { background: var(--accent-primary); border-color: var(--accent-primary); color: white; }
 
         /* --- PROCESSING OVERLAY --- */
         #processing-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px);
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
             z-index: 100002; display: none; flex-direction: column;
             justify-content: center; align-items: center; text-align: center; padding: 2rem;
         }
@@ -502,10 +447,7 @@
             border-radius: 50%;
             animation: spin 1s linear infinite; margin-bottom: 2rem;
         }
-        .process-text {
-            font-size: 1.25rem; color: white; max-width: 600px;
-            line-height: 1.6;
-        }
+        .process-text { font-size: 1.25rem; color: white; max-width: 600px; line-height: 1.6; }
 
         /* --- MAINTENANCE --- */
         #maintenance-overlay {
@@ -519,11 +461,26 @@
         .maintenance-content i { font-size:5rem; color: var(--accent-warn); margin-bottom: 2rem; display: block; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
 
-        /* --- FOOTER --- */
-        footer {
-            background-color: #020202; border-top: 1px solid var(--border-glass);
-            padding: 5rem 0 2rem; margin-top: auto; position: relative; z-index: 5;
+        /* --- TERMS MODAL --- */
+        .modal { display: none; position: fixed; z-index: 99999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.3s; overflow-y: auto; }
+        .modal.open { display: block; opacity: 1; }
+        .modal-content {
+            background-color: var(--bg-card); margin: 2% auto; padding: 40px;
+            border: 1px solid var(--border-color); width: 90%; max-width: 800px; border-radius: 24px;
+            min-height: 90vh; transform: scale(0.9); transition: transform 0.3s var(--ease-smooth);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.1); position: relative; z-index: 10000;
         }
+        .modal.open .modal-content { transform: scale(1); }
+        .close-modal { position: absolute; top: 20px; right: 25px; color: #aaa; font-size: 35px; font-weight: bold; cursor: pointer; z-index: 10001; transition: 0.2s; }
+        .close-modal:hover { color: white; transform: rotate(90deg); }
+        .modal h2 { margin-bottom: 2rem; text-align: center; color: white; font-size: 2rem; }
+        .modal-text { color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; }
+        .modal-text h3 { color: var(--accent-primary); margin-top: 2rem; margin-bottom: 1rem; font-size: 1.3rem; text-transform: none; letter-spacing: normal; border-bottom: 1px solid var(--border-glass); padding-bottom: 10px; }
+        .modal-text ul { list-style: disc; margin-left: 25px; margin-bottom: 1.5rem; }
+        .modal-text li { margin-bottom: 0.8rem; }
+
+        /* --- FOOTER --- */
+        footer { background-color: #020202; border-top: 1px solid var(--border-glass); padding: 5rem 0 2rem; margin-top: auto; position: relative; z-index: 5; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
         .footer-col h4 { font-size: 0.9rem; margin-bottom: 1.5rem; color: white; letter-spacing: 0.05em; }
         .footer-brand .company-name { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; }
@@ -535,25 +492,13 @@
         .footer-contact-item i { color: var(--accent-primary); }
         .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--border-glass); }
         .copyright { font-size: 0.85rem; color: var(--text-tertiary); }
-
-        /* Mac Dock */
-        .mac-dock {
-            display: flex; gap: 1rem; background: rgba(255,255,255,0.05);
-            padding: 0.8rem 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px); 
-        }
-        .dock-icon { 
-            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; background: rgba(30, 30, 30, 0.8); color: white; font-size: 1.2rem; 
-            transition: all 0.3s; 
-        }
+        .mac-dock { display: flex; gap: 1rem; background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        .dock-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(30, 30, 30, 0.8); color: white; font-size: 1.2rem; transition: all 0.3s; }
         .dock-icon:hover { transform: scale(1.2) translateY(-8px); background: rgba(255, 255, 255, 0.2); box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); z-index: 10; color: white; }
 
         /* --- RESPONSIVE --- */
         @media(max-width: 991px) {
-            h1 { font-size: 2.2rem !important; } 
-            h2 { font-size: 1.5rem !important; } 
-            body { font-size: 0.95rem !important; } 
+            h1 { font-size: 2.2rem !important; } h2 { font-size: 1.5rem !important; } body { font-size: 0.95rem !important; } 
             .hero p { font-size: 1rem !important; margin-bottom: 1.5rem !important; }
             #globe-canvas { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
             .page-section { padding-top: 120px !important; padding-bottom: 40px !important; }
@@ -584,14 +529,14 @@
         </div>
     </div>
 
-    <!-- GLASSMORPHIC NOTIFICATION MODAL (New) -->
+    <!-- GLASSMORPHIC NOTIFICATION MODAL -->
     <div id="glass-modal-overlay">
         <div class="glass-card glass-modal-content">
             <div id="glass-modal-icon-container" class="glass-modal-icon warning">
                 <i class="ri-error-warning-line"></i>
             </div>
             <h3 id="glass-modal-title" class="glass-modal-title">Action Required</h3>
-            <p id="glass-modal-desc" class="glass-modal-desc">Please complete the required steps to proceed.</p>
+            <p id="glass-modal-desc" class="glass-modal-desc">Please complete required steps to proceed.</p>
             <button id="glass-modal-btn" class="glass-modal-btn primary">Okay</button>
         </div>
     </div>
@@ -917,11 +862,20 @@
                             <h3 class="pkg-title">HTML Only</h3>
                             <p class="pkg-desc">Simple Landing Page.</p>
                             
-                            <div class="price-display-area">
-                                <span id="price-html" class="pkg-price">RM 39</span>
-                                <span class="pkg-period" id="period-html">/month</span>
-                                <span id="save-html" class="save-badge">Save RM 269</span>
+                            <!-- Special Toggle for HTML Only -->
+                            <div class="html-toggle-wrapper">
+                                <div id="html-btn-onetime" class="html-opt-btn active" onclick="setHtmlMode('onetime')">One-Time</div>
+                                <div id="html-btn-sub" class="html-opt-btn" onclick="setHtmlMode('sub')">Subscription</div>
                             </div>
+
+                            <div class="price-display-area">
+                                <span id="price-html" class="pkg-price">RM 249</span>
+                                <span id="period-html" class="pkg-period">/one-time</span>
+                                <span id="save-html" class="save-badge hidden">Save RM 269</span>
+                            </div>
+                            
+                            <!-- Dynamic Setup Fee Display for Subscription Mode -->
+                            <div id="html-setup-display" class="setup-fee-tag hidden">Setup Fee: RM 80</div>
                         </div>
 
                         <ul class="pkg-features">
@@ -929,7 +883,7 @@
                             <li>Mobile Responsive Design</li>
                             <li>Basic SEO Tags</li>
                             <li>Contact Form</li>
-                            <li>Free Domain for 1 Year</li>
+                            <li id="html-feat-support" class="hidden">Maintenance & basic support</li>
                         </ul>
                         <button class="btn btn-glass" style="width: 100%;" onclick="attemptSelectPackage('HTML Only', 'html')">Select</button>
                     </div>
@@ -942,10 +896,11 @@
                             <h3 class="pkg-title">Front-End Website</h3>
                             <p class="pkg-desc">Interactive multi-page websites.</p>
                             
+                            <div class="setup-fee-tag">Setup Fee: RM 200</div>
                             <div class="price-display-area">
-                                <span id="price-frontend" class="pkg-price">RM 129</span>
-                                <span class="pkg-period" id="period-frontend">/month</span>
-                                <span id="save-frontend" class="save-badge">Save RM 749</span>
+                                <span id="price-frontend" class="pkg-price">RM 99</span>
+                                <span id="period-frontend" class="pkg-period">/month</span>
+                                <span id="save-frontend" class="save-badge">Save RM 489</span>
                             </div>
                         </div>
 
@@ -968,10 +923,11 @@
                             <h3 class="pkg-title">Front-End + Portal</h3>
                             <p class="pkg-desc">Full website & internal management.</p>
                             
+                            <div class="setup-fee-tag">Setup Fee: RM 700</div>
                             <div class="price-display-area">
-                                <span id="price-bundle" class="pkg-price">RM 399</span>
-                                <span class="pkg-period" id="period-bundle">/month</span>
-                                <span id="save-bundle" class="save-badge">Save RM 1,300</span>
+                                <span id="price-bundle" class="pkg-price">RM 249</span>
+                                <span id="period-bundle" class="pkg-period">/month</span>
+                                <span id="save-bundle" class="save-badge">Save RM 789</span>
                             </div>
                         </div>
 
@@ -993,10 +949,11 @@
                             <h3 class="pkg-title">AI Powered</h3>
                             <p class="pkg-desc">Advanced automation & chatbots.</p>
                             
+                            <div class="setup-fee-tag">Setup Fee: RM 400</div>
                             <div class="price-display-area">
-                                <span id="price-ai" class="pkg-price">RM 299</span>
-                                <span class="pkg-period" id="period-ai">/month</span>
-                                <span id="save-ai" class="save-badge">Save RM 1,089</span>
+                                <span id="price-ai" class="pkg-price">RM 149</span>
+                                <span id="period-ai" class="pkg-period">/month</span>
+                                <span id="save-ai" class="save-badge">Save RM 389</span>
                             </div>
                         </div>
 
@@ -1016,10 +973,11 @@
                             <h3 class="pkg-title">Portal Standalone</h3>
                             <p class="pkg-desc">Internal portal for existing sites.</p>
                             
+                            <div class="setup-fee-tag">Setup Fee: RM 700</div>
                             <div class="price-display-area">
-                                <span id="price-portal" class="pkg-price">RM 499</span>
-                                <span class="pkg-period" id="period-portal">/month</span>
-                                <span id="save-portal" class="save-badge">Save RM 998</span>
+                                <span id="price-portal" class="pkg-price">RM 279</span>
+                                <span id="period-portal" class="pkg-period">/month</span>
+                                <span id="save-portal" class="save-badge">Save RM 749</span>
                             </div>
                         </div>
 
@@ -1061,6 +1019,14 @@
 
                     <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
                         <div style="display:flex; justify-content:space-between; font-size:0.95rem;">
+                            <span style="color: var(--text-secondary);">Setup Fee (One-time):</span>
+                            <span id="summary-setup" style="color: var(--accent-warn); font-weight: 600;">RM 0</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;">
+                            <span style="color: var(--text-secondary);">Recurring Price:</span>
+                            <span id="summary-recurring" style="color: white; font-weight: 600;">RM 0</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;">
                             <span style="color: var(--text-secondary);">Domain:</span>
                             <span id="summary-domain" style="color: white; font-weight: 600;">RM 0</span>
                         </div>
@@ -1078,7 +1044,7 @@
                     </div>
 
                     <div style="display:flex; justify-content:space-between; font-size: 1.5rem; font-weight: 800; color: white; border-top: 1px solid var(--border-glass); padding-top: 20px; margin-top: 20px;">
-                        <span>Total</span>
+                        <span>Total Due</span>
                         <span id="summary-final-total" style="color: var(--accent-primary);">RM 0</span>
                     </div>
                     <div id="deposit-note" style="text-align: right; font-size: 0.8rem; color: var(--accent-warn); margin-top: 10px; font-weight: 600;">
@@ -1192,7 +1158,7 @@
                     </div>
                     <h2 style="margin-bottom: 1rem;">Order Placed Successfully!</h2>
                     <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">
-                        Thank you for choosing DDNetwork One. We have received your order and payment details.<br>
+                        Thank you for choosing DDNetwork One (MY). We have received your order and payment details.<br>
                         Our team will review your order and contact you via WhatsApp/Email within 24 hours.
                     </p>
                     
@@ -1253,7 +1219,7 @@
                 <h2 style="margin-bottom: 0.5rem;">Danial Danish</h2>
                 <p style="color: var(--accent-primary); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1.5rem;">Founder & Lead Developer</p>
                 <p style="color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 1.5rem;">
-                    "My journey started with a curiosity for code. Today, DDNetwork One is result of years of experimentation, late-night coding sessions, and a genuine passion for helping local businesses succeed in digital age. I believe in simplicity, speed, and smart design."
+                    "My journey started with a curiosity for code. Today, DDNetwork One (MY) is result of years of experimentation, late-night coding sessions, and a genuine passion for helping local businesses succeed in digital age. I believe in simplicity, speed, and smart design."
                 </p>
                 <div style="display: flex; gap: 1rem;">
                     <a href="#" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-linkedin-fill"></i></a>
@@ -1417,7 +1383,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="copyright">&copy; 2025-2026 DDNetwork One. PG0572133-K All rights reserved.</p>
+                <p class="copyright">&copy; 2025-2026 DDNetwork One (MY). PG0572133-K All rights reserved.</p>
                 
                 <div class="mac-dock">
                     <a href="https://linkedin.com" target="_blank" class="dock-icon"><i class="ri-linkedin-fill"></i></a>
@@ -1427,6 +1393,78 @@
                 </div>
             </div>
         </footer>
+
+    <!-- UPDATED TERMS MODAL -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeTermsModal()">&times;</span>
+            <h2>Terms & Conditions</h2>
+            <div class="modal-text">
+                <p style="text-align:center; margin-bottom:2rem;">By accessing, engaging, or using any services provided by <strong>DDNetwork One</strong>, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms & Conditions.</p>
+
+                <h3>1. Scope of Services</h3>
+                <p>Services provided are limited to what is explicitly stated in selected package or written agreement.</p>
+                <p>Any work not listed (including additional pages, features, redesigns, or custom functions) is considered <strong>out of scope</strong> and will be quoted separately.</p>
+
+                <h3>2. One-Time Purchase Services</h3>
+                <p>One-time purchases include <strong>development and delivery only</strong>.</p>
+                <p>Updates, content changes, bug fixes, maintenance, and ongoing support are <strong>not included</strong>.</p>
+                <p>Any future changes will be charged separately.</p>
+
+                <h3>3. Subscription Services (Monthly / Yearly)</h3>
+                <p>Subscription plans cover <strong>maintenance, monitoring, and technical support</strong> within agreed scope.</p>
+                <p>Subscriptions do <strong>not</strong> include major redesigns, new features, or scope expansion.</p>
+                <p>Requests beyond original scope will require an additional quotation.</p>
+
+                <h3>4. Setup Fees</h3>
+                <p>Setup fees are <strong>one-time, non-refundable</strong> payments.</p>
+                <p>Setup fees cover initial development, configuration, integrations, testing, and deployment.</p>
+                <p>Work will only begin after setup fee has been fully paid.</p>
+
+                <h3>5. Payments & Billing</h3>
+                <p>All prices are stated in <strong>RM (MYR)</strong> unless otherwise specified.</p>
+                <p>Monthly plans are billed in advance on a recurring basis.</p>
+                <p>Yearly plans are billed in full upfront.</p>
+                <p>Late payments may result in suspension of services until payment is received.</p>
+
+                <h3>6. Revisions & Changes</h3>
+                <p>Minor revisions may be provided at DDNetwork One (MY)’s discretion.</p>
+                <p>Repeated revisions, content rewrites, or design changes are not included unless stated.</p>
+                <p>Additional changes will be billed separately.</p>
+
+                <h3>7. Client Responsibilities</h3>
+                <p>Clients are responsible for providing accurate content, images, and information.</p>
+                <p>Delays caused by missing content or approvals may affect delivery timelines.</p>
+                <p>DDNetwork One (MY) is not responsible for issues caused by third-party services or client-provided materials.</p>
+
+                <h3>8. Delivery Timeline</h3>
+                <p>Estimated timelines are provided as guidelines only.</p>
+                <p>Delays caused by client-side feedback, content submission, or external dependencies are not responsibility of DDNetwork One (MY).</p>
+
+                <h3>9. Intellectual Property</h3>
+                <p>Ownership of final website or system is transferred to client only after full payment is received.</p>
+                <p>DDNetwork One (MY) retains right to showcase completed projects for portfolio and promotional purposes unless otherwise agreed in writing.</p>
+
+                <h3>10. Termination</h3>
+                <p>DDNetwork One (MY) reserves right to terminate services if payments are overdue, terms are violated, or abusive behavior occurs.</p>
+                <p>No refunds will be issued for work already completed.</p>
+
+                <h3>11. Refund Policy</h3>
+                <p>All payments made are <strong>non-refundable</strong>, unless otherwise stated in writing.</p>
+                <p>Setup fees and completed work are strictly non-refundable.</p>
+
+                <h3>12. Limitation of Liability</h3>
+                <p>DDNetwork One (MY) shall not be held liable for loss of data, revenue, or business arising from use or inability to use services.</p>
+                <p>Clients are advised to maintain their own backups and business continuity plans.</p>
+
+                <h3>13. Changes to Terms</h3>
+                <p>DDNetwork One (MY) reserves right to update or modify these Terms & Conditions at any time.</p>
+                <p>Continued use of services constitutes acceptance of the updated terms.</p>
+                
+                <p style="margin-top: 3rem; font-weight: 700; text-align:center;">&copy; DDNetwork One (MY). All rights reserved.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- JAVASCRIPT -->
     <script>
@@ -1450,46 +1488,65 @@
             modalTitle.innerText = title;
             modalDesc.innerText = message;
             
-            // Reset Icon
             modalIconContainer.className = 'glass-modal-icon';
             modalIconContainer.innerHTML = '';
-
-            if (type === 'warning') {
-                modalIconContainer.classList.add('warning');
-                modalIconContainer.innerHTML = '<i class="ri-error-warning-line"></i>';
-            } else if (type === 'success') {
-                modalIconContainer.classList.add('success');
-                modalIconContainer.innerHTML = '<i class="ri-checkbox-circle-line"></i>';
-            }
+            if (type === 'warning') { modalIconContainer.classList.add('warning'); modalIconContainer.innerHTML = '<i class="ri-error-warning-line"></i>'; } 
+            else if (type === 'success') { modalIconContainer.classList.add('success'); modalIconContainer.innerHTML = '<i class="ri-checkbox-circle-line"></i>'; }
 
             modalBtn.innerText = btnText;
-            
-            // Handle button click
             modalBtn.onclick = () => {
                 modalOverlay.classList.remove('active');
                 setTimeout(() => { modalOverlay.style.display = 'none'; }, 300);
                 if (btnCallback) btnCallback();
             };
-
             modalOverlay.style.display = 'flex';
-            // Small delay to allow display flex to apply before adding opacity class
-            requestAnimationFrame(() => {
-                modalOverlay.classList.add('active');
-            });
+            requestAnimationFrame(() => { modalOverlay.classList.add('active'); });
         }
 
         // ==========================================
         // PRICING DATA & TOGGLE LOGIC
         // ==========================================
         const PRICING_DATA = {
-            html: { monthly: 39, yearly: 199, save: 269, desc: "1 Static Page, Mobile Responsive, Basic SEO, Contact Form." },
-            frontend: { monthly: 129, yearly: 799, save: 749, desc: "Up to 5 Pages, Animations, Integrations, Free Domain." },
-            bundle: { monthly: 399, yearly: 2499, save: 1300, desc: "Front-End Website + Internal Portal + Enterprise Support." },
-            ai: { monthly: 299, yearly: 1499, save: 1089, desc: "Everything in Front-End + AI Chatbot + Priority Support." },
-            portal: { monthly: 499, yearly: 2999, save: 998, desc: "Multi-User Portal, Database, Dashboards, Workflow Automation." }
+            html: { 
+                oneTime: 249, 
+                setupFee: 80, 
+                monthly: 39, 
+                yearly: 199, 
+                saveYearly: 269, 
+                desc: "1 Static Page, Mobile Responsive, Basic SEO, Contact Form." 
+            },
+            frontend: { 
+                setupFee: 200, 
+                monthly: 99, 
+                yearly: 699, 
+                saveYearly: 489, 
+                desc: "Up to 5 Pages, Animations, Integrations, Free Domain." 
+            },
+            bundle: { 
+                setupFee: 700, 
+                monthly: 249, 
+                yearly: 2199, 
+                saveYearly: 789, 
+                desc: "Front-End Website + Internal Portal + Enterprise Support." 
+            },
+            ai: { 
+                setupFee: 400, 
+                monthly: 149, 
+                yearly: 1399, 
+                saveYearly: 389, 
+                desc: "Everything in Front-End + AI Chatbot + Priority Support." 
+            },
+            portal: { 
+                setupFee: 700, 
+                monthly: 279, 
+                yearly: 2599, 
+                saveYearly: 749, 
+                desc: "Multi-User Portal, Database, Dashboards, Workflow Automation." 
+            }
         };
 
         let billingCycle = 'monthly'; 
+        let htmlMode = 'onetime'; // 'onetime' or 'sub'
 
         function setBilling(cycle) {
             billingCycle = cycle;
@@ -1502,6 +1559,28 @@
         function toggleBilling() {
             const toggle = document.getElementById('billing-toggle');
             billingCycle = toggle.checked ? 'yearly' : 'monthly';
+            updatePricingUI();
+        }
+
+        function setHtmlMode(mode) {
+            htmlMode = mode;
+            // Visual Toggle
+            const btnOnetime = document.getElementById('html-btn-onetime');
+            const btnSub = document.getElementById('html-btn-sub');
+            const setupDisplay = document.getElementById('html-setup-display');
+            const featSupport = document.getElementById('html-feat-support');
+
+            if (mode === 'onetime') {
+                btnOnetime.classList.add('active');
+                btnSub.classList.remove('active');
+                setupDisplay.classList.add('hidden');
+                featSupport.classList.add('hidden');
+            } else {
+                btnOnetime.classList.remove('active');
+                btnSub.classList.add('active');
+                setupDisplay.classList.remove('hidden');
+                featSupport.classList.remove('hidden');
+            }
             updatePricingUI();
         }
 
@@ -1519,21 +1598,40 @@
                 labelYearly.querySelector('.save-badge').classList.remove('show');
             }
 
+            // Update HTML Card
+            const priceHtml = document.getElementById('price-html');
+            const periodHtml = document.getElementById('period-html');
+            const saveHtml = document.getElementById('save-html');
+
+            if (priceHtml && periodHtml && saveHtml) {
+                if (htmlMode === 'onetime') {
+                    priceHtml.innerText = `RM 249`;
+                    periodHtml.innerText = '/one-time';
+                    saveHtml.classList.add('hidden');
+                } else {
+                    priceHtml.innerText = `RM ${PRICING_DATA.html[billingCycle]}`;
+                    periodHtml.innerText = `/${billingCycle === 'monthly' ? 'month' : 'year'}`;
+                    saveHtml.innerText = `Save RM ${PRICING_DATA.html.saveYearly}`;
+                    saveHtml.classList.remove('hidden');
+                }
+            }
+
+            // Update Other Cards
             for(const [key, data] of Object.entries(PRICING_DATA)) {
+                if(key === 'html') continue;
                 const priceEl = document.getElementById(`price-${key}`);
                 const periodEl = document.getElementById(`period-${key}`);
                 const saveEl = document.getElementById(`save-${key}`);
 
                 if(priceEl && periodEl && saveEl) {
-                    if(billingCycle === 'monthly') {
-                        priceEl.innerText = `RM ${data.monthly}`;
-                        periodEl.innerText = '/month';
-                        saveEl.classList.remove('show');
+                    priceEl.innerText = `RM ${data[billingCycle]}`;
+                    periodEl.innerText = `/${billingCycle === 'monthly' ? 'month' : 'year'}`;
+                    
+                    if(billingCycle === 'yearly') {
+                        saveEl.innerText = `Save RM ${data.saveYearly}`;
+                        saveEl.classList.remove('hidden');
                     } else {
-                        priceEl.innerText = `RM ${data.yearly}`;
-                        periodEl.innerText = '/year';
-                        saveEl.innerText = `Save RM ${data.save}`;
-                        saveEl.classList.add('show');
+                        saveEl.classList.add('hidden');
                     }
                 }
             }
@@ -1593,7 +1691,6 @@
                     targetSection.style.display = 'block'; 
                     void targetSection.offsetWidth; 
                     targetSection.classList.add('active');
-                    
                     if(targetSectionId === 'profile') loadProfilePageData();
                     if(targetSectionId === 'buynow' && auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
                     if(targetSectionId === 'updates' && auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
@@ -1708,7 +1805,7 @@
             db.collection("clients_portfolio").where("status", "==", true).onSnapshot((snapshot) => {
                 container.innerHTML = ''; 
                 if (snapshot.empty) {
-                    container.innerHTML = '<div class="text-center" style="grid-column: 1/-1; padding: 2rem; color: var(--text-tertiary);">No portfolio items available at moment.</div>';
+                    container.innerHTML = '<div class="text-center" style="grid-column:1/-1; padding: 2rem; color: var(--text-tertiary);">No portfolio items available at moment.</div>';
                     return;
                 }
                 snapshot.forEach((doc) => {
@@ -1748,9 +1845,20 @@
         const ADMIN_PHONE_NO = "60122600969"; 
         
         let state = {
-            packageType: null, packagePrice: 0, domainPrice: 0, maintenancePrice: 0,
-            discountRate: 0, discountFixed: 0, discountType: 'percent', discountCode: '',
-            domainType: 'sub', domainName: '', paymentMethodId: null, billingCycle: 'monthly'
+            packageType: null,
+            packagePrice: 0, // Recurring Price
+            setupFee: 0,
+            domainPrice: 0,
+            maintenancePrice: 0,
+            discountRate: 0,
+            discountFixed: 0,
+            discountType: 'percent',
+            discountCode: '',
+            domainType: 'sub',
+            domainName: '',
+            paymentMethodId: null,
+            billingCycle: 'monthly',
+            isOneTime: false // Specific for HTML
         };
 
         // ==========================================
@@ -1855,10 +1963,8 @@
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             if(!auth) return showToast("Firebase not configured", "error");
-            auth.signInWithEmailAndPassword(email, password).then(() => {
-                showToast("Login Successful!", "success");
-                navigateTo('/');
-            }).catch((error) => showToast(error.message, "error"));
+            auth.signInWithEmailAndPassword(email, password).then(() => { showToast("Login Successful!", "success"); navigateTo('/'); })
+            .catch((error) => showToast(error.message, "error"));
         }
 
         function handleSignup(e) {
@@ -1940,7 +2046,7 @@
             if(!db) return `#Ticket-${Math.floor(1000 + Math.random() * 9000)}`;
             try {
                 const snapshot = await db.collection("tickets").where("ticketId", "!=", null).orderBy("ticketId", "desc").limit(1).get();
-                let nextNumber = 1;
+                let nextNumber =1;
                 if (!snapshot.empty) {
                     const lastTicket = snapshot.docs[0].data();
                     const parts = lastTicket.ticketId.split('-');
@@ -2035,24 +2141,45 @@
 
         function selectPackage(name, type) {
             state.packageType = type;
-            state.packagePrice = 0; 
-            state.billingCycle = billingCycle; 
+            state.packagePrice = 0;
+            state.setupFee = 0;
+            state.billingCycle = billingCycle;
+            state.isOneTime = (type === 'html' && htmlMode === 'onetime');
+
             document.getElementById('summary-pkg-name').innerText = name;
             const priceArea = document.getElementById('dynamic-price-area');
             priceArea.innerHTML = ''; 
 
             let basePrice = 0;
             let desc = "";
+            let setupFee = 0;
 
             if(PRICING_DATA[type]) {
-                basePrice = billingCycle === 'monthly' ? PRICING_DATA[type].monthly : PRICING_DATA[type].yearly;
-                desc = PRICING_DATA[type].desc;
+                if (state.isOneTime) {
+                    basePrice = PRICING_DATA[type].oneTime;
+                    desc = "One-time purchase. No support.";
+                } else {
+                    basePrice = billingCycle === 'monthly' ? PRICING_DATA[type].monthly : PRICING_DATA[type].yearly;
+                    setupFee = PRICING_DATA[type].setupFee;
+                    desc = PRICING_DATA[type].desc;
+                }
             }
             state.packagePrice = basePrice;
-            document.getElementById('summary-pkg-desc').innerText = desc;
-            if (type === 'ai' || type === 'portal') { priceArea.innerHTML = `<div style="padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; color:#a1a1aa; text-align:center;">${billingCycle === 'monthly' ? 'Monthly' : 'Yearly'} Quote: RM ${basePrice}</div>`; } 
-            else { priceArea.innerHTML = `<div style="text-align:right; font-weight:700; color:var(--accent-primary);">Price: RM ${basePrice} (${billingCycle})</div>`; }
+            state.setupFee = setupFee;
 
+            // Display Logic
+            document.getElementById('summary-pkg-desc').innerText = desc;
+            let priceHTML = '';
+            if (state.isOneTime) {
+                priceHTML = `<div style="text-align:right; font-weight:700; color:var(--accent-primary);">Price: RM ${basePrice}</div>`;
+            } else if (type === 'ai' || type === 'portal') {
+                priceHTML = `<div style="padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; color:#a1a1aa; text-align:center;">${billingCycle === 'monthly' ? 'Monthly' : 'Yearly'} Quote: RM ${basePrice}</div>`;
+            } else {
+                priceHTML = `<div style="text-align:right; font-weight:700; color:var(--accent-primary);">Price: RM ${basePrice} (${billingCycle})</div>`;
+            }
+            priceArea.innerHTML = priceHTML;
+
+            // Defaults
             state.domainType = 'sub'; state.domainPrice = 55; state.maintenancePrice = 0;
             state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
             document.getElementById('payment-method-select').value = ""; document.getElementById('terms-check').checked = false;
@@ -2162,14 +2289,15 @@
         }
 
         function updateTotal() {
-            let subtotal = state.packagePrice; 
-            subtotal += state.maintenancePrice;
+            let subtotal = state.packagePrice + state.setupFee + state.maintenancePrice;
             if(state.domainType === 'sub') subtotal += state.domainPrice;
             let discountAmt = 0;
             if(state.discountType === 'fixed') discountAmt = state.discountFixed;
             else discountAmt = subtotal * state.discountRate;
             const finalTotal = Math.max(0, Math.round(subtotal - discountAmt));
             document.getElementById('summary-final-total').innerText = `RM ${finalTotal}`;
+            document.getElementById('summary-recurring').innerText = `RM ${state.packagePrice} / ${state.billingCycle}`;
+            document.getElementById('summary-setup').innerText = state.setupFee > 0 ? `RM ${state.setupFee}` : 'RM 0';
             document.getElementById('deposit-note').innerText = `Deposit Required (50%): RM ${Math.round(finalTotal / 2)}`;
         }
 
@@ -2249,7 +2377,6 @@
             const select = document.getElementById('payment-method-select');
             const methodId = select.value;
 
-            // GLASSMORPHIC VALIDATION
             if(!methodId) {
                 showGlassModal("Payment Method Required", "Please select a payment method from the dropdown list before proceeding.", "warning", "Select Method");
                 return;
@@ -2272,17 +2399,27 @@
             tempClose.onclick = () => { overlay.style.display = 'none'; };
             overlay.appendChild(tempClose);
 
-            setTimeout(() => { window.open(selectedMethod.link, '_blank'); }, 500);
+            setTimeout(() => { window.open(selectedMethod.link, '_blank'); },500);
         }
 
         function openTermsModal() {
-            showGlassModal("Terms & Conditions", "By accessing, engaging, or using any services provided by DDNetwork One, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms & Conditions.", "info", "I Understand");
+            document.getElementById('termsModal').classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').classList.remove("open");
+            document.body.style.overflow = "auto";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('termsModal');
+            if (event.target == modal) closeTermsModal();
         }
 
         function submitOrder() {
             const termsCheck = document.getElementById('terms-check');
             
-            // GLASSMORPHIC VALIDATION
             if(!termsCheck.checked) {
                 showGlassModal("Agreement Required", "Please agree to the Terms & Conditions to proceed with your order.", "warning", "I Agree", () => {
                     document.getElementById('terms-check').checked = true;
@@ -2306,7 +2443,7 @@
             
             overlay.style.display = 'flex';
             
-            // Success Animation inside glass overlay
+            // Success Animation
             msgEl.innerHTML = `<div style="margin-bottom:1rem; color:var(--accent-success); font-size:3rem;"><i class="ri-checkbox-circle-fill"></i></div> <div style="font-weight:700; font-size:1.5rem;">Order Successful</div>`;
 
             const methods = siteConfig.payment_methods && siteConfig.payment_methods.length > 0 ? siteConfig.payment_methods : DEFAULT_PAYMENT_METHODS;
@@ -2321,7 +2458,7 @@
             const orderData = {
                 customerName: name, customerPhone: phone, customerEmail: email, customerCompany: company || 'Individual', 
                 package: pkgName, domain: domain, maintenance: maint, total: total, promo: state.discountCode, 
-                paymentMethod: paymentLabel, billingCycle: state.billingCycle,
+                paymentMethod: paymentLabel, billingCycle: state.billingCycle, setupFee: state.setupFee,
                 status: "Pending", userId: auth.currentUser ? auth.currentUser.uid : null,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
@@ -2335,7 +2472,7 @@
             }
 
             setTimeout(() => {
-                msgEl.innerHTML = `Thank you for choosing DDNetwork One. We have received your order and payment details. Our team will review your order and contact you via WhatsApp or email within 24 hours.`;
+                msgEl.innerHTML = `Thank you for choosing DDNetwork One (MY). We have received your order and payment details. Our team will review your order and contact you via WhatsApp or email within 24 hours.`;
                 setTimeout(() => {
                     const voucherText = state.discountCode ? state.discountCode : "None";
                     const whatsappMessage = `Hi Admin Team,\nI have just placed a new order. Please find my details below:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nVoucher: ${voucherText}\nPlan: ${pkgName} (${state.billingCycle})\nPayment Type: ${paymentLabel}\n\nKindly let me know if any additional information is required.\nThank you.`;
@@ -2369,7 +2506,7 @@
             const homeSection = document.getElementById('home');
             if(!homeSection || !homeSection.classList.contains('active')) { return; }
 
-            rotation += 0.002;
+            rotation +=0.002;
             dots.forEach(dot => {
                 const rotX = dot.x * Math.cos(rotation) - dot.z * Math.sin(rotation);
                 const rotZ = dot.z * Math.cos(rotation) + dot.x * Math.sin(rotation);
