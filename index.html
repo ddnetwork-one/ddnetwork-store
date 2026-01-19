@@ -232,11 +232,11 @@
 
         /* --- HERO --- */
         .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 0; overflow: hidden; margin-top: -100px; }
-        #globe-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; pointer-events: none; opacity: 0.6; will-change: transform; }
-        .hero-glow { position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(0,0,0,0) 70%); transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
+        #globe-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1; pointer-events: none; opacity: 0.8; will-change: transform; }
+        /* Removed .hero-glow as requested */
         .hero-content { position: relative; z-index: 10; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
-        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom:1.5rem; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
-        .hero p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
+        .hero h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom:1.5rem; background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); text-shadow: 0 0 40px rgba(0,0,0,0.8); }
+        .hero p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
 
         /* --- GLASS CARDS & AUTH --- */
         .glass-card {
@@ -549,6 +549,7 @@
             overflow-x: auto;
             border: 1px solid var(--border-glass);
             border-radius: 12px;
+            background: rgba(255,255,255,0.02);
         }
         .history-table {
             width: 100%;
@@ -564,6 +565,7 @@
             text-transform: uppercase;
             font-size: 0.75rem;
             border-bottom: 1px solid var(--border-glass);
+            white-space: nowrap;
         }
         .history-table td {
             padding: 1rem;
@@ -773,7 +775,7 @@
         <!-- === PAGE: HOME === -->
         <section id="home" class="page-section active">
             <div class="hero">
-                <div class="hero-glow"></div>
+                <!-- Blue glow removed as requested. Canvas now handles the background. -->
                 <canvas id="globe-canvas" width="1200" height="1200"></canvas>
                 
                 <div class="hero-content">
@@ -832,10 +834,10 @@
                         </div>
                     </div>
 
-                    <!-- PURCHASE HISTORY SECTION -->
+                    <!-- PURCHASE HISTORY SECTION (UPDATED) -->
                     <div id="profile-history-section" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 2rem; text-align: left;">
                         <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main);">Purchase History</h3>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Track your previous orders and status.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Track your previous orders and status. Syncs automatically.</p>
                         <div class="history-table-container">
                             <table class="history-table">
                                 <thead>
@@ -847,7 +849,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="order-history-body">
-                                    <!-- Orders injected here -->
+                                    <!-- Orders injected here via JS -->
                                 </tbody>
                             </table>
                             <div id="no-orders-msg" class="text-center hidden" style="padding: 2rem; color: var(--text-tertiary);">No orders found.</div>
@@ -2171,6 +2173,7 @@
             container.style.display = 'block';
             tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>';
 
+            // Real-time listener
             db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(10)
                 .onSnapshot((snapshot) => {
                     tbody.innerHTML = '';
@@ -2828,16 +2831,17 @@
         }
 
         // ==========================================
-        // GLOBE ANIMATION (OPTIMIZED)
+        // EARTH + METEOR BACKGROUND ANIMATION (OPTIMIZED)
         // ==========================================
         const canvas = document.getElementById('globe-canvas');
         const ctx = canvas.getContext('2d');
         let dots = [];
+        let meteors = [];
         
         // PERFORMANCE OPTIMIZATION: Detect screen size for dot count
         // Use fewer dots on mobile to prevent lagging
-        const DOT_COUNT_DESKTOP = 700; // Reduced from 850
-        const DOT_COUNT_MOBILE = 350;  // Reduced significantly for mobile
+        const DOT_COUNT_DESKTOP = 700; 
+        const DOT_COUNT_MOBILE = 350;  
         let DOT_COUNT = window.innerWidth < 768 ? DOT_COUNT_MOBILE : DOT_COUNT_DESKTOP;
 
         const GLOBE_RADIUS = 380; 
@@ -2853,6 +2857,61 @@
             }
         }
 
+        // Meteor Class
+        class Meteor {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * 1200;
+                this.y = -100; // Start above canvas
+                this.len = Math.random() * 80 + 20;
+                this.speed = Math.random() * 5 + 5;
+                this.size = Math.random() * 2 + 0.5;
+                this.active = false;
+            }
+
+            spawn() {
+                this.reset();
+                this.active = true;
+                // Bias spawn towards top right quadrant for better composition
+                this.x = 800 + Math.random() * 400; 
+                this.y = -50 - Math.random() * 100;
+            }
+
+            update() {
+                if(!this.active) return;
+                this.x -= this.speed * 1.5; // Move left
+                this.y += this.speed;       // Move down
+
+                // Reset if out of bounds
+                if(this.y > 800 || this.x < -200) {
+                    this.active = false;
+                }
+            }
+
+            draw() {
+                if(!this.active) return;
+                // Create gradient trail
+                const gradient = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
+                gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+                gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+                
+                ctx.beginPath();
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = this.size;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + this.len, this.y - this.len); // Diagonal streak
+                ctx.stroke();
+            }
+        }
+
+        // Init Meteors
+        for(let i=0; i<5; i++) {
+            meteors.push(new Meteor());
+        }
+
         function animate() {
             // OPTIMIZATION: Stop rendering immediately if home section isn't active
             const homeSection = document.getElementById('home');
@@ -2863,6 +2922,30 @@
             // Clear Canvas
             ctx.clearRect(0,0, 1200, 1200); 
 
+            // Draw Stars (Background)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+            for(let i=0; i<50; i++) {
+                const sx = (Math.sin(i * 132 + 1) * 43758.5453) % 1200;
+                const sy = (Math.cos(i * 53 + 1) * 43758.5453) % 1200;
+                // Normalize negative coords
+                const finalX = sx < 0 ? -sx : sx;
+                const finalY = sy < 0 ? -sy : sy;
+                ctx.beginPath();
+                ctx.arc(finalX, finalY, Math.random() * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Update & Draw Meteors
+            if(Math.random() < 0.02) { // 2% chance per frame to spawn a meteor
+                const inactiveMeteor = meteors.find(m => !m.active);
+                if(inactiveMeteor) inactiveMeteor.spawn();
+            }
+            meteors.forEach(m => {
+                m.update();
+                m.draw();
+            });
+
+            // Draw Rotating Earth Globe
             rotation +=0.002;
             dots.forEach(dot => {
                 const rotX = dot.x * Math.cos(rotation) - dot.z * Math.sin(rotation);
@@ -2872,7 +2955,9 @@
                     const scale = 800 / (800 + rotZ); 
                     const x = 600 + rotX * scale; const y = 600 + dot.y * scale;
                     ctx.beginPath(); ctx.arc(x, y,1.5 * scale, 0, Math.PI *2);
-                    ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill();
+                    // Change color to cyan/teal to look like "Digital Earth"
+                    ctx.fillStyle = `rgba(56, 189, 248, ${alpha})`; 
+                    ctx.fill();
                 }
             });
             animationId = requestAnimationFrame(animate);
