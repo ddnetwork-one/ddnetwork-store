@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic Title handled by JS -->
     <title>DDNetwork One</title>
     
     <!-- Favicon -->
@@ -436,6 +437,21 @@
         .btn.disabled {
             background: rgba(0,0,0,0.05) !important; color: rgba(0,0,0,0.2) !important;
             border-color: rgba(0,0,0,0.05) !important; cursor: not-allowed !important;
+        }
+
+        /* --- GOOGLE BUTTON STYLE --- */
+        .btn-google {
+            background: white; 
+            color: var(--text-main); 
+            border: 1px solid var(--border-glass);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-google i { color: #DB4437; font-size: 1.2rem; }
+        .btn-google:hover { 
+            background: #f8fafc; 
+            border-color: #cbd5e1; 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         /* --- FORM ELEMENTS --- */
@@ -1164,6 +1180,16 @@
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
                     </form>
                     
+                    <div style="margin: 1.5rem 0; display: flex; align-items: center; gap: 10px;">
+                        <div style="height: 1px; background: var(--border-glass); flex: 1;"></div>
+                        <span style="color: var(--text-tertiary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Or</span>
+                        <div style="height: 1px; background: var(--border-glass); flex: 1;"></div>
+                    </div>
+
+                    <button type="button" class="btn btn-google" style="width: 100%;" onclick="handleGoogleAuth()">
+                        <i class="ri-google-fill"></i> Continue with Google
+                    </button>
+                    
                     <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
                         Don't have an account? <span class="auth-link" onclick="navigateTo('/signup')">Sign Up</span>
                     </div>
@@ -1220,6 +1246,16 @@
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
                     </form>
+
+                    <div style="margin: 1.5rem 0; display: flex; align-items: center; gap: 10px;">
+                        <div style="height: 1px; background: var(--border-glass); flex: 1;"></div>
+                        <span style="color: var(--text-tertiary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Or</span>
+                        <div style="height: 1px; background: var(--border-glass); flex: 1;"></div>
+                    </div>
+
+                    <button type="button" class="btn btn-google" style="width: 100%;" onclick="handleGoogleAuth()">
+                        <i class="ri-google-fill"></i> Sign up with Google
+                    </button>
                     
                     <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
                         Already have an account? <span class="auth-link" onclick="navigateTo('/login')">Login</span>
@@ -1943,6 +1979,32 @@
         });
 
         // ==========================================
+        // SEO TITLES CONFIGURATION
+        // ==========================================
+        const PAGE_TITLES = {
+            '/': 'DDNetwork One | Malaysia Web Solutions',
+            '/pricing': 'Pricing Packages | DDNetwork One',
+            '/reviews': 'Client Reviews | DDNetwork One',
+            '/order': 'Secure Checkout | DDNetwork One',
+            '/clients': 'Portfolio & Clients | DDNetwork One',
+            '/founder-danialdanish': 'Founder | DDNetwork One',
+            '/login': 'Login | DDNetwork One',
+            '/signup': 'Sign Up | DDNetwork One',
+            '/profile': 'User Profile | DDNetwork One',
+            '/profile-website-describe': 'Describe Website Idea | DDNetwork One',
+            '/helpdesk': 'Support Helpdesk | DDNetwork One',
+            '/contact': 'Contact Us | DDNetwork One',
+            '/forgot-password': 'Reset Password | DDNetwork One',
+            '/thank-you': 'Order Successful | DDNetwork One',
+            '/updates': 'Customer Requests | DDNetwork One'
+        };
+
+        function updatePageTitle(path) {
+            const title = PAGE_TITLES[path] || 'DDNetwork One';
+            document.title = title;
+        }
+
+        // ==========================================
         // GLASSMORPHIC NOTIFICATION MODAL
         // ==========================================
         const modalOverlay = document.getElementById('glass-modal-overlay');
@@ -2134,18 +2196,32 @@
         function navigateTo(path) {
             const sectionId = routes[path];
             if (!sectionId) return;
+            
+            // Update URL without reloading
             window.history.pushState({ path: path }, "", path);
+            
+            // Update Title
+            updatePageTitle(path);
+
             performTransition(sectionId);
         }
 
         window.addEventListener('popstate', (event) => {
-            if (event.state && event.state.path) performTransition(routes[event.state.path]);
-            else performTransition(routes[window.location.pathname] || 'home');
+            if (event.state && event.state.path) {
+                performTransition(routes[event.state.path]);
+                updatePageTitle(event.state.path);
+            }
+            else {
+                const path = window.location.pathname;
+                performTransition(routes[path] || 'home');
+                updatePageTitle(path);
+            }
         });
 
         function handleInitialRoute() {
             const path = window.location.pathname;
             performTransition(routes[path] || 'home', true);
+            updatePageTitle(path);
         }
 
         function performTransition(targetSectionId, isInstant = false) {
@@ -2535,8 +2611,40 @@
 
 
         // ==========================================
-        // AUTH & USER DATA
+        // AUTH & USER DATA (WITH GOOGLE SUPPORT)
         // ==========================================
+        
+        // Google Auth Handler
+        function handleGoogleAuth() {
+            if(!auth) return showToast("Auth not initialized", "error");
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                // Check if user doc exists in Firestore
+                db.collection("users").doc(user.uid).get().then((doc) => {
+                    if (!doc.exists) {
+                        // New user, create doc
+                        // Since Google doesn't provide phone number by default, we leave it empty
+                        // We'll prompt them later
+                        return db.collection("users").doc(user.uid).set({
+                            name: user.displayName || 'Google User',
+                            email: user.email,
+                            phone: '', 
+                            role: 'user',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    }
+                }).then(() => {
+                    showToast("Login Successful!", "success");
+                    navigateTo('/');
+                });
+            }).catch((error) => {
+                console.error(error);
+                showToast("Google Login Failed: " + error.message, "error");
+            });
+        }
+
         if(auth) {
             auth.onAuthStateChanged((user) => {
                 if (user) {
@@ -2548,6 +2656,15 @@
                             if(data.personalVoucher) { currentUserPersonalVoucher = data.personalVoucher; showVoucherCard(data.personalVoucher); } 
                             else { currentUserPersonalVoucher = null; hideVoucherCard(); }
                             fetchAndSyncUserData(user.uid);
+                            
+                            // Check if user profile is incomplete (specifically phone number for new Google users)
+                            if(!data.phone) {
+                                showToast("Please complete your profile (Phone Number).", "warning");
+                                // Only redirect if not already on profile page
+                                if(window.location.pathname !== '/profile') {
+                                    setTimeout(() => navigateTo('/profile'), 1000);
+                                }
+                            }
                         }
                     });
                 } else {
@@ -2840,7 +2957,7 @@
                         const data = doc.data();
                         const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
                         const item = document.createElement('div');
-                        item.className = 'glass-card'; item.style.padding = '1rem'; item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
+                        item.className = 'glass-card'; item.style.padding = '1rem';                         item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
                         item.innerHTML = `<div><div style="color:var(--text-main); font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background:${data.status==='Open'?'#fffbeb':'#ecfdf5'}; color:${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div></div>`;
                         listContainer.appendChild(item);
                     });
@@ -3154,7 +3271,8 @@
                 requestData.details = document.getElementById('req-desc-upgrade').value;
             } else if (type === 'renew') {
                 requestData.plan = document.getElementById('req-renew-plan').value;
-                requestData.duration = document.getElementById('req-renew-duration').value;
+                // requestData.duration was missing in original HTML, adding fallback logic
+                requestData.duration = "1 Year"; 
             } else if (type === 'remove') { requestData.details = document.getElementById('req-desc-remove').value; }
 
             db.collection("customer_requests").add(requestData).then(() => {
