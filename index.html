@@ -694,7 +694,6 @@
 
         /* =========================================
            UPDATED: ADVANCED DUAL ROW MARQUEE
-           (TOUCH OPTIMIZED - NO PAUSE ON SWIPE)
            ========================================= */
         .reviews-marquee-section {
             padding: 3rem 0;
@@ -713,47 +712,15 @@
             /* Fade edges */
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            
-            /* Critical: Disable pointer events on the track to prevent 'sticking' on touch */
-            pointer-events: none;
+            /* DISABLE TOUCH PAUSING ON MOBILE */
+            touch-action: none; 
         }
 
-        /* Re-enable pointer events ONLY for the individual cards 
-           so users can still click links if they had them, 
-           BUT the cards themselves do not trigger the pause */
-        .review-card-marquee {
-            background: white;
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 1.5rem;
-            width: 320px;
-            flex-shrink: 0; /* Critical for marquee */
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.3s, box-shadow 0.3s;
-            
-            /* Allow clicks on the card content */
-            pointer-events: auto;
-        }
-        
-        /* Update: Disable the :hover pause on touch devices only via Media Query */
-        @media (hover: none) and (pointer: coarse) {
-            .marquee-row:hover .marquee-track {
-                animation-play-state: running !important;
-            }
-        }
-        
-        /* Original hover behavior (Desktop only) */
-        @media (hover: hover) {
-            .marquee-row:hover .marquee-track {
-                animation-play-state: paused;
-            }
-        }
-
-        /* Animation classes */
         .marquee-track {
             display: flex;
             gap: 2rem;
-            /* Animation applied dynamically via CSS classes */
+            /* DISABLE TOUCH PAUSING ON MOBILE */
+            touch-action: none; 
         }
 
         /* Animation for Row 1 (Left to Right) */
@@ -766,6 +733,8 @@
             animation: scrollLeft 50s linear infinite;
         }
 
+        /* NOTE: Hover pause logic has been completely removed. */
+        
         @keyframes scrollLeft {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -775,10 +744,21 @@
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0); }
         }
-        
-        /* Keep original card hover effects */
+
+        .review-card-marquee {
+            background: white;
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 1.5rem;
+            width: 320px;
+            flex-shrink: 0; /* Critical for marquee */
+            box-shadow: var(--shadow-sm);
+            /* Removed hover transform to prevent accidental stopping on desktop */
+            /* transition: transform 0.3s, box-shadow 0.3s; */
+        }
         .review-card-marquee:hover {
-            transform: translateY(-5px);
+            /* Removed hover transform effect */
+            /* transform: translateY(-5px); */
             box-shadow: var(--shadow-card-hover);
             border-color: var(--soft-black);
         }
