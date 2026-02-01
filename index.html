@@ -1121,14 +1121,14 @@
                 <div class="container" style="overflow: hidden;">
                     <!-- Row 1 Left -->
                     <div class="marquee-row" id="trust-marquee-row-1">
-                        <div class="trust-item"><i class="ri-check-double-line"></i> Trusted by 50+ Clients</div>
+                        <div class="trust-item"><i class="ri-check-double-line"></i> Trusted by 100+ Clients</div>
                         <div class="trust-item"><i class="ri-global-line"></i> Global Standard Hosting</div>
                         <div class="trust-item"><i class="ri-rocket-line"></i> Fast Delivery Guaranteed</div>
                         <div class="trust-item"><i class="ri-shield-check-line"></i> Secure Payment Gateway</div>
                         <div class="trust-item"><i class="ri-customer-service-2-line"></i> 24/7 Technical Support</div>
                         <div class="trust-item"><i class="ri-star-s-fill"></i> 5-Star Rated Services</div>
                         <!-- Duplicate for smooth loop -->
-                        <div class="trust-item"><i class="ri-check-double-line"></i> Trusted by 50+ Clients</div>
+                        <div class="trust-item"><i class="ri-check-double-line"></i> Trusted by 100+ Clients</div>
                         <div class="trust-item"><i class="ri-global-line"></i> Global Standard Hosting</div>
                         <div class="trust-item"><i class="ri-rocket-line"></i> Fast Delivery Guaranteed</div>
                         <div class="trust-item"><i class="ri-shield-check-line"></i> Secure Payment Gateway</div>
@@ -1983,21 +1983,23 @@
                     <h2 style="margin-bottom: 1rem;">Get In Touch</h2>
                     <p style="color: var(--text-secondary); margin-bottom: 2rem;">Have a custom project in mind? Send us a direct message.</p>
                     
-                    <form style="text-align: left;">
+                    <!-- Added onsubmit="handleContactSubmit(event)" and IDs to inputs -->
+                    <form style="text-align: left;" onsubmit="handleContactSubmit(event)">
                         <div class="form-group">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-input" placeholder="Your Name">
+                            <input type="text" id="contact-name" class="form-input" placeholder="Your Name">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-input" placeholder="hello@example.com">
+                            <input type="email" id="contact-email" class="form-input" placeholder="hello@example.com">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Message</label>
-                            <textarea rows="4" class="form-input" placeholder="Tell us about your project..."></textarea>
+                            <textarea id="contact-message" rows="4" class="form-input" placeholder="Tell us about your project..."></textarea>
                         </div>
-                        <button class="btn btn-primary" style="width: 100%;">Send Message</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
                     </form>
+                    
                     <div style="margin-top: 3rem; border-top: 1px solid var(--border-glass); padding-top: 2rem;">
                         <p style="color: var(--text-main); font-weight: 700; margin-bottom: 0.5rem;">Email Us</p>
                         <a href="mailto:sales@ddnet.my" style="color: var(--soft-black); font-size: 1.2rem;">sales@ddnet.my</a>
@@ -3838,42 +3840,64 @@
         }
 
         // ==========================================
-        // HOME LEAD FORM
+        // CONTACT PAGE FORM SUBMISSION
         // ==========================================
-        function handleHomeLeadSubmit(e) {
+        function handleContactSubmit(e) {
             e.preventDefault();
-            const name = document.getElementById('lead-name').value;
-            const email = document.getElementById('lead-email').value;
-            const message = document.getElementById('lead-message').value;
+            
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const message = document.getElementById('contact-message').value;
 
-            if(!name || !email || !message) return showToast("Please fill in all fields.", "error");
+            if(!name || !email || !message) {
+                showToast("Please fill in all fields.", "error");
+                return;
+            }
 
+            // Visual feedback on button
             const btn = e.target.querySelector('button');
             const originalText = btn.innerText;
             btn.disabled = true;
             btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Sending...';
 
+            // Prepare data for Firestore
             const data = {
-                name, email, message, type: 'General Inquiry', status: 'Pending',
+                name: name, 
+                email: email, 
+                message: message, 
+                type: 'Contact Inquiry', // Identifies this as from the Contact Page
+                status: 'Pending',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                userId: auth.currentUser ? auth.currentUser.uid : null, source: 'Home Lead Form'
+                userId: auth.currentUser ? auth.currentUser.uid : null, 
+                source: 'Contact Page Form'
             };
 
             if(db) {
                 db.collection("customer_requests").add(data)
                     .then(() => {
-                        showToast("Message sent successfully!", "success");
+                        // SUCCESS
+                        // Shows the popup requested
+                        showToast("Thank you for your interest!", "success");
                         e.target.reset();
                         
-                        // Send WhatsApp notification too
-                        const waMsg = `New Home Lead!\nName: ${name}\nEmail: ${email}\nMsg: ${message}`;
-                        window.open(`https://wa.me/${ADMIN_PHONE_NO}?text=${encodeURIComponent(waMsg)}`, '_blank');
+                        // Optional: Send WhatsApp notification (similar to other forms)
+                        const waMsg = `New Contact Inquiry!\nName: ${name}\nEmail: ${email}\nMsg: ${message}`;
+                        // Uncomment the line below if you want WhatsApp notification
+                        // window.open(`https://wa.me/${ADMIN_PHONE_NO}?text=${encodeURIComponent(waMsg)}`, '_blank');
                     })
-                    .catch(err => { showToast("Failed to send message.", "error"); })
-                    .finally(() => { btn.disabled = false; btn.innerText = originalText; });
+                    .catch((error) => {
+                        console.error(error);
+                        showToast("Failed to send message. Please try again.", "error");
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        btn.disabled = false;
+                        btn.innerText = originalText;
+                    });
             } else {
-                showToast("System error.", "error");
-                btn.disabled = false; btn.innerText = originalText;
+                showToast("System offline. Please try again later.", "error");
+                btn.disabled = false;
+                btn.innerText = originalText;
             }
         }
 
