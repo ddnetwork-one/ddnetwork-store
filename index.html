@@ -77,7 +77,7 @@
             color: var(--text-main);
             font-family: var(--font-display);
             font-weight: 400;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             display: flex;
@@ -582,26 +582,41 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 3rem; /* Increased gap between top and bottom rows */
         }
 
-        /* Mask for fading edges */
+        /* Mask for fading edges - Updated to be wider and more subtle */
         .marquee-mask {
             width: 100%;
             overflow: hidden;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            /* Prevent vertical overflow issues on mobile */
+            padding: 10px 0; 
         }
 
         .marquee-track {
             display: flex;
             width: max-content;
-            gap: 2rem;
+            gap: 1.5rem; /* Gap between cards */
+            will-change: transform; /* Performance hint */
         }
 
-        /* TOP ROW: Moves Left -> Right (Actually implemented as moving from -50% to 0% with reversed content) */
+        /* Ensure cards don't squash */
+        .review-card-marquee {
+            flex: 0 0 auto; /* Critical for mobile layout */
+        }
+
+        /* 
+           Animation Logic:
+           To create a perfect infinite loop, we duplicate the content set 4 times.
+           We animate translateX from 0% to -25% (1/4 of the total width).
+           This ensures that when the animation resets to 0%, the content looks identical.
+        */
+        
+        /* TOP ROW: Moves Left -> Right */
         .track-top {
-            /* Content will be reversed in JS so that moving L->R works visually */
             animation: scroll-right 60s linear infinite; 
         }
 
@@ -613,47 +628,50 @@
         /* Keyframes */
         @keyframes scroll-left {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Moves half because content is duplicated */
+            100% { transform: translateX(-25%); } /* Moves 25% because we clone 3x (Total 4x) */
         }
 
         @keyframes scroll-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); } /* Moves from -50 to 0 = Right movement */
+            0% { transform: translateX(-25%); }
+            100% { transform: translateX(0); } /* Moves from -25% to 0 = Right movement */
         }
 
         /* Card Style for Marquee */
         .review-card-marquee {
-            background: white;
+            background: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
             border: 1px solid var(--border-glass);
-            border-radius: 16px;
+            border-top: 1px solid white;
+            border-radius: 20px;
             padding: 1.5rem;
-            width: 320px;
-            flex-shrink: 0;
+            width: 320px; /* Fixed width to ensure consistent layout */
             box-shadow: var(--shadow-sm);
-            transition: transform 0.3s, box-shadow 0.3s;
-            /* REMOVED hover pause: marquee-wrapper:hover .marquee-track { ... } */
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
-        /* Optional: Slight hover effect on the card itself, but doesn't stop the parent track */
+        /* Subtle hover effect */
         .review-card-marquee:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-8px) scale(1.02);
             box-shadow: var(--shadow-card-hover);
-            border-color: var(--soft-black);
-            z-index: 2;
+            border-color: rgba(30, 41, 59, 0.3);
+            background: white;
+            z-index: 10;
         }
 
         .review-header-marquee {
             display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
         }
         .review-avatar-marquee {
-            width: 48px; height: 48px; border-radius: 50%; background: #f1f5f9;
+            width: 48px; height: 48px; border-radius: 50%; background: #e2e8f0; /* Lighter grey */
             display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--soft-black);
-            font-size: 1.1rem; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1.1rem; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        .review-info-marquee h4 { font-size: 1rem; font-weight: 700; margin: 0; text-transform: none; }
-        .review-role-marquee { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 500; }
+        .review-info-marquee h4 { font-size: 1rem; font-weight: 700; margin: 0; text-transform: none; color: var(--text-main); }
+        .review-role-marquee { font-size: 0.75rem; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .review-stars-marquee { color: var(--accent-star); margin-bottom: 0.8rem; font-size: 0.85rem; letter-spacing: 1px; }
-        .review-text-marquee { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .review-text-marquee { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; font-style: italic; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* --- REVIEWS SECTION MIDDLE LAYOUT --- */
         .reviews-middle-container {
@@ -798,7 +816,9 @@
             .profile-details-grid { grid-template-columns: 1fr; gap: 1rem; }
             
             /* Mobile Marquee Tweaks */
-            .review-card-marquee { width: 280px; padding: 1rem; }
+            .review-card-marquee { width: 280px; padding: 1.2rem; }
+            .marquee-mask { mask-image: none; -webkit-mask-image: none; } /* Remove fade mask on small mobile for better visibility */
+            .reviews-marquee-section { padding: 1rem 0; }
         }
 
     </style>
@@ -2307,7 +2327,7 @@
 
             setTimeout(() => {
                 if (targetSection) {
-                    targetSection.style.display = 'block'; 
+                    targetSection.style.display = block; 
                     void targetSection.offsetWidth; 
                     targetSection.classList.add('active');
                     if(targetSectionId === 'profile') loadProfilePageData();
@@ -2671,37 +2691,37 @@
 
                 // --- HANDLE MARQUEES ---
 
+                // To ensure a seamless infinite loop without JS glitching on wide screens,
+                // we will repeat the content set 3 times (Original + Clone 1 + Clone 2 + Clone 3).
+                // Total 4 sets. Animation goes from 0% to -25%.
+                // This guarantees enough width for desktop and mobile landscape.
+
+                const createInfiniteLoopContent = (array, isReversed = false) => {
+                    // Clone array 3 times (total 4 copies)
+                    let sourceArray = isReversed ? [...array].reverse() : array;
+                    const finalSet = [...sourceArray, ...sourceArray, ...sourceArray, ...sourceArray];
+                    return finalSet.join('');
+                };
+
                 // A. Home Page Marquee (Standard Left to Right)
+                // For Home, we just need it to move smoothly.
                 if (cardsArray.length > 0) {
-                    const content = cardsArray.join('') + cardsArray.join(''); // Duplicate for loop
-                    if(homeTrack) homeTrack.innerHTML = content;
+                    const homeContent = createInfiniteLoopContent(cardsArray, false);
+                    if(homeTrack) homeTrack.innerHTML = homeContent;
                 }
 
-                // B. Reviews Page: Top Row (Moves L -> R) & Bottom Row (Moves R -> L)
+                // B. Reviews Page: Top Row (Moves L -> R) & Bottom Row (Moves R -> Left)
                 if (cardsArray.length > 0) {
-                    // For infinite loop to look good, we need enough width.
-                    // Let's create a string containing the set twice or three times depending on width.
-                    // Ideally 3 times.
-                    const singleSet = cardsArray.join('');
-                    const loopContent = singleSet + singleSet + singleSet;
-
-                    // Top Row: Use standard content. Animation 'scroll-right' handles direction.
-                    // BUT visually, to move Left->Right using 'scroll-right' (which moves from -50% to 0),
-                    // we just put the content in. If we want them to appear at different starting points, 
-                    // we can reverse the array for one track.
-                    
+                    // Top Row (Moves L -> R): We want it to look like it's coming from left.
+                    // The CSS animation 'scroll-right' moves from -25% to 0.
                     if(topTrack) {
-                        topTrack.innerHTML = loopContent;
+                        topTrack.innerHTML = createInfiniteLoopContent(cardsArray, false);
                     }
 
+                    // Bottom Row (Moves R -> Left)
                     if(bottomTrack) {
-                        // Bottom Row: We can use the reversed content for visual variety
-                        // Reverse array
-                        const reversedArray = [...cardsArray].reverse();
-                        const reversedSet = reversedArray.join('');
-                        const reversedLoop = reversedSet + reversedSet + reversedSet;
-                        
-                        bottomTrack.innerHTML = reversedLoop;
+                        // Reverse content for visual variety
+                        bottomTrack.innerHTML = createInfiniteLoopContent(cardsArray, true);
                     }
                 }
             });
