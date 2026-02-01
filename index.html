@@ -693,7 +693,7 @@
         .status-cancelled { background: #fef2f2; color: #ef4444; }
 
         /* =========================================
-           UPDATED: ADVANCED DUAL ROW MARQUEE
+           UPDATED: MOBILE OPTIMIZED DUAL ROW MARQUEE
            ========================================= */
         .reviews-marquee-section {
             padding: 3rem 0;
@@ -701,7 +701,7 @@
             background: linear-gradient(to right, rgba(255,255,255,0), rgba(241, 245, 249, 1), rgba(255,255,255,0));
             display: flex;
             flex-direction: column; /* Stack rows */
-            gap: 2rem; /* Space between rows */
+            gap: 0.5rem; /* REDUCED GAP for mobile visibility */
         }
 
         .marquee-row {
@@ -710,17 +710,16 @@
             display: flex;
             position: relative;
             /* Fade edges */
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            /* DISABLE TOUCH PAUSING ON MOBILE */
-            touch-action: none; 
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            touch-action: none; /* Prevents mobile scrolling hijack */
         }
 
         .marquee-track {
             display: flex;
-            gap: 2rem;
-            /* DISABLE TOUCH PAUSING ON MOBILE */
-            touch-action: none; 
+            gap: 1.5rem;
+            width: max-content; /* Essential for marquee */
+            touch-action: none; /* Prevents mobile scrolling hijack */
         }
 
         /* Animation for Row 1 (Left to Right) */
@@ -749,32 +748,33 @@
             background: white;
             border: 1px solid var(--border-glass);
             border-radius: 16px;
-            padding: 1.5rem;
-            width: 320px;
+            padding: 1.2rem; /* Adjusted padding for mobile */
+            width: 300px; /* Slightly smaller width for mobile fit */
+            min-width: 280px; /* Prevent squishing */
+            min-height: 180px; /* Ensure height */
             flex-shrink: 0; /* Critical for marquee */
             box-shadow: var(--shadow-sm);
             /* Removed hover transform to prevent accidental stopping on desktop */
-            /* transition: transform 0.3s, box-shadow 0.3s; */
         }
         .review-card-marquee:hover {
             /* Removed hover transform effect */
-            /* transform: translateY(-5px); */
             box-shadow: var(--shadow-card-hover);
             border-color: var(--soft-black);
         }
+
         .review-header-marquee {
-            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;
         }
         .review-avatar-marquee {
-            width: 48px; height: 48px; border-radius: 50%; background: #f1f5f9;
+            width: 40px; height: 40px; border-radius: 50%; background: #f1f5f9;
             display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--soft-black);
-            font-size: 1.1rem; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 1rem; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-shrink: 0;
         }
-        .review-info-marquee h4 { font-size: 1rem; font-weight: 700; margin: 0; text-transform: none; }
-        .review-role-marquee { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 500; }
-        .review-stars-marquee { color: var(--accent-star); margin-bottom: 0.8rem; font-size: 0.85rem; letter-spacing: 1px; }
-        .review-text-marquee { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
+        .review-info-marquee h4 { font-size: 0.9rem; font-weight: 700; margin: 0; text-transform: none; }
+        .review-role-marquee { font-size: 0.75rem; color: var(--text-tertiary); font-weight: 500; }
+        .review-stars-marquee { color: var(--accent-star); margin-bottom: 0.6rem; font-size: 0.8rem; letter-spacing: 1px; }
+        .review-text-marquee { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; font-style: italic; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
 
         /* --- CUSTOMER REVIEWS GRID (STATIC ON REVIEWS PAGE) --- */
@@ -863,6 +863,9 @@
             .mac-dock { display: none; }
             .mobile-fab { bottom: 25px; right: 25px; }
             .toast-container { top: auto; bottom: 100px; right: 20px; left: 20px; }
+            
+            /* Marquee specific tweaks mobile */
+            .reviews-marquee-section { padding: 2rem 0; }
         }
 
         @media(max-width: 600px) {
@@ -897,7 +900,9 @@
             .review-avatar { width: 35px; height: 35px; font-size: 0.9rem; }
             
             /* Marquee tweaks mobile */
-            .review-card-marquee { width: 280px; padding: 1rem; }
+            .review-card-marquee { width: 280px; padding: 1rem; min-width: 260px; }
+            .review-header-marquee { gap: 0.5rem; }
+            .review-info-marquee h4 { font-size: 0.85rem; }
         }
 
     </style>
@@ -1094,14 +1099,14 @@
             <!-- === UPDATED DUAL ROW MARQUEE REVIEWS ON HOME === -->
             <div class="reviews-marquee-section">
                 <!-- Header -->
-                <div class="marquee-header" style="text-align: center; margin-bottom: 1.5rem;">
+                <div class="marquee-header" style="text-align: center; margin-bottom: 1rem;">
                     <h2>Client Stories <span style="color: var(--accent-star); font-size: 1.5rem; margin-left: 10px;">★★★★★</span></h2>
                 </div>
 
                 <!-- ROW 1: Left to Right -->
                 <div class="marquee-row">
                     <div class="marquee-track track-left-right" id="home-marquee-track-1">
-                        <div class="text-center" style="color:var(--text-tertiary); width: 100%;">Loading reviews...</div>
+                        <div class="text-center" style="color:var(--text-tertiary);">Loading reviews...</div>
                     </div>
                 </div>
 
@@ -3165,7 +3170,7 @@
             db.collection("tickets").where("ticketId", "==", caseId).get()
                 .then((snapshot) => {
                     listContainer.innerHTML = ''; 
-                    if (snapshot.empty) { listContainer.innerHTML = '<div style="text-align                    :center; color: #ef4444; padding: 1rem;">No ticket found with that Case ID.</div>'; return; }
+                    if (snapshot.empty) { listContainer.innerHTML = '<div style="text-align:center; color: #ef4444; padding: 1rem;">No ticket found with that Case ID.</div>'; return; }
                     snapshot.forEach((doc) => {
                         const data = doc.data();
                         const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
@@ -3498,7 +3503,6 @@
                     requestData.details = document.getElementById('req-desc-upgrade').value;
                 } else if (type === 'renew') {
                     requestData.plan = document.getElementById('req-renew-plan').value;
-                    // requestData.duration was missing in original HTML, adding fallback logic
                     requestData.duration = "1 Year"; 
                 } else if (type === 'remove') { requestData.details = document.getElementById('req-desc-remove').value; }
 
