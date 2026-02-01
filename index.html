@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Dynamic Title handled by JS -->
-    <title>Malaysia Custom Website | DDNetwork</title>
+    <title>DDNetwork One</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png">
@@ -27,32 +27,32 @@
     <style>
         /* --- CSS VARIABLES (PREMIUM GLASS & SOFT BLACK THEME) --- */
         :root {
-            /* Backgrounds */
-            --bg-deep: #f1f5f9;
+            /* Backgrounds: Premium Slate instead of Plain White */
+            --bg-deep: #f1f5f9; /* Slate 100 */
             --bg-surface: #ffffff;
             
-            /* Glass Effect */
+            /* Glass Effect: Frosted & Saturated */
             --bg-glass: rgba(255, 255, 255, 0.65); 
             --bg-glass-hover: rgba(255, 255, 255, 0.8);
-            --border-glass: rgba(30, 41, 59, 0.08);
-            --border-highlight: rgba(255, 255, 255, 0.5);
+            --border-glass: rgba(30, 41, 59, 0.08); /* Soft Black tint */
+            --border-highlight: rgba(255, 255, 255, 0.5); /* Light catch */
             
-            /* Text */
-            --text-main: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #94a3b8;
+            /* Text: Slate Grey */
+            --text-main: #0f172a; /* Slate 900 */
+            --text-secondary: #475569; /* Slate 600 */
+            --text-tertiary: #94a3b8; /* Slate 400 */
             
-            /* Accents */
-            --soft-black: #1e293b;
-            --soft-black-hover: #0f172a;
+            /* Accents: Soft Black */
+            --soft-black: #1e293b; /* Slate 800 */
+            --soft-black-hover: #0f172a; /* Slate 900 */
             --accent-glow: rgba(30, 41, 59, 0.15);
             
             /* Functional Colors */
             --accent-warn: #f59e0b;
             --accent-success: #10b981;
-            --accent-star: #fbbf24;
+            --accent-star: #fbbf24; /* Gold for reviews */
             
-            /* Shadows */
+            /* Shadows: Multi-layered for depth */
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
             --shadow-glass: 0 8px 30px rgba(30, 41, 59, 0.06);
             --shadow-card-hover: 0 20px 40px rgba(30, 41, 59, 0.1);
@@ -120,27 +120,16 @@
             display: flex; justify-content: center; align-items: center;
             transition: opacity 0.6s ease;
         }
-        .spinner-svg {
+        .spinner {
             width: 50px; height: 50px;
-            animation: rotate 2s linear infinite;
+            border: 3px solid rgba(30, 41, 59, 0.1);
+            border-left-color: var(--soft-black);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .spinner-circle {
-            stroke: var(--soft-black);
-            stroke-width: 4;
-            stroke-dasharray: 1, 200;
-            stroke-dashoffset: 0;
-            stroke-linecap: round;
-            animation: dash 1.5s ease-in-out infinite;
-            fill: none;
-        }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-        @keyframes dash {
-            0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }
-            50% { stroke-dasharray: 89, 200; stroke-dashoffset: -35px; }
-            100% { stroke-dasharray: 89, 200; stroke-dashoffset: -124px; }
-        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- HEADER --- */
+        /* --- HEADER (STICKY & PREMIUM) --- */
         header {
             position: fixed; 
             top: 20px; left: 50%; 
@@ -148,7 +137,7 @@
             width: calc(100% - 40px);
             max-width: 1200px;
             z-index: 2100;
-            background: rgba(255, 255, 255, 0.7); 
+            background: rgba(255, 255, 255, 0.7); /* More opaque */
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(255,255,255,0.6);
@@ -164,91 +153,191 @@
             will-change: top, background, height, border-radius, box-shadow;
         }
         
+        /* SCROLLED / STICKY STATE */
         header.scrolled {
-            top: 0; width: 100%; max-width: 100%; border-radius: 0; 
-            background: rgba(255, 255, 255, 0.95); 
-            border-bottom: 1px solid var(--border-glass); border-top: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 0 1rem; height: 60px;
+            top: 0; /* Snap to top */
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0; /* Flat at top */
+            background: rgba(255, 255, 255, 0.95); /* Almost solid */
+            border-bottom: 1px solid var(--border-glass);
+            border-top: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Tighter shadow */
+            padding: 0 1rem; /* Tighter padding on mobile sticky */
+            height: 60px; /* Slightly smaller */
         }
 
         .logo-wrapper { display: flex; align-items: center; gap: 12px; cursor: pointer; z-index: 2101; flex-shrink: 0; }
-        .logo-img { height: 35px; width: auto; display: block; object-fit: contain; } 
+        .logo-img { height: 35px; width: auto; display: block; object-fit: contain; } /* Slightly smaller logo for mobile */
         .company-name { font-size: 1.1rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; line-height: 1; white-space: nowrap; }
 
+        /* Desktop Navigation */
         .nav-desktop { display: none; gap: 2rem; align-items: center; }
         .nav-link-item { position: relative; font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); padding: 0.5rem 0; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
         .nav-link-item:hover, .nav-link-item.active { color: var(--soft-black); }
         .nav-link-item i { font-size: 1rem; transition: transform 0.3s; }
         .nav-link-item:hover i { transform: rotate(180deg); }
 
+        /* Dropdown Menu */
         .dropdown {
-            position: absolute; top: 140%; left: 50%;
+            position: absolute;
+            top: 140%; /* Slightly lower for hover clearance */
+            left: 50%;
             transform: translateX(-50%) translateY(10px);
-            background: white; min-width: 240px;
-            border-radius: 12px; padding: 0.5rem;
+            background: white; /* Solid white for menu readability */
+            min-width: 240px;
+            border-radius: 12px;
+            padding: 0.5rem;
             box-shadow: var(--shadow-dropdown);
             border: 1px solid var(--border-glass);
-            opacity: 0; visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2100;
         }
-        .nav-link-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .dropdown li a { display: block; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; color: var(--text-main); transition: all 0.2s; display: flex; align-items: center; }
+        .nav-link-item:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        .dropdown li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-main);
+            transition: all 0.2s;
+            display: flex; align-items: center;
+        }
         .dropdown li a i { margin-right: 10px; color: var(--text-tertiary); transition: color 0.2s; }
-        .dropdown li a:hover { background: #f8fafc; color: var(--soft-black); }
+        .dropdown li a:hover {
+            background: #f8fafc; 
+            color: var(--soft-black);
+        }
         .dropdown li a:hover i { color: var(--soft-black); }
 
+        /* Auth Buttons in Header */
         .auth-buttons { display: flex; gap: 10px; align-items: center; }
         .logout-btn { font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; transition: 0.2s; white-space: nowrap;}
         .logout-btn:hover { color: var(--soft-black); text-decoration: underline; }
         .admin-link { font-size: 1.1rem; color: var(--accent-warn); background: rgba(245, 158, 11, 0.1); padding: 6px; border-radius: 50%; transition: 0.2s; border: 1px solid rgba(245, 158, 11, 0.2); }
         .admin-link:hover { background: var(--accent-warn); color: white; transform: rotate(15deg) scale(1.1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.3); }
 
+        /* Mobile Toggle */
         .mobile-toggle { display: block; font-size: 1.5rem; cursor: pointer; color: var(--text-main); z-index: 2101; transition: transform 0.4s var(--ease-elastic); }
         .mobile-toggle.open { transform: rotate(90deg); }
 
+        /* DESKTOP MEDIA QUERY */
         @media(min-width: 992px) {
             .nav-desktop { display: flex; } 
             .mobile-toggle { display: none; }  
         }
 
-        /* --- MOBILE DRAWER --- */
+        /* --- MOBILE DRAWER (PROFESSIONAL ACCORDION STYLE) --- */
         .mobile-drawer-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(5px);
             z-index: 1999; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
         }
         .mobile-drawer-overlay.active { opacity: 1; pointer-events: all; }
 
         .mobile-drawer {
-            position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
-            background: var(--bg-surface); z-index: 2000;
+            position: fixed; top: 0; right: 0; width: 85%; max-width: 380px; height: 100vh;
+            background: var(--bg-surface);
+            z-index: 2000;
             display: flex; flex-direction: column; 
             transform: translateX(100%); transition: transform 0.5s var(--ease-smooth);
-            overflow-y: auto; 
+            overflow-y: auto; border-left: 1px solid var(--border-glass);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
-        @media(min-width: 768px) { .mobile-drawer { width: 500px; } }
         .mobile-drawer.open { transform: translateX(0); }
 
-        .mobile-nav-list { padding: 100px 0 40px; display: flex; flex-direction: column; }
-        .mobile-nav-item { border-bottom: 1px solid #f1f5f9; }
-        .mobile-nav-link {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1.5rem 2rem; font-size: 1.3rem; font-weight: 800;
-            color: var(--text-main); transition: background 0.2s; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1px;
+        /* Mobile Navigation Structure */
+        .mobile-nav-list {
+            padding: 100px 0 40px;
+            display: flex;
+            flex-direction: column;
         }
-        .mobile-nav-link:hover { background: #f8fafc; padding-left: 2.4rem; color: var(--soft-black); }
-        .mobile-nav-link i { color: var(--text-tertiary); transition: transform 0.3s; }
 
-        .mobile-submenu { max-height: 0; overflow: hidden; background: #fdfdfd; transition: max-height 0.4s ease-in-out; border-bottom: 1px solid #e2e8f0; }
-        .mobile-submenu.open { max-height: 500px; box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
-        .mobile-submenu a { display: flex; align-items: center; padding: 1.2rem 2rem 1.2rem 3.5rem; font-size: 1rem; font-weight: 600; color: var(--text-secondary); border-bottom: 1px dashed #f1f5f9; }
-        .mobile-submenu a i { margin-right: 15px; color: var(--accent-warn); font-size: 1.2rem; }
-        .mobile-submenu a:hover { background: #f1f5f9; color: var(--soft-black); padding-left: 3.7rem; }
-        .mobile-nav-header.active { background: #f8fafc; color: var(--soft-black); }
-        .mobile-nav-header.active i.ri-arrow-down-s-line { transform: rotate(180deg); }
-        .mobile-nav-header.active i { color: var(--soft-black); }
-        .mobile-auth-section { margin-top: auto; padding: 3rem 2rem; border-top: 1px solid var(--border-glass); background: #f8fafc; }
+        /* Top Level Link or Header */
+        .mobile-nav-item {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            transition: background 0.2s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .mobile-nav-link:hover {
+            background: #f8fafc;
+            padding-left: 2.2rem; /* Slight movement on hover */
+        }
+        .mobile-nav-link i {
+            color: var(--text-tertiary);
+            transition: transform 0.3s;
+        }
+
+        /* Accordion Submenu */
+        .mobile-submenu {
+            max-height: 0;
+            overflow: hidden;
+            background: #fdfdfd;
+            transition: max-height 0.3s ease-in-out;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .mobile-submenu.open {
+            max-height: 500px; /* Arbitrary large height for animation */
+            box-shadow: inset 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        
+        .mobile-submenu a {
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem 1rem 3rem; /* Indented */
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed #f1f5f9;
+        }
+        .mobile-submenu a i {
+            margin-right: 12px;
+            color: var(--accent-warn);
+            font-size: 1rem;
+        }
+        .mobile-submenu a:hover {
+            background: #f1f5f9;
+            color: var(--soft-black);
+        }
+
+        /* Active State for Dropdowns */
+        .mobile-nav-header.active {
+            background: #f8fafc;
+            color: var(--soft-black);
+        }
+        .mobile-nav-header.active i.ri-arrow-down-s-line {
+            transform: rotate(180deg);
+        }
+        .mobile-nav-header.active i {
+            color: var(--soft-black);
+        }
+
+        /* Mobile Auth Section at Bottom */
+        .mobile-auth-section {
+            margin-top: auto;
+            padding: 2rem;
+            border-top: 1px solid var(--border-glass);
+            background: #f8fafc;
+        }
 
         /* --- FAB --- */
         .mobile-fab {
@@ -309,7 +398,7 @@
         .profile-details-grid { display: grid; grid-template-columns:1fr 1fr; gap:1rem; }
         @media(max-width: 600px) { .profile-details-grid { grid-template-columns:1fr; } }
 
-        /* --- BUTTONS --- */
+        /* --- BUTTONS (SOFT BLACK FOCUS) --- */
         .btn {
             position: relative; display: inline-flex; align-items: center; justify-content: center;
             padding: 0.9rem 2rem; border-radius: 100px; cursor: pointer; overflow: hidden;
@@ -324,12 +413,16 @@
         }
         .btn:hover::before { left: 150%; }
 
+        /* The Requested Soft Black Button */
         .btn-primary { 
-            background: var(--soft-black); color: white; border: 1px solid var(--soft-black); 
+            background: var(--soft-black); 
+            color: white; 
+            border: 1px solid var(--soft-black); 
             box-shadow: 0 4px 15px rgba(30, 41, 59, 0.25);
         }
         .btn-primary:hover { 
-            background: var(--soft-black-hover); transform: translateY(-2px); 
+            background: var(--soft-black-hover); 
+            transform: translateY(-2px); 
             box-shadow: 0 10px 25px rgba(30, 41, 59, 0.3); 
         }
 
@@ -346,14 +439,18 @@
             border-color: rgba(0,0,0,0.05) !important; cursor: not-allowed !important;
         }
 
-        /* --- GOOGLE BUTTON --- */
+        /* --- GOOGLE BUTTON STYLE --- */
         .btn-google {
-            background: white; color: var(--text-main); border: 1px solid var(--border-glass);
+            background: white; 
+            color: var(--text-main); 
+            border: 1px solid var(--border-glass);
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .btn-google i { color: #DB4437; font-size: 1.2rem; }
         .btn-google:hover { 
-            background: #f8fafc; border-color: #cbd5e1; transform: translateY(-2px); 
+            background: #f8fafc; 
+            border-color: #cbd5e1; 
+            transform: translateY(-2px); 
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
@@ -568,125 +665,10 @@
         .status-paid { background: #f1f5f9; color: var(--soft-black); }
         .status-cancelled { background: #fef2f2; color: #ef4444; }
 
-        /* ==========================================
-           UPDATED MARQUEE REVIEWS STYLES
-           ========================================== */
-        .reviews-marquee-section {
-            padding: 2rem 0 4rem;
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
-
-        .marquee-wrapper {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        /* Mask for fading edges */
-        .marquee-mask {
-            width: 100%;
-            overflow: hidden;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            gap: 2rem;
-        }
-
-        /* TOP ROW: Moves Left -> Right (Actually implemented as moving from -50% to 0% with reversed content) */
-        .track-top {
-            /* Content will be reversed in JS so that moving L->R works visually */
-            animation: scroll-right 60s linear infinite; 
-        }
-
-        /* BOTTOM ROW: Moves Right -> Left */
-        .track-bottom {
-            animation: scroll-left 60s linear infinite;
-        }
-
-        /* Keyframes */
-        @keyframes scroll-left {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Moves half because content is duplicated */
-        }
-
-        @keyframes scroll-right {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); } /* Moves from -50 to 0 = Right movement */
-        }
-
-        /* Card Style for Marquee */
-        .review-card-marquee {
-            background: white;
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 1.5rem;
-            width: 320px;
-            flex-shrink: 0;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.3s, box-shadow 0.3s;
-            /* REMOVED hover pause: marquee-wrapper:hover .marquee-track { ... } */
-        }
-        
-        /* Optional: Slight hover effect on the card itself, but doesn't stop the parent track */
-        .review-card-marquee:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--shadow-card-hover);
-            border-color: var(--soft-black);
-            z-index: 2;
-        }
-
-        .review-header-marquee {
-            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
-        }
-        .review-avatar-marquee {
-            width: 48px; height: 48px; border-radius: 50%; background: #f1f5f9;
-            display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--soft-black);
-            font-size: 1.1rem; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .review-info-marquee h4 { font-size: 1rem; font-weight: 700; margin: 0; text-transform: none; }
-        .review-role-marquee { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 500; }
-        .review-stars-marquee { color: var(--accent-star); margin-bottom: 0.8rem; font-size: 0.85rem; letter-spacing: 1px; }
-        .review-text-marquee { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; font-style: italic; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-        /* --- REVIEWS SECTION MIDDLE LAYOUT --- */
-        .reviews-middle-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 20; /* Sit above marquee rows visually */
-        }
-
-        /* --- CUSTOMER REVIEWS GRID (STATIC & HIDDEN BY DEFAULT) --- */
-        .reviews-grid-container {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 2rem 0;
-            /* Hidden by default logic handled in JS/CSS class */
-        }
-        
+        /* --- CUSTOMER REVIEWS STYLES --- */
         .reviews-grid {
-            display: none; /* HIDDEN BY DEFAULT */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;
         }
-
-        .reviews-grid.visible {
-            display: grid;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .view-all-btn-container {
-            text-align: center; margin-top: 1rem; margin-bottom: 3rem;
-        }
-
         .review-card {
             background: rgba(255, 255, 255, 0.6); border: 1px solid var(--border-glass);
             padding: 1.5rem; border-radius: 16px; transition: 0.3s;
@@ -797,8 +779,10 @@
             .hero-content { width: 100%; }
             .profile-details-grid { grid-template-columns: 1fr; gap: 1rem; }
             
-            /* Mobile Marquee Tweaks */
-            .review-card-marquee { width: 280px; padding: 1rem; }
+            /* Review specific mobile tweaks */
+            .review-card { padding: 1.2rem; }
+            .review-header { gap: 0.8rem; }
+            .review-avatar { width: 35px; height: 35px; font-size: 0.9rem; }
         }
 
     </style>
@@ -848,9 +832,7 @@
 
     <!-- Preloader -->
     <div id="preloader">
-        <svg class="spinner-svg" viewBox="0 0 50 50">
-            <circle class="spinner-circle" cx="25" cy="25" r="20"></circle>
-        </svg>
+        <div class="spinner"></div>
     </div>
 
     <!-- Toast Container -->
@@ -865,7 +847,7 @@
         <i class="ri-customer-service-2-fill"></i>
     </div>
 
-    <!-- Header (Sticky) -->
+    <!-- Header (Sticky + About Us + Solutions Dropdowns) -->
     <header id="mainHeader">
         <a href="/" onclick="routeLink(event, '/')" class="logo-wrapper">
             <img src="https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png" alt="DDNetwork Logo" class="logo-img">
@@ -910,7 +892,7 @@
         </div>
     </header>
 
-    <!-- PROFESSIONAL MOBILE DRAWER -->
+    <!-- PROFESSIONAL MOBILE DRAWER (ACCORDION STYLE) -->
     <div class="mobile-drawer" id="mobileDrawer">
         <ul class="mobile-nav-list">
             <!-- Home -->
@@ -992,97 +974,47 @@
                     </div>
                 </div>
             </div>
-
-            <!-- === MARQUEE REVIEWS ON HOME (Single Row for Home Page) === -->
-            <div class="reviews-marquee-section">
-                <div class="marquee-header text-center" style="margin-bottom: 2rem;">
-                    <h2>Client Stories <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span></h2>
-                </div>
-                <div class="marquee-wrapper" style="gap: 0;">
-                    <div class="marquee-mask">
-                        <div class="marquee-track" id="home-marquee-track">
-                            <!-- Reviews injected via JS -->
-                            <div class="text-center" style="color:var(--text-tertiary);">Loading reviews...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <!-- === PAGE: REVIEWS (UPDATED) === -->
+        <!-- === PAGE: REVIEWS (NEW) === -->
         <section id="reviews" class="page-section">
             <div class="text-center" style="margin-bottom: 2rem;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Customer Reviews</h2>
                 <p style="color: var(--text-secondary); font-size: 0.9rem;">See what our clients say about us.</p>
             </div>
 
-            <!-- === DUAL ROW MARQUEE SECTION === -->
-            <div class="reviews-marquee-section">
-                
-                <!-- TOP ROW: Moves Left to Right -->
-                <div class="marquee-wrapper">
-                    <div class="marquee-mask">
-                        <div class="marquee-track track-top" id="reviews-marquee-track-top">
-                            <!-- Injected JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MIDDLE: REVIEW FORM -->
-                <div class="reviews-middle-container">
-                    <div class="glass-card">
-                        <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1.2rem;">Write a Review</h3>
-                        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">
-                            Login required to submit a review.
-                        </p>
-                        
-                        <form id="review-form" onsubmit="handleReviewSubmit(event)">
-                            <div class="form-group">
-                                <label class="form-label">Your Rating</label>
-                                <div class="review-input-wrapper" id="star-input-container">
-                                    <i class="ri-star-fill star-icon" data-val="1"></i>
-                                    <i class="ri-star-fill star-icon" data-val="2"></i>
-                                    <i class="ri-star-fill star-icon" data-val="3"></i>
-                                    <i class="ri-star-fill star-icon" data-val="4"></i>
-                                    <i class="ri-star-fill star-icon" data-val="5"></i>
-                                </div>
-                                <input type="hidden" id="rating-value" required>
-                                <div id="rating-error" style="color: var(--accent-warn); font-size: 0.8rem; margin-top: 5px; display: none;">Please select a rating.</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Your Comment</label>
-                                <textarea id="review-comment" class="form-input" rows="4" placeholder="Share your experience with DDNetwork One..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Review</button>
-                        </form>
-                    </div>
-
-                    <div class="view-all-btn-container">
-                        <button id="view-all-btn" class="btn btn-secondary" onclick="toggleAllReviews()">
-                            <i class="ri-list-check" style="margin-right:8px;"></i> View All Reviews
-                        </button>
-                    </div>
-                </div>
-
-                <!-- BOTTOM ROW: Moves Right to Left -->
-                <div class="marquee-wrapper">
-                    <div class="marquee-mask">
-                        <div class="marquee-track track-bottom" id="reviews-marquee-track-bottom">
-                            <!-- Injected JS -->
-                        </div>
-                    </div>
-                </div>
-
+            <div id="reviews-list" class="reviews-grid">
+                <!-- Reviews injected via JS -->
+                <div class="text-center" style="grid-column: 1/-1; color: var(--text-tertiary); padding: 2rem;">Loading reviews...</div>
             </div>
 
-            <!-- === HIDDEN DETAILED GRID === -->
-            <div class="reviews-grid-container">
-                <h3 id="all-reviews-header" class="text-center hidden" style="margin-bottom:1rem;">All Reviews</h3>
-                <div id="reviews-list" class="reviews-grid">
-                    <!-- Reviews injected via JS -->
-                </div>
+            <div class="glass-card" style="max-width: 600px; margin: 3rem auto 0;">
+                <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1.2rem;">Write a Review</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">
+                    Login required to submit a review.
+                </p>
+                
+                <form id="review-form" onsubmit="handleReviewSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">Your Rating</label>
+                        <div class="review-input-wrapper" id="star-input-container">
+                            <i class="ri-star-fill star-icon" data-val="1"></i>
+                            <i class="ri-star-fill star-icon" data-val="2"></i>
+                            <i class="ri-star-fill star-icon" data-val="3"></i>
+                            <i class="ri-star-fill star-icon" data-val="4"></i>
+                            <i class="ri-star-fill star-icon" data-val="5"></i>
+                        </div>
+                        <input type="hidden" id="rating-value" required>
+                        <div id="rating-error" style="color: var(--accent-warn); font-size: 0.8rem; margin-top: 5px; display: none;">Please select a rating.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Comment</label>
+                        <textarea id="review-comment" class="form-input" rows="4" placeholder="Share your experience with DDNetwork One..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Review</button>
+                </form>
             </div>
         </section>
 
@@ -1500,7 +1432,7 @@
                             <li>Multi-User Internal Portal Access</li>
                             <li>Website Integration & Database Management</li>
                             <li>Advanced Analytics & Custom Dashboards</li>
-                            <li>IT Support System by DDNetwork</li>
+                            <li>Workflow Automation</li>
                             <li>Enterprise-Level Support</li>
                         </ul>
                         <button class="btn btn-glass" style="width: 100%; background: linear-gradient(45deg, #6366f1, #a855f7); border-color: transparent; color: white;" onclick="attemptSelectPackage('Front-End + Portal', 'bundle')">Select Bundle</button>
@@ -1550,7 +1482,7 @@
                             <li>Multi-User Internal Portal Access</li>
                             <li>Website Integration & Database Management</li>
                             <li>Advanced Analytics & Custom Dashboards</li>
-                            <li>IT Support System by DDNetwork & Business Process Integration</li>
+                            <li>Workflow Automation & Business Process Integration</li>
                             <li>Enterprise-Level Support & Maintenance</li>
                         </ul>
                         <button class="btn btn-glass" style="width: 100%;" onclick="attemptSelectPackage('Portal Standalone', 'portal')">Request Quote</button>
@@ -2150,7 +2082,7 @@
                 monthly: 279, 
                 yearly: 2599, 
                 saveYearly: 749, 
-                desc: "Multi-User Portal, Database, Dashboards, IT Support System by DDNetwork." 
+                desc: "Multi-User Portal, Database, Dashboards, Workflow Automation." 
             }
         };
 
@@ -2265,8 +2197,12 @@
             const sectionId = routes[path];
             if (!sectionId) return;
             
+            // Update URL without reloading
             window.history.pushState({ path: path }, "", path);
+            
+            // Update Title
             updatePageTitle(path);
+
             performTransition(sectionId);
         }
 
@@ -2539,7 +2475,7 @@
         };
 
         // ==========================================
-        // REVIEWS LOGIC (UPDATED MARQUEE)
+        // REVIEWS LOGIC (NEW)
         // ==========================================
         let selectedRating = 0;
 
@@ -2582,60 +2518,31 @@
             });
         }
 
-        function toggleAllReviews() {
-            const grid = document.getElementById('reviews-list');
-            const btn = document.getElementById('view-all-btn');
-            const header = document.getElementById('all-reviews-header');
-
-            if (grid.classList.contains('visible')) {
-                // Hide
-                grid.classList.remove('visible');
-                btn.innerHTML = '<i class="ri-list-check" style="margin-right:8px;"></i> View All Reviews';
-                header.classList.add('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                // Show
-                grid.classList.add('visible');
-                btn.innerHTML = '<i class="ri-close-line" style="margin-right:8px;"></i> Close Reviews';
-                header.classList.remove('hidden');
-            }
-        }
-
         function loadReviewsData() {
             if(!db) return;
             const list = document.getElementById('reviews-list');
-            const homeTrack = document.getElementById('home-marquee-track');
-            const topTrack = document.getElementById('reviews-marquee-track-top');
-            const bottomTrack = document.getElementById('reviews-marquee-track-bottom');
             
             // Order by timestamp desc, limit 10
             db.collection("customer_reviews").orderBy("timestamp", "desc").limit(10).onSnapshot((snapshot) => {
-                // Clear existing content
                 list.innerHTML = '';
-                if(homeTrack) homeTrack.innerHTML = '';
-                if(topTrack) topTrack.innerHTML = '';
-                if(bottomTrack) bottomTrack.innerHTML = '';
-                
                 if(snapshot.empty) {
                     list.innerHTML = '<div class="text-center" style="grid-column: 1/-1; padding: 2rem; color: var(--text-tertiary);">No reviews yet. Be the first!</div>';
                     return;
                 }
 
-                let marqueeHTML = ''; // For Home (Standard Left -> Right)
-                let cardsArray = []; // Store to manage duplication
-
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Recently';
+                    // Initials for avatar
                     const initials = (data.userName || 'User').substring(0, 2).toUpperCase();
                     
-                    // Star generation
+                    // Star generation string
                     let starsHtml = '';
                     for(let i=1; i<=5; i++) {
-                        starsHtml += i <= data.rating ? '<i class="ri-star-fill"></i>' : '<i class="ri-star-line" style="color:#cbd5e1"></i>';
+                        if(i <= data.rating) starsHtml += '<i class="ri-star-fill"></i>';
+                        else starsHtml += '<i class="ri-star-line" style="color:#cbd5e1"></i>';
                     }
 
-                    // 1. Generate Card for Grid
                     const html = `
                         <div class="review-card">
                             <div class="review-header">
@@ -2650,60 +2557,7 @@
                         </div>
                     `;
                     list.innerHTML += html;
-
-                    // 2. Generate Marquee Card String
-                    const marqueeCard = `
-                        <div class="review-card-marquee">
-                            <div class="review-header-marquee">
-                                <div class="review-avatar-marquee">${initials}</div>
-                                <div class="review-info-marquee">
-                                    <h4>${data.userName || 'Anonymous'}</h4>
-                                    <div class="review-role-marquee">Verified Client</div>
-                                </div>
-                            </div>
-                            <div class="review-stars-marquee">${starsHtml}</div>
-                            <p class="review-text-marquee">"${data.comment}"</p>
-                        </div>
-                    `;
-                    marqueeHTML += marqueeCard;
-                    cardsArray.push(marqueeCard);
                 });
-
-                // --- HANDLE MARQUEES ---
-
-                // A. Home Page Marquee (Standard Left to Right)
-                if (cardsArray.length > 0) {
-                    const content = cardsArray.join('') + cardsArray.join(''); // Duplicate for loop
-                    if(homeTrack) homeTrack.innerHTML = content;
-                }
-
-                // B. Reviews Page: Top Row (Moves L -> R) & Bottom Row (Moves R -> L)
-                if (cardsArray.length > 0) {
-                    // For infinite loop to look good, we need enough width.
-                    // Let's create a string containing the set twice or three times depending on width.
-                    // Ideally 3 times.
-                    const singleSet = cardsArray.join('');
-                    const loopContent = singleSet + singleSet + singleSet;
-
-                    // Top Row: Use standard content. Animation 'scroll-right' handles direction.
-                    // BUT visually, to move Left->Right using 'scroll-right' (which moves from -50% to 0),
-                    // we just put the content in. If we want them to appear at different starting points, 
-                    // we can reverse the array for one track.
-                    
-                    if(topTrack) {
-                        topTrack.innerHTML = loopContent;
-                    }
-
-                    if(bottomTrack) {
-                        // Bottom Row: We can use the reversed content for visual variety
-                        // Reverse array
-                        const reversedArray = [...cardsArray].reverse();
-                        const reversedSet = reversedArray.join('');
-                        const reversedLoop = reversedSet + reversedSet + reversedSet;
-                        
-                        bottomTrack.innerHTML = reversedLoop;
-                    }
-                }
             });
         }
 
@@ -2724,6 +2578,7 @@
             const comment = document.getElementById('review-comment').value;
             const user = auth.currentUser;
             
+            // Get name from local DB if possible, else fallback
             let displayName = user.email.split('@')[0];
             
             db.collection("users").doc(user.uid).get().then(doc => {
@@ -2736,7 +2591,7 @@
                     rating: selectedRating,
                     comment: comment,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    status: 'approved'
+                    status: 'approved' // Auto approve for simplicity
                 };
 
                 return db.collection("customer_reviews").add(reviewData);
@@ -2805,6 +2660,7 @@
                             // Check if user profile is incomplete (specifically phone number for new Google users)
                             if(!data.phone) {
                                 showToast("Please complete your profile (Phone Number).", "warning");
+                                // Only redirect if not already on profile page
                                 if(window.location.pathname !== '/profile') {
                                     setTimeout(() => navigateTo('/profile'), 1000);
                                 }
@@ -2990,6 +2846,7 @@
                 deskAuth.innerHTML = userControls;
             }
             
+            // Updated Mobile Auth Injection
             const mobAuth = document.getElementById('mobileAuthLinksContainer');
             if(mobAuth) {
                 let authButtons = `<a href="/profile" onclick="routeLink(event, '/profile'); toggleDrawer()" class="mobile-nav-link" style="justify-content: flex-start; border-top:1px solid var(--border-glass);"><i class="ri-user-fill" style="margin-right:15px;"></i> Profile</a>`;
@@ -3003,6 +2860,7 @@
             const deskAuth = document.getElementById('desktopAuthLinks');
             if(deskAuth) deskAuth.innerHTML = `<a href="/login" onclick="routeLink(event, '/login')" class="btn-glass" style="padding: 0.6rem 1.2rem; border-radius: 50px; background: white; color: var(--text-main); border:1px solid var(--border-glass);"><i class="ri-login-circle-fill"></i> Login</a>`;
             
+            // Updated Mobile Guest Injection
             const mobAuth = document.getElementById('mobileAuthLinksContainer');
             if(mobAuth) {
                 mobAuth.innerHTML = `<a href="/login" onclick="routeLink(event, '/login'); toggleDrawer()" class="mobile-nav-link" style="justify-content: flex-start; border-top:1px solid var(--border-glass);"><i class="ri-login-circle-fill" style="margin-right:15px;"></i> Login</a><a href="/signup" onclick="routeLink(event, '/signup'); toggleDrawer()" class="mobile-nav-link" style="justify-content: flex-start;"><i class="ri-user-add-fill" style="margin-right:15px;"></i> Sign Up</a>`;
@@ -3099,7 +2957,7 @@
                         const data = doc.data();
                         const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : '-';
                         const item = document.createElement('div');
-                        item.className = 'glass-card'; item.style.padding = '1rem'; item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
+                        item.className = 'glass-card'; item.style.padding = '1rem';                         item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
                         item.innerHTML = `<div><div style="color:var(--text-main); font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background:${data.status==='Open'?'#fffbeb':'#ecfdf5'}; color:${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div></div>`;
                         listContainer.appendChild(item);
                     });
@@ -3123,7 +2981,10 @@
             const submenu = element.nextElementSibling;
             const parentLi = element.parentElement;
             
+            // Toggle the 'open' class on the submenu
             submenu.classList.toggle('open');
+            
+            // Toggle the 'active' class on the header to rotate arrow
             element.classList.toggle('active');
         }
 
@@ -3410,6 +3271,7 @@
                 requestData.details = document.getElementById('req-desc-upgrade').value;
             } else if (type === 'renew') {
                 requestData.plan = document.getElementById('req-renew-plan').value;
+                // requestData.duration was missing in original HTML, adding fallback logic
                 requestData.duration = "1 Year"; 
             } else if (type === 'remove') { requestData.details = document.getElementById('req-desc-remove').value; }
 
@@ -3750,3 +3612,4 @@
     </script>
 </body>
 </html>
+"without" remove anything just improve
