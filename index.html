@@ -632,6 +632,33 @@
         .radio-option.selected span { color: var(--soft-black); font-weight: 700; }
         .radio-option input[type="radio"] { width: 1px; height: 1px; opacity: 0; position: absolute; pointer-events: none; }
 
+        /* --- PASSWORD REQUIREMENTS STYLES --- */
+        .password-requirements {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .req-item {
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        .req-item i {
+            font-size: 1rem;
+            color: var(--text-tertiary);
+        }
+        .req-item.valid {
+            color: var(--accent-success);
+            font-weight: 600;
+        }
+        .req-item.valid i {
+            color: var(--accent-success);
+        }
+
         /* --- NOTIFICATION MODAL --- */
         #glass-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -664,25 +691,67 @@
         }
         .glass-modal-btn:hover { background: var(--soft-black-hover); }
 
-        /* --- TOAST NOTIFICATIONS --- */
-        .toast-container { position: fixed; top: 100px; right: 30px; z-index: 100000; display: flex; flex-direction: column; gap: 15px; pointer-events: none; }
-        .toast { 
-            pointer-events: auto; min-width: 300px; max-width: 400px;
-            background: white; backdrop-filter: blur(12px);
-            border: 1px solid var(--border-glass);
-            border-left: 4px solid var(--soft-black); 
-            border-radius: 12px; padding: 16px 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: space-between;
-            color: var(--text-main); transform: translateX(150%); transition: transform 0.4s var(--ease-elastic);
+        /* --- IMPROVED TOAST NOTIFICATIONS (GLASSMORPHISM) --- */
+        .toast-container { 
+            position: fixed; 
+            top: 90px; /* Adjusted to avoid sticky header */
+            right: 20px; 
+            z-index: 100000; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            pointer-events: none; /* Allow clicks through container */
         }
+        
+        .toast { 
+            pointer-events: auto; 
+            min-width: 300px; 
+            max-width: 400px;
+            /* Glassmorphism Styling */
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px rgba(30, 41, 59, 0.12);
+            
+            border-radius: 16px; 
+            padding: 16px 20px;
+            
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            color: var(--text-main); 
+            transform: translateX(120%); 
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
         .toast.show { transform: translateX(0); }
-        .toast.success { border-left-color: var(--accent-success); }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast-icon { font-size: 1.2rem; transition: color 0.3s; }
+        
+        .toast.success { border-left: 4px solid var(--accent-success); }
         .toast.success .toast-icon { color: var(--accent-success); }
-        .toast.error { border-left-color: #ef4444; }
+        
+        .toast.error { border-left: 4px solid #ef4444; }
         .toast.error .toast-icon { color: #ef4444; }
-        .toast.warning { border-left-color: var(--accent-warn); }
+        
+        .toast.warning { border-left: 4px solid var(--accent-warn); }
         .toast.warning .toast-icon { color: var(--accent-warn); }
+
+        .toast-close {
+            cursor: pointer;
+            color: var(--text-tertiary);
+            transition: color 0.2s;
+            margin-left: 10px;
+        }
+        .toast-close:hover { color: var(--text-main); }
 
         /* --- PRICING CARDS --- */
         .pricing-toggle-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 3rem; }
@@ -1906,7 +1975,7 @@
             </div>
         </section>
 
-        <!-- === PAGE: SIGNUP === -->
+        <!-- === PAGE: SIGNUP (UPDATED WITH PASSWORD VALIDATION) === -->
         <section id="signup" class="page-section">
             <div class="auth-container">
                 <div class="glass-card auth-card">
@@ -1928,7 +1997,15 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Password</label>
-                            <input type="password" id="signup-password" class="form-input" placeholder="Min 6 chars" required minlength="6">
+                            <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required minlength="6" oninput="checkPasswordStrength()">
+                            
+                            <!-- PASSWORD REQUIREMENTS LIST -->
+                            <div class="password-requirements">
+                                <span id="req-upper" class="req-item"><i class="ri-close-circle-line"></i> Uppercase</span>
+                                <span id="req-lower" class="req-item"><i class="ri-close-circle-line"></i> Lowercase</span>
+                                <span id="req-num" class="req-item"><i class="ri-close-circle-line"></i> Number</span>
+                                <span id="req-len" class="req-item"><i class="ri-close-circle-line"></i> Min 6 chars</span>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
                     </form>
@@ -2721,6 +2798,53 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
     }
 
     // ==========================================
+    // PASSWORD VALIDATION FUNCTION
+    // ==========================================
+    function checkPasswordStrength() {
+        const password = document.getElementById('signup-password').value;
+        const reqUpper = document.getElementById('req-upper');
+        const reqLower = document.getElementById('req-lower');
+        const reqNum = document.getElementById('req-num');
+        const reqLen = document.getElementById('req-len');
+
+        // Check Uppercase
+        if (/[A-Z]/.test(password)) {
+            reqUpper.classList.add('valid');
+            reqUpper.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Uppercase';
+        } else {
+            reqUpper.classList.remove('valid');
+            reqUpper.innerHTML = '<i class="ri-close-circle-line"></i> Uppercase';
+        }
+
+        // Check Lowercase
+        if (/[a-z]/.test(password)) {
+            reqLower.classList.add('valid');
+            reqLower.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Lowercase';
+        } else {
+            reqLower.classList.remove('valid');
+            reqLower.innerHTML = '<i class="ri-close-circle-line"></i> Lowercase';
+        }
+
+        // Check Number
+        if (/[0-9]/.test(password)) {
+            reqNum.classList.add('valid');
+            reqNum.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Number';
+        } else {
+            reqNum.classList.remove('valid');
+            reqNum.innerHTML = '<i class="ri-close-circle-line"></i> Number';
+        }
+
+        // Check Length
+        if (password.length >= 6) {
+            reqLen.classList.add('valid');
+            reqLen.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Min 6 chars';
+        } else {
+            reqLen.classList.remove('valid');
+            reqLen.innerHTML = '<i class="ri-close-circle-line"></i> Min 6 chars';
+        }
+    }
+
+    // ==========================================
     // GLASSMORPHIC NOTIFICATION MODAL
     // ==========================================
     const modalOverlay = document.getElementById('glass-modal-overlay');
@@ -2761,23 +2885,14 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
     }
 
     // ==========================================
-    // FAQ ACCORDION LOGIC (UPDATED FOR BETTER VISIBILITY)
+    // FAQ ACCORDION LOGIC
     // ==========================================
     function toggleFaq(element) {
         const item = element.parentElement;
         const answer = item.querySelector('.faq-answer');
         
-        // Close others if you want accordion style (optional)
-        // document.querySelectorAll('.faq-item').forEach(i => {
-        //     if(i !== item) {
-        //         i.classList.remove('active');
-        //         i.querySelector('.faq-answer').style.maxHeight = null;
-        //     }
-        // });
-
         item.classList.toggle('active');
         if (item.classList.contains('active')) {
-            // Increase buffer for desktop readability
             answer.style.maxHeight = (answer.scrollHeight + 50) + "px";
         } else {
             answer.style.maxHeight = null;
@@ -2828,7 +2943,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         if(cycle === 'onetime') toggle.checked = true;
         else toggle.checked = false;
         updatePricingUI();
-        // Re-run domain calculation logic if needed
         if(state.domainType === 'sub') updateDomain('sub', document.querySelector('input[name="domain_type"][value="sub"]').parentElement);
     }
 
@@ -2866,7 +2980,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                 periodHtml.innerText = '/one-time';
                 setupHtml.classList.add('hidden');
                 
-                // Show "No Support" features
                 if(featHtmlSub) featHtmlSub.classList.add('hidden');
                 if(featHtmlContent) featHtmlContent.classList.add('hidden');
                 if(featHtmlNoSupport) featHtmlNoSupport.classList.remove('hidden');
@@ -2876,7 +2989,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                 periodHtml.innerText = '/month';
                 setupHtml.classList.remove('hidden');
                 
-                // Show "Support Included" features
                 if(featHtmlSub) featHtmlSub.classList.remove('hidden');
                 if(featHtmlContent) featHtmlContent.classList.remove('hidden');
                 if(featHtmlNoSupport) featHtmlNoSupport.classList.add('hidden');
@@ -2904,7 +3016,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                     periodEl.innerText = '/one-time';
                     if(setupEl) setupEl.classList.add('hidden');
                     
-                    // Show "No Support" features
                     if(featMaint) featMaint.classList.add('hidden');
                     if(featContent) featContent.classList.add('hidden');
                     if(featEnt) featEnt.classList.add('hidden');
@@ -2916,7 +3027,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                     periodEl.innerText = '/month';
                     if(setupEl) setupEl.classList.remove('hidden');
 
-                    // Show "Support Included" features
                     if(featMaint) featMaint.classList.remove('hidden');
                     if(featContent) featContent.classList.remove('hidden');
                     if(featEnt) featEnt.classList.remove('hidden');
@@ -3017,7 +3127,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                 if(targetSectionId === 'profile') loadProfilePageData();
                 if(targetSectionId === 'reviews') {
                     loadReviewsMarquee();
-                    // Don't auto-load grid, wait for button click
                 } 
                 if(targetSectionId === 'buynow' && auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
                 if(targetSectionId === 'updates' && auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
@@ -3250,12 +3359,11 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
     };
 
     // ==========================================
-    // REVIEWS LOGIC (FIXED MARQUEE WITH DUMMIES & SYNC)
+    // REVIEWS LOGIC
     // ==========================================
     let selectedRating = 0;
-    let reviewsCache = []; // Cache reviews for marquee
+    let reviewsCache = []; 
 
-    // DUMMY REVIEWS FOR FRONTEND PRELOAD (Prevents Empty/Stuck Marquee)
     const DUMMY_REVIEWS = [
         { rating: 5, userName: 'PNE Arena Enterprise', comment: 'Excellent service! The team was very professional and the delivery was faster than expected.', timestamp: null },
     ];
@@ -3296,21 +3404,16 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         });
     }
 
-    // --- NEW: Live Listener for Reviews ---
     function listenToReviews() {
         if(!db) return;
         db.collection("customer_reviews").orderBy("timestamp", "desc").limit(20)
             .onSnapshot((snapshot) => {
-                reviewsCache = []; // Clear cache
+                reviewsCache = []; 
                 snapshot.forEach(doc => reviewsCache.push(doc.data()));
-                
-                // Update the Marquee immediately with new data
                 loadReviewsMarquee();
-                
-                // If the full grid is currently visible, update it too
                 const list = document.getElementById('reviews-list');
                 if(!list.classList.contains('hidden')) {
-                    toggleFullReviews(); // Re-trigger render
+                    toggleFullReviews(); 
                 }
             }, (error) => {
                 console.error("Error syncing reviews:", error);
@@ -3321,7 +3424,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         const row1 = document.getElementById('reviews-marquee-row-1');
         const row2 = document.getElementById('reviews-marquee-row-2');
         
-        // 1. Combine DB reviews with Dummies (Prepend DB so DB takes precedence if available)
         let allReviews = [...DUMMY_REVIEWS, ...reviewsCache];
         
         if (allReviews.length === 0) {
@@ -3330,7 +3432,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
             return;
         }
 
-        // Helper to create HTML string
         const createMarqueeHTML = (list) => list.map(data => {
             let starsHtml = '';
             for(let i=1; i<=5; i++) {
@@ -3344,12 +3445,10 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                 </div>`;
         }).join('');
 
-        // 2. Split data into two rows
         const mid = Math.ceil(allReviews.length / 2);
         const list1 = allReviews.slice(0, mid);
         const list2 = allReviews.slice(mid);
 
-        // 3. Render and Duplicate for seamless scrolling
         row1.innerHTML = createMarqueeHTML(list1) + createMarqueeHTML(list1);
         row2.innerHTML = createMarqueeHTML(list2) + createMarqueeHTML(list2);
     }
@@ -3359,9 +3458,7 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         const btn = event.target;
         
         if (list.classList.contains('hidden')) {
-            // Load grid data
             list.innerHTML = '';
-            // Use database cache, fallback to dummies
             let allReviews = reviewsCache.length > 0 ? reviewsCache : DUMMY_REVIEWS;
 
             if(allReviews.length > 0) {
@@ -3428,7 +3525,7 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                 rating: selectedRating,
                 comment: comment,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                status: 'approved' // Auto approve for simplicity
+                status: 'approved' 
             };
 
             return db.collection("customer_reviews").add(reviewData);
@@ -3437,37 +3534,30 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
             document.getElementById('review-form').reset();
             selectedRating = 0;
             highlightStars(0);
-            // Listener will catch the update automatically, but we can force update if needed:
-            // loadReviewsMarquee(); 
         }).catch(err => {
             console.error(err);
             showToast("Failed to submit review.", "error");
         });
     }
 
-    // Initialize stars on load
     document.addEventListener('DOMContentLoaded', () => {
         setupStarRating();
-        // Start listening to reviews immediately
         listenToReviews();
     });
 
 
     // ==========================================
-    // AUTH & USER DATA (WITH GOOGLE SUPPORT)
+    // AUTH & USER DATA
     // ==========================================
     
-    // Google Auth Handler
     function handleGoogleAuth() {
         if(!auth) return showToast("Auth not initialized", "error");
         const provider = new firebase.auth.GoogleAuthProvider();
         
         auth.signInWithPopup(provider).then((result) => {
             const user = result.user;
-            // Check if user doc exists in Firestore
             db.collection("users").doc(user.uid).get().then((doc) => {
                 if (!doc.exists) {
-                    // New user, create doc
                     return db.collection("users").doc(user.uid).set({
                         name: user.displayName || 'Google User',
                         email: user.email,
@@ -3498,7 +3588,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                         else { currentUserPersonalVoucher = null; hideVoucherCard(); }
                         fetchAndSyncUserData(user.uid);
                         
-                        // Check if user profile is incomplete (specifically phone number for new Google users)
                         if(!data.phone) {
                             showToast("Please complete your profile (Phone Number).", "warning");
                             if(window.location.pathname !== '/profile') {
@@ -3815,11 +3904,9 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         else { icon.classList.add('ri-menu-4-line'); icon.classList.remove('ri-close-line'); }
     }
 
-    // NEW MOBILE MENU ACCORDION LOGIC
     function toggleMobileSub(element) {
         const submenu = element.nextElementSibling;
         const parentLi = element.parentElement;
-        
         submenu.classList.toggle('open');
         element.classList.toggle('active');
     }
@@ -3849,7 +3936,7 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
             if (state.isOneTime) {
                 basePrice = PRICING_DATA[type].oneTime;
                 desc = "One-time purchase. No support.";
-                setupFee = 0; // Setup fee is usually baked into one-time price or not applicable in same way
+                setupFee = 0; 
             } else {
                 basePrice = PRICING_DATA[type].monthly;
                 setupFee = PRICING_DATA[type].setupFee;
@@ -4332,13 +4419,11 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
             return;
         }
 
-        // Visual feedback on button
         const btn = e.target.querySelector('button');
         const originalText = btn.innerText;
         btn.disabled = true;
         btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Sending...';
 
-        // Prepare data for Firestore
         const data = {
             name: name, 
             email: email, 
@@ -4353,7 +4438,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         if(db) {
             db.collection("customer_requests").add(data)
                 .then(() => {
-                    // SUCCESS
                     showToast("Thank you for your interest!", "success");
                     e.target.reset();
                 })
@@ -4362,7 +4446,6 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
                     showToast("Failed to send message. Please try again.", "error");
                 })
                 .finally(() => {
-                    // Reset button state
                     btn.disabled = false;
                     btn.innerText = originalText;
                 });
@@ -4447,7 +4530,7 @@ Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local
         draw() {
             if(!this.active) return;
             const gradient = ctx.createLinearGradient(this.x, this.y, this.x + this.len, this.y - this.len);
-            gradient.addColorStop(0, "rgba(99, 102, 241, 0.8)"); // Indigo meteor
+            gradient.addColorStop(0, "rgba(99, 102, 241, 0.8)"); 
             gradient.addColorStop(1, "rgba(99, 102, 241, 0)");
             ctx.beginPath();
             ctx.strokeStyle = gradient;
