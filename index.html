@@ -3,13 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> DDNetwork by DD CLOUD NETWORK</title>
     
-    <!-- Favicon -->
+    <!-- CORE SEO META TAGS -->
+    <title>DDNetwork One | Professional Web Design & Digital Solutions in Malaysia</title>
+    <meta name="description" content="DDNetwork offers professional web design, AI integration, and digital solutions in Malaysia. Trusted by local businesses. Fast delivery, mobile-first design.">
+    <meta name="keywords" content="Web Design Malaysia, Website Development, AI Integration, Custom Website, DDNetwork, DD Cloud Network, Digital Agency Malaysia">
+    <meta name="author" content="Danial Danish">
+    <meta name="robots" content="index, follow"> <!-- Tells Google to crawl the site -->
+    
+    <!-- FAVICON & APPLE TOUCH ICON -->
     <link rel="icon" type="image/png" href="https://i.ibb.co/Y7yLkm5j/IMG-3157.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/Y7yLkm5j/IMG-3157.png">
     
-    <meta name="description" content="Designed in Malaysia. Built for the world.">
+    <!-- OPEN GRAPH / FACEBOOK / WHATSAPP -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ddnet.my/">
+    <meta property="og:title" content="DDNetwork One | Custom Web Solutions">
+    <meta property="og:description" content="Designed in Malaysia. Built for the world. Professional web design and AI solutions for modern businesses.">
+    <meta property="og:image" content="https://i.ibb.co/Y7yLkm5j/IMG-3157.png"> <!-- Use a high-quality logo/banner here -->
     
+    <!-- TWITTER -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://ddnet.my/">
+    <meta name="twitter:title" content="DDNetwork One | Custom Web Solutions">
+    <meta name="twitter:description" content="Designed in Malaysia. Built for the world. Professional web design and AI solutions.">
+    <meta name="twitter:image" content="https://i.ibb.co/Y7yLkm5j/IMG-3157.png">
+
+    <!-- CANONICAL URL (Prevents duplicate content issues) -->
+    <link rel="canonical" href="https://ddnet.my/" />
+
+    <!-- STRUCTURED DATA: ORGANIZATION (Helps Google recognize "DDNetwork" as a Brand Name) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "DDNetwork",
+        "alternateName": "DDNetwork One",
+        "url": "https://ddnet.my",
+        "logo": "https://i.ibb.co/Y7yLkm5j/IMG-3157.png",
+        "sameAs": [
+            "https://www.linkedin.com/in/muhammad-danial-danish-217bb82ba/",
+            "https://www.instagram.com/danialddanish/"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+60-12-260-0969",
+            "contactType": "sales",
+            "areaServed": "MY",
+            "availableLanguage": "Malay,English"
+        }
+    }
+    </script>
+
+    <!-- STRUCTURED DATA: WEBSITE (Enables Sitelinks Search Box like GitHub) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "DDNetwork",
+        "url": "https://ddnet.my/",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://ddnet.my/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
     <!-- Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1468,6 +1528,32 @@
 </head>
 <body>
 
+    <!-- HIDDEN NAVIGATION FOR GOOGLE CRAWLERS (SITELINKS) -->
+    <nav style="display: none;" aria-label="Breadcrumb">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="https://ddnet.my/"><span itemprop="name">Home</span></a>
+                <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="https://ddnet.my/pricing"><span itemprop="name">Pricing</span></a>
+                <meta itemprop="position" content="2" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="https://ddnet.my/reviews"><span itemprop="name">Reviews</span></a>
+                <meta itemprop="position" content="3" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="https://ddnet.my/clients"><span itemprop="name">Portfolio</span></a>
+                <meta itemprop="position" content="4" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a itemprop="item" href="https://ddnet.my/about-company"><span itemprop="name">About Us</span></a>
+                <meta itemprop="position" content="5" />
+            </li>
+        </ol>
+    </nav>
+
     <!-- MAINTENANCE OVERLAY -->
     <div id="maintenance-overlay">
         <div class="maintenance-content">
@@ -2064,7 +2150,7 @@
                             <div class="price-display-area"><span id="price-bundle" class="pkg-price">RM 249</span><span id="period-bundle" class="pkg-period">/month</span></div>
                         </div>
                         <ul class="pkg-features">
-                            <li style="color:var(--soft-black); font-weight:700;">Everything in Front-End Website</li>
+                            <li style="color: var(--soft-black); font-weight:700;">Everything in Front-End Website</li>
                             <li>Multi-User Internal Portal Access</li><li>Website Integration and Database Management</li><li>Advanced Analytics</li><li>Custom Dashboards</li><li>Hosting based on your custom domain</li>
                             <li>Free ddnet.my subdomain for 1 year (new customer)</li>
                             <li id="bundle-feat-maint" class="hidden">Maintenance and priority support included</li>
@@ -2387,34 +2473,73 @@
     });
 
     // ==========================================
-    // SEO TITLES CONFIGURATION
+    // SEO CONFIGURATION (FINALIZED FOR ddnet.my)
     // ==========================================
-    const PAGE_TITLES = {
-        '/': 'DDNetwork by DD Cloud Network',
-        '/home': 'DDNetwork',
-        '/pricing': 'Pricing Packages',
-        '/reviews': 'Client Reviews',
-        '/order': 'Secure Checkout',
-        '/clients': 'Portfolio & Clients',
-        '/founder-danialdanish': 'Danial Danish – Founder',
-        '/login': 'Login',
-        '/signup': 'Sign Up',
-        '/profile': 'User Profile',
-        '/profile-website-describe': 'Describe Website Idea',
-        '/helpdesk': 'Support Helpdesk @ DDNetwork',
-        '/contact': 'Contact Us @ DDNetwork',
-        '/forgot-password': 'Reset Password',
-        '/thank-you': 'Order Successful - DDNetwork',
-        '/updates': 'Customer Requests',
-        '/about-company': 'About Company',
-        '/terms': 'Terms & Conditions',
-        '/faq': 'Frequently Asked Questions',
-        '/privacy': 'Privacy Policy - DDNetwork'
+    const SEO_CONFIG = {
+        '/': { 
+            title: 'DDNetwork One | Professional Web Design Malaysia',
+            desc: 'DDNetwork offers professional web design, AI integration, and digital solutions in Malaysia. Fast delivery and mobile-first design.',
+            canonical: 'https://ddnet.my/'
+        },
+        '/pricing': { 
+            title: 'Pricing Packages | DDNetwork',
+            desc: 'Affordable website packages in Malaysia. Choose from Static HTML, Front-End, or AI-Powered solutions.',
+            canonical: 'https://ddnet.my/pricing'
+        },
+        '/reviews': { 
+            title: 'Client Reviews | DDNetwork',
+            desc: 'See what our clients say about our web design and digital services. Trusted by Malaysian businesses.',
+            canonical: 'https://ddnet.my/reviews'
+        },
+        '/clients': { 
+            title: 'Portfolio & Clients | DDNetwork',
+            desc: 'Explore our portfolio of custom websites and digital solutions built for Malaysian businesses.',
+            canonical: 'https://ddnet.my/clients'
+        },
+        '/founder-danialdanish': { 
+            title: 'Danial Danish - Founder | DDNetwork',
+            desc: 'Meet Danial Danish, the founder of DDNetwork and DD Cloud Network. Learn about our vision.',
+            canonical: 'https://ddnet.my/founder-danialdanish'
+        },
+        '/terms': { 
+            title: 'Terms & Conditions | DDNetwork',
+            desc: 'Read our terms of service, hosting policies, and refund guidelines.',
+            canonical: 'https://ddnet.my/terms'
+        },
+        '/privacy': { 
+            title: 'Privacy Policy | DDNetwork',
+            desc: 'DDNetwork privacy policy regarding data collection, security, and user rights.',
+            canonical: 'https://ddnet.my/privacy'
+        },
+        '/login': { 
+            title: 'Login | DDNetwork',
+            desc: 'Login to your DDNetwork dashboard to manage your orders and profile.',
+            canonical: 'https://ddnet.my/login'
+        },
+        '/signup': { 
+            title: 'Sign Up | DDNetwork',
+            desc: 'Create an account with DDNetwork to start your digital journey today.',
+            canonical: 'https://ddnet.my/signup'
+        }
     };
+    
+    function updatePageSEO(path) {
+        const config = SEO_CONFIG[path] || SEO_CONFIG['/'];
+        
+        document.title = config.title;
+        
+        const descTag = document.querySelector('meta[name="description"]');
+        if (descTag) descTag.setAttribute('content', config.desc);
 
-    function updatePageTitle(path) {
-        const title = PAGE_TITLES[path] || 'DDNetwork One';
-        document.title = title;
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        const ogUrl = document.querySelector('meta[property="og:url"]');
+        const canonical = document.querySelector('link[rel="canonical"]');
+
+        if (ogTitle) ogTitle.setAttribute('content', config.title);
+        if (ogDesc) ogDesc.setAttribute('content', config.desc);
+        if (ogUrl) ogUrl.setAttribute('content', config.canonical);
+        if (canonical) canonical.setAttribute('href', config.canonical);
     }
 
     // ==========================================
@@ -2450,12 +2575,10 @@
         
         container.appendChild(toast);
         
-        // Trigger animation
         setTimeout(() => {
             toast.classList.add('show');
         }, 10);
         
-        // Auto remove
         setTimeout(() => {
             toast.classList.remove('show');
             setTimeout(() => {
@@ -2464,7 +2587,6 @@
         }, 4000);
     }
 
-    // Function to open Auth Modal (Login/Signup Prompt)
     function showAuthModal() {
         const modal = document.getElementById('auth-modal');
         modal.classList.add('active');
@@ -2485,7 +2607,6 @@
         modalTitle.innerText = title;
         modalDesc.innerText = message;
         
-        // Generate SVG Content
         let iconHTML = '';
         if (type === 'success') {
             iconHTML = `
@@ -2505,30 +2626,23 @@
                     </svg>
                 </div>`;
         } else {
-            // Default / Warning
             iconHTML = `<div class="warning-pulse"><i class="ri-information-line"></i></div>`;
         }
 
-        // Clean up previous icons if any
         const existingIcon = modalContainer.querySelector('.notif-icon-wrapper, .warning-pulse');
         if (existingIcon) existingIcon.remove();
 
-        // Insert new icon before title
         modalContainer.insertAdjacentHTML('afterbegin', iconHTML);
 
-        // Display Logic
         modalOverlay.style.display = 'flex';
-        // Trigger reflow for animation
         void modalOverlay.offsetWidth; 
         modalOverlay.classList.add('active');
 
-        // Auto-Close Logic (3 Seconds)
         clearTimeout(window.modalTimer);
         window.modalTimer = setTimeout(() => {
             closeModal();
         }, 3000);
 
-        // Manual Close Handler
         modalBtn.onclick = () => {
             clearTimeout(window.modalTimer);
                         closeModal();
@@ -2539,10 +2653,9 @@
             modalOverlay.classList.remove('active');
             setTimeout(() => {
                 modalOverlay.style.display = 'none';
-                // Cleanup SVG
                 const wrapper = modalContainer.querySelector('.notif-icon-wrapper, .warning-pulse');
                 if(wrapper) wrapper.remove();
-            }, 400); // Match CSS transition
+            }, 400);
         }
     }
 
@@ -2569,18 +2682,12 @@
         else { reqLen.classList.remove('valid'); reqLen.innerHTML = '<i class="ri-close-circle-line"></i> Min 6 chars'; }
     }
 
-    // ==========================================
-    // WEBSITE IDEA SUCCESS MODAL LOGIC
-    // ==========================================
     function closeIdeaSuccessModal() {
         const modal = document.getElementById('idea-success-modal');
         modal.classList.remove('active');
         setTimeout(() => { modal.style.display = 'none'; navigateTo('/'); }, 300);
     }
 
-    // ==========================================
-    // FAQ ACCORDION LOGIC
-    // ==========================================
     function toggleFaq(element) {
         const item = element.parentElement;
         const answer = item.querySelector('.faq-answer');
@@ -2634,7 +2741,6 @@
             const featContentCharge = document.getElementById(`${key}-feat-content-charge`);
 
             if(priceEl && periodEl) {
-                // FIX: Ensure we strictly read from the object based on current billingCycle
                 if (billingCycle === 'onetime') {
                     priceEl.innerText = `RM ${PRICING_DATA[key].oneTime}`;
                     periodEl.innerText = '/one-time';
@@ -2673,18 +2779,18 @@
         const sectionId = routes[path];
         if (!sectionId) return;
         window.history.pushState({ path: path }, "", path);
-        updatePageTitle(path);
+        updatePageSEO(path); // SEO Update
         performTransition(sectionId);
     }
 
     window.addEventListener('popstate', (event) => {
         if (event.state && event.state.path) {
             performTransition(routes[event.state.path]);
-            updatePageTitle(event.state.path);
+            updatePageSEO(event.state.path);
         } else {
             const path = window.location.pathname;
             performTransition(routes[path] || 'home');
-            updatePageTitle(path);
+            updatePageSEO(path);
         }
     });
 
@@ -2692,7 +2798,7 @@
         const path = window.location.pathname;
         const target = routes[path] || 'home'; 
         performTransition(target, true);
-        updatePageTitle(path);
+        updatePageSEO(path); // SEO Update on Load
     }
 
     let isTransitioning = false;
@@ -2728,7 +2834,6 @@
             void targetSection.offsetWidth;
             targetSection.classList.add('active');
 
-            // Logic Hooks
             if(targetSectionId === 'profile') loadProfilePageData();
             if(targetSectionId === 'reviews') loadReviewsMarquee();
             if(targetSectionId === 'buynow' && auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
@@ -2919,7 +3024,7 @@
 
         const createMarqueeHTML = (list) => list.map(data => {
             let starsHtml = '';
-            for(let i=1; i<=5; i++) starsHtml += `<i class="${i <= data.rating ? 'ri-star-fill' : 'ri-star-line'}" style="color:${i<=data.rating?'var(--accent-star)':'#cbd5e1'}"></i>`;
+            for(let i=1; i<=5; i++) starsHtml += `<i class="${i <= data.rating ? 'ri-star-fill' : 'ri-star-line'}" style="color="${i<=data.rating?'var(--accent-star)':'#cbd5e1'}"></i>`;
             return `
                 <div class="review-marquee-item">
                     <div class="rm-rating">${starsHtml}</div>
@@ -2948,7 +3053,7 @@
                     const date = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Recently';
                     const initials = (data.userName || 'User').substring(0, 2).toUpperCase();
                     let starsHtml = '';
-                    for(let i=1; i<=5; i++) starsHtml += `<i class="${i <= data.rating ? 'ri-star-fill' : 'ri-star-line'}" style="color:${i<=data.rating?'var(--accent-star)':'#cbd5e1'}"></i>`;
+                    for(let i=1; i<=5; i++) starsHtml += `<i class="${i <= data.rating ? 'ri-star-fill' : 'ri-star-line'}" style="color="${i<=data.rating?'var(--accent-star)':'#cbd5e1'}"></i>`;
                     const html = `
                         <div class="review-card">
                             <div class="review-header">
@@ -3003,7 +3108,7 @@
     // AUTH & USER DATA
     // ==========================================
     
-    // --- HYPERPACE LOGIN ANIMATION LOGIC (BLACK & WHITE) ---
+    // --- HYPERPACE LOGIN ANIMATION LOGIC ---
     let warpAnimationId = null;
     const warpCanvas = document.getElementById('warp-canvas');
     const warpCtx = warpCanvas ? warpCanvas.getContext('2d') : null;
@@ -3030,7 +3135,6 @@
         const cx = warpCanvas.width / 2;
         const cy = warpCanvas.height / 2;
         
-        // Black Background
         warpCtx.fillStyle = "#000000"; 
         warpCtx.fillRect(0, 0, warpCanvas.width, warpCanvas.height);
 
@@ -3046,12 +3150,10 @@
             let py = star.y * k + cy;
             let size = (1 - star.z/warpCanvas.width) * 3.5;
             
-            // White Stars
             warpCtx.fillStyle = "#ffffff"; 
             warpCtx.fillRect(px, py, size, size);
 
             if(isWarping && warpSpeed > 5){
-                // White Trail
                 const gradient = warpCtx.createLinearGradient(px, py, px - star.x*0.03, py - star.y*0.03);
                 gradient.addColorStop(0, "rgba(255,255,255,0.8)"); 
                 gradient.addColorStop(1, "rgba(255,255,255,0)");
@@ -3089,7 +3191,6 @@
 
         isWarping = true;
         
-        // 1. Accelerate (0s - 2s)
         let accelerate = setInterval(()=>{
             warpSpeed += 3; 
             if (warpSpeed >= 80){
@@ -3097,14 +3198,11 @@
             }
         }, 30);
         
-        // 2. Show Welcome Text (at 1.5s)
         setTimeout(() => {
             welcomeText.style.opacity = "1";
         }, 1500);
         
-        // 3. Flash & Decelerate (at 4s)
         setTimeout(() => {
-            // White Flash
             flash.style.opacity = "1";
             welcomeText.style.opacity = "0"; 
             
@@ -3120,7 +3218,6 @@
 
         }, 4000); 
 
-        // 4. End (at 5s)
         setTimeout(()=>{
             flash.style.opacity = "0";
             overlay.classList.remove('active');
@@ -3133,7 +3230,6 @@
         }, 5000); 
     }
 
-    // --- Friendly Error Messages ---
     function getFirebaseErrorMessage(error) {
         switch (error.code) {
             case 'auth/user-not-found': return "No account found with this email address.";
@@ -3491,7 +3587,7 @@
                     const item = document.createElement('div');
                     item.className = 'glass-card'; item.style.padding = '1rem'; 
                     item.style.marginBottom = '1rem'; item.style.display = 'grid'; item.style.gridTemplateColumns = '1fr 1fr 1fr'; item.style.alignItems = 'center';
-                    item.innerHTML = `<div><div style="color:var(--text-main); font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background:${data.status==='Open'?'#fffbeb':'#ecfdf5'}; color:${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div></div>`;
+                    item.innerHTML = `<div><div style="color:var(--text-main); font-weight:600;">${data.type}</div><div style="font-size:0.75rem; color:var(--text-tertiary);">${date}</div></div><div class="ticket-id">${data.ticketId || doc.id}</div><div style="text-align:right;"><span style="background="${data.status==='Open'?'#fffbeb':'#ecfdf5'}; color="${data.status==='Open'?'var(--accent-warn)':'var(--accent-success)'}; padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">${data.status}</span></div></div>`;
                     listContainer.appendChild(item);
                 });
             }).catch((error) => { console.error(error); listContainer.innerHTML = '<div style="text-align:center; color: #ef4444;">Error loading ticket.</div>'; });
@@ -3535,7 +3631,6 @@
         }
         if (typeof auth === 'undefined' || auth === null) { showGlassModal("Error", "Authentication system initializing...", "error"); return; }
         
-        // UPDATED: Show Custom Auth Modal for Guest
         if (auth.currentUser) { 
             selectPackage(name, type); 
         } else { 
@@ -3589,7 +3684,6 @@
         state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
         document.getElementById('terms-check').checked = false;
         
-        // Reset UI Sections
         document.getElementById('checkout-actions').style.display = 'block';
         document.getElementById('manual-confirm-section').style.display = 'none';
         document.getElementById('payment-failed-section').style.display = 'none';
@@ -3829,7 +3923,6 @@
             "description": document.getElementById('summary-pkg-name').innerText + (state.paymentMode === 'deposit' ? " (Deposit)" : ""),
             "image": "https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png",
             "handler": function(response){ 
-                // UPDATED: Auto-submit on success
                 handlePaymentSuccess(response.razorpay_payment_id);
             },
             "modal": { 
@@ -3848,7 +3941,6 @@
         try {
             const rzp1 = new Razorpay(options);
             rzp1.open(); 
-            // Show manual confirmation box as a fallback/visual cue
             document.getElementById('checkout-actions').style.display = 'none';
             document.getElementById('manual-confirm-section').style.display = 'block';
             document.getElementById('payment-failed-section').style.display = 'none';
@@ -3858,7 +3950,6 @@
         }
     }
 
-    // NEW: Dedicated Handler for Auto-Submit
     function handlePaymentSuccess(paymentId) {
         const pendingOrderStr = localStorage.getItem('pendingOrder');
         if(!pendingOrderStr) {
@@ -3868,9 +3959,8 @@
 
         const orderData = JSON.parse(pendingOrderStr);
         
-        // Add Payment ID to order
         orderData.razorpay_payment_id = paymentId;
-        orderData.status = 'Paid'; // Update status immediately
+        orderData.status = 'Paid'; 
         
         const overlay = document.getElementById('processing-overlay');
         const msgEl = document.getElementById('process-message');
@@ -3894,7 +3984,7 @@
                 domain: orderData.domainName, internalNotes: "",
                 maintenance: orderData.maintenancePrice > 0 ? (orderData.maintenancePrice === 50 ? "Basic" : "Business") : "None",
                 package: orderData.package, paymentMethod: "Razorpay (Curlec)", promo: orderData.discountCode || "",
-                razorpay_payment_id: paymentId, // Store Payment ID
+                razorpay_payment_id: paymentId,
                 salesRepIds: [], salesTeamIds: [], salesTeamNames: [], status: "Paid",
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(), total: orderData.total, userId: orderData.userId || ""
             };
@@ -3910,7 +4000,6 @@
             console.error("Order Error:", error);
             overlay.style.display = 'none';
             showToast("Order processing failed. Please contact support.", "error");
-            // Keep the manual confirm section visible as fallback if auto-process fails
             document.getElementById('manual-confirm-section').style.display = 'block';
         });
     }
@@ -3923,7 +4012,6 @@
             return;
         }
         
-        // If manual button is clicked, we assume success but have no ID
         handlePaymentSuccess('MANUAL_CHECK_' + Date.now());
     }
 
