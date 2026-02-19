@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<!-- Homepage -->
+<url>
+  <loc>https://ddnet.my/</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>1.00</priority>
+  <changefreq>weekly</changefreq>
+</url>
+
+<!-- Pricing -->
+<url>
+  <loc>https://ddnet.my/pricing</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.90</priority>
+  <changefreq>monthly</changefreq>
+</url>
+
+<!-- Portfolio / Clients -->
+<url>
+  <loc>https://ddnet.my/clients</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.80</priority>
+  <changefreq>monthly</changefreq>
+</url>
+
+<!-- Reviews -->
+<url>
+  <loc>https://ddnet.my/reviews</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.80</priority>
+  <changefreq>weekly</changefreq>
+</url>
+
+<!-- About Company -->
+<url>
+  <loc>https://ddnet.my/about-company</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.70</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Founder -->
+<url>
+  <loc>https://ddnet.my/founder-danialdanish</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.60</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Contact -->
+<url>
+  <loc>https://ddnet.my/contact</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.70</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Helpdesk -->
+<url>
+  <loc>https://ddnet.my/helpdesk</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.70</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Updates -->
+<url>
+  <loc>https://ddnet.my/updates</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.60</priority>
+  <changefreq>monthly</changefreq>
+</url>
+
+<!-- Terms & Conditions -->
+<url>
+  <loc>https://ddnet.my/terms</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.40</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Privacy Policy -->
+<url>
+  <loc>https://ddnet.my/privacy</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.40</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- FAQ -->
+<url>
+  <loc>https://ddnet.my/faq</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.60</priority>
+  <changefreq>monthly</changefreq>
+</url>
+
+<!-- Login -->
+<url>
+  <loc>https://ddnet.my/login</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.30</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+<!-- Signup -->
+<url>
+  <loc>https://ddnet.my/signup</loc>
+  <lastmod>2026-02-19</lastmod>
+  <priority>0.30</priority>
+  <changefreq>yearly</changefreq>
+</url>
+
+</urlset>
