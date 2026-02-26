@@ -864,9 +864,9 @@
         /* Card Container */
         .animated-notification-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: column,
             align-items: center;
-            justify-content: center;
+            justify-content: center,
             text-align: center;
             
             /* Card Styling */
@@ -1133,7 +1133,7 @@
         .about-section-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center,
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
@@ -1275,8 +1275,124 @@
         .star-icon { font-size: 1.8rem; color: #cbd5e1; transition: color 0.2s; }
         .star-icon.hovered, .star-icon.selected { color: var(--accent-star); }
 
+        /* ========================================== */
+        /* NEW CHECKOUT WIZARD STYLES                 */
+        /* ========================================== */
+        .checkout-stepper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+        .step-indicator.active {
+            color: var(--soft-black);
+            opacity: 1;
+        }
+        .step-indicator.completed {
+            color: var(--accent-success);
+            opacity: 1;
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .step-indicator.active .step-number {
+            background: var(--soft-black);
+            color: white;
+            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+        }
+        .step-indicator.completed .step-number {
+            background: var(--accent-success);
+            color: white;
+        }
+        
+        .step-content { display: none; animation: fadeIn 0.4s ease; }
+        .step-content.active { display: block; }
+        
+        .step-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 1.5rem;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NEWSLETTER SECTION --- */
+        .newsletter-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .newsletter-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .newsletter-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .newsletter-content p {
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .newsletter-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+        }
+        .newsletter-input:focus { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
+        .btn-newsletter {
+            background: var(--accent-success);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-newsletter:hover { background: #059669; transform: translateY(-2px); }
+
         /* --- FOOTER --- */
-        footer { background-color: white; border-top: 1px solid var(--border-glass); padding: 5rem 0 2rem; margin-top: auto; position: relative; z-index: 5; }
+        footer { background-color: white; border-top: 1px solid var(--border-glass); padding: 5rem 0 2rem; position: relative; z-index: 5; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
         .footer-col h4 { font-size: 0.9rem; margin-bottom: 1.5rem; color: var(--text-main); letter-spacing: 0.05em; }
         .footer-brand .company-name { font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; }
@@ -1366,15 +1482,6 @@
             text-align: center;
             animation: fadeIn 0.5s ease;
         }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .manual-confirm-icon, .failed-confirm-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .manual-confirm-icon { color: var(--accent-success); }
-        .failed-confirm-icon { color: var(--accent-danger); }
 
         /* ========================================== */
         /* LOGIN WARP EFFECT STYLES (BLACK & WHITE)   */
@@ -1510,6 +1617,11 @@
                 min-width: unset;
                 width: 100%;
             }
+            
+            /* Checkout Steps Mobile */
+            .checkout-stepper { gap: 0.5rem; margin-bottom: 2rem; }
+            .step-indicator { font-size: 0.8rem; }
+            .step-number { width: 28px; height: 28px; font-size: 0.75rem; }
         }
 
         /* Fix: Force Chat Widget Visibility */
@@ -2192,18 +2304,88 @@
             </div>
         </section>
 
-        <!-- PAGE: CHECKOUT -->
+        <!-- PAGE: CHECKOUT (UPDATED 3-STEP WIZARD) -->
         <section id="buynow" class="page-section">
-            <div class="text-center" style="margin-bottom: 2rem;"><h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Finalize Your Order</h2><p style="color: var(--text-secondary);">Secure your package and finalize details.</p></div>
-            <div class="profile-details-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
-                <!-- LEFT COLUMN -->
-                <div class="glass-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-glass);"><h3 style="font-size: 1rem; color: var(--text-main);">Order Summary</h3><span class="auth-link" style="font-size:0.85rem;" onclick="navigateTo('/pricing')">Change Package</span></div>
-                    <div style="background: rgba(241, 245, 249, 0.5); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(30, 41, 59, 0.1); margin-bottom: 1.5rem;">
-                        <h4 id="summary-pkg-name" style="color: var(--soft-black); margin-bottom: 0.5rem;">Select a Package</h4>
-                        <p id="summary-pkg-desc" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Please select a package from Services page.</p>
+            <div class="text-center" style="margin-bottom: 2rem;"><h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Checkout</h2><p style="color: var(--text-secondary);">Complete your order in 3 simple steps.</p></div>
+            
+            <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                
+                <!-- STEPPER HEADER -->
+                <div class="checkout-stepper">
+                    <div class="step-indicator active" id="ind-1"><div class="step-number">1</div> Review</div>
+                    <div class="step-indicator" id="ind-2"><div class="step-number">2</div> Details</div>
+                    <div class="step-indicator" id="ind-3"><div class="step-number">3</div> Payment</div>
+                </div>
+
+                <!-- STEP 1: PLAN REVIEW -->
+                <div id="step-1" class="step-content active">
+                    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem;">1. Plan Review</h3>
+                    
+                    <div style="background: rgba(241, 245, 249, 0.5); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--border-glass);">
+                        <h4 id="summary-pkg-name" style="font-size: 1.2rem; color: var(--soft-black);">Select a Package</h4>
+                        <p id="summary-pkg-desc" style="font-size: 0.9rem; color: var(--text-secondary);">Please select a package from Services page.</p>
                         <div id="dynamic-price-area"></div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Billing Cycle</label>
+                        <div class="pricing-toggle-container" style="margin-bottom: 0;">
+                            <span id="checkout-label-monthly" class="toggle-label" onclick="setCheckoutBilling('monthly')">Monthly</span>
+                            <label class="switch"><input type="checkbox" id="checkout-billing-toggle" onchange="toggleCheckoutBilling()"><span class="slider"></span></label>
+                            <span id="checkout-label-onetime" class="toggle-label" onclick="setCheckoutBilling('onetime')">One-Time</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.5rem;">*One-time purchase excludes support & maintenance.</p>
+                    </div>
+
+                    <div class="step-nav">
+                        <button class="btn btn-secondary" onclick="navigateTo('/pricing')">Cancel</button>
+                        <button class="btn btn-primary" onclick="nextCheckoutStep()">Next Step <i class="ri-arrow-right-line" style="margin-left: 5px;"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: YOUR DETAILS & DOMAIN -->
+                <div id="step-2" class="step-content">
+                    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem;">2. Your Details & Domain</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Personal Details <span id="auto-fill-label" style="font-size: 0.7rem; color: var(--soft-black); display: none;">(Auto-filled)</span></label>
+                        <div class="profile-details-grid">
+                            <input type="text" id="co-name" class="form-input" placeholder="Full Name" required>
+                            <input type="tel" id="co-phone" class="form-input" placeholder="Phone Number" required>
+                            <input type="email" id="co-email" class="form-input" placeholder="Email" required>
+                            <input type="text" id="co-company" class="form-input" placeholder="Company Name (Optional)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Domain Choice</label>
+                        <div class="radio-group">
+                            <div class="radio-option selected" onclick="updateDomain('sub', this)"><input type="radio" name="domain_type" value="sub" checked> <span style="font-size: 0.95rem; color: var(--text-main);">DDNetwork Subdomain (Free 1st Year)</span></div>
+                            <div class="radio-option" onclick="updateDomain('custom', this)"><input type="radio" name="domain_type" value="custom"> <span style="font-size: 0.95rem; color: var(--text-main);">I have my own domain</span></div>
+                        </div>
+                        <div id="input-subdomain" style="margin-top: 10px;"><input type="text" id="subdomain-text" class="form-input" placeholder="yourname" oninput="updateSummaryText()"><span style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px; display: block;">URL: <span id="url-preview" style="color: var(--soft-black); font-weight: 700;">.ddnet.my</span></span></div>
+                        <div id="input-custom" style="display: none; margin-top: 10px;"><input type="text" id="custom-domain-text" class="form-input" placeholder="www.example.com" oninput="updateSummaryText()"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Maintenance Plan (Optional)</label>
+                        <div class="radio-group">
+                            <div class="radio-option selected" onclick="updateMaintenance('none', this)"><input type="radio" name="maint" value="none" checked> None</div>
+                            <div class="radio-option" onclick="updateMaintenance('basic', this)"><input type="radio" name="maint" value="basic"> Basic (+RM 50/mo)</div>
+                            <div class="radio-option" onclick="updateMaintenance('business', this)"><input type="radio" name="maint" value="business"> Business (+RM 100/mo)</div>
+                        </div>
+                    </div>
+
+                    <div class="step-nav">
+                        <button class="btn btn-secondary" onclick="prevCheckoutStep()"><i class="ri-arrow-left-line" style="margin-right: 5px;"></i> Back</button>
+                        <button class="btn btn-primary" onclick="nextCheckoutStep()">Next Step <i class="ri-arrow-right-line" style="margin-left: 5px;"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: ORDER SUMMARY & PAYMENT -->
+                <div id="step-3" class="step-content">
+                    <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem;">3. Order Summary & Payment</h3>
+                    
                     <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
                         <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Setup Fee (One-time):</span><span id="summary-setup" style="color: var(--accent-warn); font-weight: 600;">RM 0</span></div>
                         <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Recurring Price:</span><span id="summary-recurring" style="color: var(--text-main); font-weight: 600;">RM 0</span></div>
@@ -2211,87 +2393,66 @@
                         <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Maintenance:</span><span id="summary-maintenance" style="color: var(--text-main); font-weight: 600;">None</span></div>
                         <div id="row-discount" style="display:none; justify-content:space-between; font-size:0.95rem; color: var(--accent-success);"><span style="display:flex; align-items:center;">Discount: <strong id="summary-promo-code" style="margin: 0 5px;"></strong><i class="ri-close-circle-fill" style="margin-left:5px; cursor:pointer;" onclick="removeVoucher()"></i></span><span id="summary-discount-val">-RM 0</span></div>
                     </div>
-                    <div style="display:flex; justify-content:space-between; font-size: 1.5rem; font-weight: 800; color: var(--text-main); border-top: 1px solid var(--border-glass); padding-top: 20px; margin-top: 20px;"><span>Total Due</span><span id="summary-final-total" style="color: var(--soft-black);">RM 0</span></div>
-                    <div id="deposit-note-container" style="margin-top: 10px; text-align: right;">
+                    
+                    <div style="display:flex; justify-content:space-between; font-size: 1.5rem; font-weight: 800; color: var(--text-main); border-top: 1px solid var(--border-glass); padding-top: 20px; margin-top: 20px; margin-bottom: 2rem;"><span>Total Due</span><span id="summary-final-total" style="color: var(--soft-black);">RM 0</span></div>
+
+                    <div id="deposit-note-container" style="margin-bottom: 2rem; text-align: right;">
                         <div id="deposit-note" style="font-size: 0.8rem; color: var(--accent-warn); margin-bottom: 5px; font-weight: 600; display:none;">Deposit Required (50%): RM 0</div>
                         <div class="payment-options" style="display: flex; gap: 10px; justify-content: flex-end;">
                             <button type="button" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" id="btn-pay-full" onclick="setPaymentMode('full')">Pay Full</button>
                             <button type="button" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" id="btn-pay-deposit" onclick="setPaymentMode('deposit')">Pay Deposit</button>
                         </div>
                     </div>
-                </div>
-                <!-- RIGHT COLUMN -->
-                <div class="glass-card">
-                    <h3 style="margin-bottom: 2rem; color: var(--text-main);">Configuration</h3>
-                    <form id="checkoutForm" onsubmit="return false;">
-                        <div class="form-group">
-                            <label class="form-label">Personal Details <span id="auto-fill-label" style="font-size: 0.7rem; color: var(--soft-black); display: none;">(Auto-filled)</span></label>
-                            <div class="profile-details-grid">
-                                <input type="text" id="co-name" class="form-input" placeholder="Full Name" required>
-                                <input type="tel" id="co-phone" class="form-input" placeholder="Phone Number" required>
-                                <input type="email" id="co-email" class="form-input" placeholder="Email" required>
-                                <input type="text" id="co-company" class="form-input" placeholder="Company Name (Optional)">
-                            </div>
-                        </div>
-                        <div id="checkout-voucher-section" style="display: none; margin-bottom: 2rem;">
-                            <div class="glass-card" style="padding: 1rem; margin-bottom:0; display:flex; justify-content:space-between; align-items:center; border-color: rgba(30, 41, 59, 0.2);">
-                                <div class="voucher-info"><h4 id="checkout-voucher-title" style="color:var(--text-main); font-size:0.9rem; margin-bottom:2px;">Gift Voucher Available</h4><p id="checkout-voucher-text" style="color:var(--soft-black); font-weight:700; font-size:0.8rem;">-</p></div>
-                                <button type="button" id="btn-apply-voucher" class="btn btn-primary" style="width: auto; padding: 0.6rem 1.5rem;" onclick="applyPersonalVoucher()">Apply</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Domain Choice</label>
-                            <div class="radio-group">
-                                <div class="radio-option selected" onclick="updateDomain('sub', this)"><input type="radio" name="domain_type" value="sub" checked> <span style="font-size: 0.95rem; color: var(--text-main);">DDNetwork Subdomain (Free 1st Year)</span></div>
-                                <div class="radio-option" onclick="updateDomain('custom', this)"><input type="radio" name="domain_type" value="custom"> <span style="font-size: 0.95rem; color: var(--text-main);">I have my own domain</span></div>
-                            </div>
-                            <div id="input-subdomain" style="margin-top: 10px;"><input type="text" id="subdomain-text" class="form-input" placeholder="yourname" oninput="updateSummaryText()"><span style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px; display: block;">URL: <span id="url-preview" style="color: var(--soft-black); font-weight: 700;">.ddnet.my</span></span></div>
-                            <div id="input-custom" style="display: none; margin-top: 10px;"><input type="text" id="custom-domain-text" class="form-input" placeholder="www.example.com" oninput="updateSummaryText()"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Maintenance Plan (Optional)</label>
-                            <div class="radio-group">
-                                <div class="radio-option selected" onclick="updateMaintenance('none', this)"><input type="radio" name="maint" value="none" checked> None</div>
-                                <div class="radio-option" onclick="updateMaintenance('basic', this)"><input type="radio" name="maint" value="basic"> Basic (+RM 50/mo)</div>
-                                <div class="radio-option" onclick="updateMaintenance('business', this)"><input type="radio" name="maint" value="business"> Business (+RM 100/mo)</div>
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top: 2rem;">
-                            <label class="form-label">Promo Code (Optional)</label>
-                            <div style="display: flex; gap: 10px;"><input type="text" id="promo-input" class="form-input" placeholder="e.g. PROMO10%" style="text-transform: uppercase;"><button type="button" class="btn btn-glass" onclick="applyPromo()" style="padding: 0 1.5rem; min-width: 70px;">Apply</button></div>
-                            <p style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 5px;">*Promo codes are for logged-in users only.</p>
-                        </div>
-                        <div style="border: 0; border-top: 1px solid var(--border-glass); margin: 2rem 0;"></div>
-                        <div class="form-group" style="background: rgba(255,255,255,0.8); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-glass);">
-                            <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 0.9rem; line-height: 1.5;">
-                                <input type="checkbox" id="terms-check" style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--soft-black);">
-                                <span style="color: var(--text-secondary);">I have read and agreed to <span class="auth-link" onclick="openTermsModal()">Terms & Conditions</span>.</span>
-                            </label>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary); background: #f8fafc; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-glass);"><i class="ri-secure-payment-line" style="color: var(--accent-success);"></i> <strong>Secure Payment via Razorpay (Curlec)</strong></div>
-                        <div id="checkout-actions"><button type="button" id="btn-pay-now" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="initiateRazorpayPayment()"><i class="ri-credit-card-2-fill" style="margin-right:8px;"></i> Pay Now</button></div>
-                        
-                        <!-- PAYMENT SUCCESS SECTION -->
-                        <div id="manual-confirm-section">
-                            <i class="ri-checkbox-circle-fill manual-confirm-icon"></i>
-                            <h3 style="margin-bottom: 0.5rem; color: var(--soft-black);">Payment Window Opened</h3>
-                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Please complete your payment in the Razorpay window. Once done, click the button below to finalize your order.</p>
-                            <button type="button" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;" onclick="handleManualConfirmation()">I have made payment</button>
-                        </div>
 
-                        <!-- PAYMENT FAILED SECTION -->
-                        <div id="payment-failed-section">
-                            <i class="ri-close-circle-fill failed-confirm-icon"></i>
-                            <h3 style="margin-bottom: 0.5rem; color: var(--accent-danger);">Payment Failed or Cancelled</h3>
-                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">The payment process was interrupted or cancelled. You can try again or contact support for assistance.</p>
-                            <div style="display: grid; gap: 10px;">
-                                <button type="button" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 1rem;" onclick="initiateRazorpayPayment()"><i class="ri-refresh-line" style="margin-right:8px;"></i> Retry Payment</button>
-                                <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="window.location.href='https://wa.me/60122600969'">Contact Support via WhatsApp</button>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">Promo Code (Optional)</label>
+                        <div style="display: flex; gap: 10px;"><input type="text" id="promo-input" class="form-input" placeholder="e.g. PROMO10%" style="text-transform: uppercase;"><button type="button" class="btn btn-glass" onclick="applyPromo()" style="padding: 0 1.5rem; min-width: 70px;">Apply</button></div>
+                        <p style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 5px;">*Promo codes are for logged-in users only.</p>
+                    </div>
 
-                    </form>
+                    <div id="checkout-voucher-section" style="display: none; margin-bottom: 1.5rem;">
+                        <div class="glass-card" style="padding: 1rem; margin-bottom:0; display:flex; justify-content:space-between; align-items:center; border-color: rgba(30, 41, 59, 0.2);">
+                            <div class="voucher-info"><h4 id="checkout-voucher-title" style="color:var(--text-main); font-size:0.9rem; margin-bottom:2px;">Gift Voucher Available</h4><p id="checkout-voucher-text" style="color:var(--soft-black); font-weight:700; font-size:0.8rem;">-</p></div>
+                            <button type="button" id="btn-apply-voucher" class="btn btn-primary" style="width: auto; padding: 0.6rem 1.5rem;" onclick="applyPersonalVoucher()">Apply</button>
+                        </div>
+                    </div>
+
+                    <div style="border: 0; border-top: 1px solid var(--border-glass); margin: 2rem 0;"></div>
+                    <div class="form-group" style="background: rgba(255,255,255,0.8); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-glass);">
+                        <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 0.9rem; line-height: 1.5;">
+                            <input type="checkbox" id="terms-check" style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--soft-black);">
+                            <span style="color: var(--text-secondary);">I have read and agreed to <span class="auth-link" onclick="openTermsModal()">Terms & Conditions</span>.</span>
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary); background: #f8fafc; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-glass);"><i class="ri-secure-payment-line" style="color: var(--accent-success);"></i> <strong>Secure Payment via Razorpay (Curlec)</strong></div>
+                    
+                    <div id="checkout-actions"><button type="button" id="btn-pay-now" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="initiateRazorpayPayment()"><i class="ri-credit-card-2-fill" style="margin-right:8px;"></i> Pay Now</button></div>
+                    
+                    <!-- PAYMENT SUCCESS SECTION -->
+                    <div id="manual-confirm-section">
+                        <i class="ri-checkbox-circle-fill manual-confirm-icon"></i>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--soft-black);">Payment Window Opened</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Please complete your payment in the Razorpay window. Once done, click the button below to finalize your order.</p>
+                        <button type="button" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;" onclick="handleManualConfirmation()">I have made payment</button>
+                    </div>
+
+                    <!-- PAYMENT FAILED SECTION -->
+                    <div id="payment-failed-section">
+                        <i class="ri-close-circle-fill failed-confirm-icon"></i>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-danger);">Payment Failed or Cancelled</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">The payment process was interrupted or cancelled. You can try again or contact support for assistance.</p>
+                        <div style="display: grid; gap: 10px;">
+                            <button type="button" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 1rem;" onclick="initiateRazorpayPayment()"><i class="ri-refresh-line" style="margin-right:8px;"></i> Retry Payment</button>
+                            <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="window.location.href='https://wa.me/60122600969'">Contact Support via WhatsApp</button>
+                        </div>
+                    </div>
+
+                    <div class="step-nav" style="margin-top: 2rem;">
+                        <button class="btn btn-secondary" onclick="prevCheckoutStep()"><i class="ri-arrow-left-line" style="margin-right: 5px;"></i> Back</button>
+                        <!-- Pay button is in the main area for step 3 to avoid clutter -->
+                    </div>
                 </div>
+                
             </div>
         </section>
 
@@ -2332,7 +2493,7 @@
         </section>
 
         <!-- PAGE: FOUNDER -->
-        <section id="founder" class="page-section">
+        <section id="founder" class="        page-section" class="page-section">
             <div class="glass-card" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 3rem 1.5rem;">
                 <img src="https://raw.githubusercontent.com/ddnetwork-ent/DDN-One/refs/heads/main/DD.JPG" alt="Danial Danish" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; margin-bottom: 1.5rem;">
                 <h2 style="margin-bottom: 0.5rem;">Danial Danish</h2>
@@ -2394,6 +2555,22 @@
         </section>
 
     </main>
+
+    <!-- NEWSLETTER SECTION (NEW) -->
+    <section class="newsletter-section">
+        <div class="newsletter-content">
+            <h3>Stay Updated</h3>
+            <p>Subscribe to our newsletter for the latest tech tips, offers, and news.</p>
+            <form class="newsletter-form" action="https://ddnetwork.us21.list-manage.com/subscribe/post?u=384c79298eab3ae51990362dd&amp;id=f888020379&amp;f_id=009d62e1f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                <input type="email" value="" name="EMAIL" class="newsletter-input" placeholder="Enter your email address" required>
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_384c79298eab3ae51990362dd_f888020379" tabindex="-1" value=""></div>
+                <button type="submit" class="btn-newsletter">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- MAILCHIMP SCRIPT (NEW) -->
+    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/384c79298eab3ae51990362dd/f88802037986932b3e513bf05.js");</script>
 
     <!-- FOOTER -->
     <footer>
@@ -2898,21 +3075,33 @@
     function loadPortfolio() {
         if(!db) return;
         const container = document.getElementById('portfolio-grid');
+        
+        // DUMMY ITEM PREPEND
+        const dummyHTML = `
+            <div class="portfolio-item">
+                <div class="portfolio-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Featured Project">
+                </div>
+                <div class="portfolio-info">
+                    <h4>Featured Concept</h4>
+                    <p>A showcase of our design capabilities for modern e-commerce solutions.</p>
+                    <a href="#" onclick="return false;" class="btn btn-glass" style="width: 100%; font-size: 0.8rem; padding: 0.5rem;">View Demo</a>
+                </div>
+            </div>`;
+        
+        container.innerHTML = dummyHTML; 
+
         db.collection("clients_portfolio").where("status", "==", true).onSnapshot((snapshot) => {
-            container.innerHTML = ''; 
-            if (snapshot.empty) {
-                container.innerHTML = '<div class="text-center" style="grid-column:1/-1; padding: 2rem; color: var(--text-tertiary);">No portfolio items available.</div>';
-                return;
-            }
+            // Append DB items
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const cardHTML = `
-                    <div class="glass-card" style="padding: 0; overflow: hidden;">
-                        <div style="height: 200px; overflow: hidden;">
-                            <img src="${data.img}" alt="${data.name}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <div class="portfolio-item">
+                        <div style="height: 220px; overflow: hidden;">
+                            <img src="${data.img}" alt="${data.name}" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div style="padding: 1.5rem;">
-                            <h4 style="margin-bottom: 0.5rem;">${data.name}</h4>
+                            <h4>${data.name}</h4>
                             <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Visit Website</p>
                             <a href="${data.link}" target="_blank" class="btn btn-glass" style="width: 100%; font-size: 0.8rem;">Visit Live Site</a>
                         </div>
@@ -3601,15 +3790,15 @@
     }
 
     // ==========================================
-    // CHECKOUT & QUOTE LOGIC
+    // CHECKOUT & QUOTE LOGIC (UPDATED 3-STEP)
     // ==========================================
-    
+    let checkoutStep = 1;
+
     function openQuoteForm(packageName) {
         state.packageType = packageName;
         state.packagePrice = 0;
         state.setupFee = 0;
         if(auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
-        document.getElementById('quote-package').value = packageName;
         navigateTo('/quote-form');
     }
 
@@ -3663,6 +3852,10 @@
         else priceHTML = `<div style="text-align:right; font-weight:700; color:var(--soft-black);">Price: RM ${basePrice} (Monthly)</div>`;
         priceArea.innerHTML = priceHTML;
 
+        // Sync checkout toggle
+        document.getElementById('checkout-billing-toggle').checked = state.isOneTime;
+        updateCheckoutToggleUI();
+
         state.domainType = 'sub'; 
         state.domainName = ''; 
         state.domainNameValid = false; 
@@ -3672,6 +3865,10 @@
         state.maintenancePrice = 0;
         state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
         document.getElementById('terms-check').checked = false;
+        
+        // Reset Steps
+        checkoutStep = 1;
+        updateCheckoutUI();
         
         document.getElementById('checkout-actions').style.display = 'block';
         document.getElementById('manual-confirm-section').style.display = 'none';
@@ -3687,6 +3884,107 @@
         const customPath = `/${packageSlug}/payment-checkout%${encodeURIComponent(clientName)}`;
         window.history.pushState({ path: customPath }, "", customPath);
         performTransition('buynow');
+    }
+
+    // --- CHECKOUT WIZARD LOGIC ---
+    function nextCheckoutStep() {
+        if (checkoutStep === 1) {
+            // Validation for Step 1 (Plan Review)
+            if(!state.packageType) { showToast("Please select a package first", "error"); return; }
+            // Move to Step 2
+            checkoutStep = 2;
+            updateCheckoutUI();
+        } else if (checkoutStep === 2) {
+            // Validation for Step 2 (Details)
+            const name = document.getElementById('co-name').value;
+            const phone = document.getElementById('co-phone').value;
+            const email = document.getElementById('co-email').value;
+            
+            if(!name || !phone || !email) { showToast("Please fill in Name, Phone, and Email.", "error"); return; }
+            if(!state.domainNameValid) {
+                if(state.domainType === 'sub') { document.getElementById('subdomain-text').focus(); showToast("Please enter a subdomain name.", "warning"); }
+                else { document.getElementById('custom-domain-text').focus(); showToast("Please enter your domain.", "warning"); }
+                return;
+            }
+            
+            // Move to Step 3
+            checkoutStep = 3;
+            updateCheckoutUI();
+        }
+    }
+
+    function prevCheckoutStep() {
+        if (checkoutStep > 1) {
+            checkoutStep--;
+            updateCheckoutUI();
+        } else {
+            navigateTo('/pricing');
+        }
+    }
+
+    function updateCheckoutUI() {
+        // Hide all steps
+        document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+        // Show current step
+        document.getElementById(`step-${checkoutStep}`).classList.add('active');
+
+        // Update indicators
+        for(let i=1; i<=3; i++) {
+            const ind = document.getElementById(`ind-${i}`);
+            if(i === checkoutStep) {
+                ind.classList.add('active');
+                ind.classList.remove('completed');
+            } else if (i < checkoutStep) {
+                ind.classList.remove('active');
+                ind.classList.add('completed');
+            } else {
+                ind.classList.remove('active');
+                ind.classList.remove('completed');
+            }
+        }
+    }
+
+    // Separate toggle for inside checkout
+    function setCheckoutBilling(cycle) {
+        state.billingCycle = cycle;
+        const toggle = document.getElementById('checkout-billing-toggle');
+        if(cycle === 'onetime') toggle.checked = true; else toggle.checked = false;
+        updateCheckoutToggleUI();
+        updatePackagePriceDisplay();
+        updateTotal();
+    }
+
+    function toggleCheckoutBilling() {
+        const toggle = document.getElementById('checkout-billing-toggle');
+        state.billingCycle = toggle.checked ? 'onetime' : 'monthly';
+        updateCheckoutToggleUI();
+        updatePackagePriceDisplay();
+        updateTotal();
+    }
+
+    function updateCheckoutToggleUI() {
+        const labelMonthly = document.getElementById('checkout-label-monthly');
+        const labelOnetime = document.getElementById('checkout-label-onetime');
+        if(state.billingCycle === 'monthly') { labelMonthly.classList.add('active'); labelOnetime.classList.remove('active'); } 
+        else { labelMonthly.classList.remove('active'); labelOnetime.classList.add('active'); }
+        
+        state.isOneTime = (state.billingCycle === 'onetime');
+    }
+
+    function updatePackagePriceDisplay() {
+        const priceArea = document.getElementById('dynamic-price-area');
+        let basePrice = 0;
+        if (PRICING_DATA[state.packageType]) {
+            basePrice = state.isOneTime ? PRICING_DATA[state.packageType].oneTime : PRICING_DATA[state.packageType].monthly;
+        }
+        state.packagePrice = basePrice;
+        state.setupFee = state.isOneTime ? 0 : PRICING_DATA[state.packageType].setupFee;
+        
+        let priceHTML = '';
+        if (state.isOneTime) priceHTML = `<div style="text-align:right; font-weight:700; color:var(--soft-black);">Price: RM ${basePrice}</div>`;
+        else priceHTML = `<div style="text-align:right; font-weight:700; color:var(--soft-black);">Price: RM ${basePrice} (Monthly)</div>`;
+        priceArea.innerHTML = priceHTML;
+        updateSummaryText(); updateTotal();
     }
 
     function updateDomain(type, element) {
@@ -3871,21 +4169,11 @@
             return;
         }
 
-        if(!state.domainNameValid) {
-            if(state.domainType === 'sub') {
-                showGlassModal("Missing Input", "Please fill in your Subdomain Name.", "warning");
-                document.getElementById('subdomain-text').focus();
-            } else {
-                showGlassModal("Missing Input", "Please fill in your Custom Domain Name.", "warning");
-                document.getElementById('custom-domain-text').focus();
-            }
-            return;
-        }
-
         const name = document.getElementById('co-name').value;
         const phone = document.getElementById('co-phone').value;
         const email = document.getElementById('co-email').value;
         const company = document.getElementById('co-company').value;
+        
         if(!name || !phone || !email) return showGlassModal("Error", "Please enter Name, Phone, and Email.", "error");
 
         const totalText = document.getElementById('summary-final-total').innerText;
@@ -4158,12 +4446,21 @@
     function loadHomePortfolio() {
         if(!db) return;
         const container = document.getElementById('home-portfolio-grid');
-        db.collection("clients_portfolio").where("status", "==", true).limit(3).onSnapshot((snapshot) => {
-            container.innerHTML = ''; 
-            if (snapshot.empty) {
-                container.innerHTML = '<div class="text-center" style="grid-column:1/-1;">No portfolio items.</div>';
-                return;
-            }
+        
+        // Dummy Item
+        const dummyHTML = `
+            <div class="portfolio-item">
+                <div class="portfolio-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Featured Project">
+                </div>
+                <div class="portfolio-info">
+                    <h4>Featured Concept</h4>
+                    <p>A showcase of our design capabilities for modern e-commerce solutions.</p>
+                </div>
+            </div>`;
+        container.innerHTML = dummyHTML;
+
+        db.collection("clients_portfolio").where("status", "==", true).limit(2).onSnapshot((snapshot) => {
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const html = `
@@ -4276,9 +4573,6 @@
 
     initializeDatabase();
     
-</script>
-<!-- UPDATED CHAT WIDGET SCRIPT -->
-<script src="https://app.livechatai.com/embed.js" data-id="cmlas1njr0001jj04hi5ygd18" async defer>
 </script>
 </body>
 </html>
