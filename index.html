@@ -1442,7 +1442,182 @@
             text-transform: none;
             color: #e0e0e0;
         }
+
+        /* ========================================== */
+        /* NEW 3-STEP CHECKOUT WIZARD STYLES          */
+        /* ========================================== */
+        .checkout-wizard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-surface);
+            border-radius: 24px;
+            box-shadow: var(--shadow-card-hover);
+            border: 1px solid var(--border-glass);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+        }
+
+        /* Wizard Progress Bar */
+        .wizard-progress {
+            background: #f8fafc;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            flex: 1;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        .step-indicator.active { opacity: 1; }
+        .step-indicator.completed { opacity: 1; }
         
+        .step-circle {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: var(--text-tertiary);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        .step-indicator.active .step-circle {
+            background: var(--soft-black);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.1);
+        }
+        .step-indicator.completed .step-circle {
+            background: var(--accent-success);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .step-indicator.active .step-label { color: var(--soft-black); }
+
+        /* Connecting Line */
+        .step-indicator:not(:last-child)::after {
+            content: ''; position: absolute; top: 16px; left: 50%; width: 100%; height: 2px;
+            background: #e2e8f0; z-index: 1;
+        }
+        .step-indicator.completed:not(:last-child)::after { background: var(--accent-success); }
+
+        /* Wizard Content Area */
+        .wizard-content {
+            padding: 2rem;
+            flex: 1;
+            position: relative;
+        }
+        
+        .wizard-step {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .wizard-step.active { display: block; }
+
+        /* Step 1: Plan Review */
+        .plan-review-card {
+            background: white;
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--soft-black);
+        }
+        .plan-price-large {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--soft-black);
+            margin: 1rem 0;
+        }
+        .plan-price-sub {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .feature-check-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+        .feature-check-list i { color: var(--accent-success); font-size: 1.1rem; }
+
+        /* Step 2: Form */
+        .domain-preview-box {
+            background: #f8fafc;
+            border: 1px dashed var(--soft-black);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+            color: var(--soft-black);
+            font-weight: 700;
+        }
+
+        /* Step 3: Summary Table */
+        .summary-table {
+            width: 100%;
+            margin-bottom: 1.5rem;
+            border-collapse: collapse;
+        }
+        .summary-table td {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+        }
+        .summary-table td:last-child {
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .summary-total td {
+            border-top: 2px solid var(--soft-black);
+            border-bottom: none;
+            font-size: 1.2rem;
+            color: var(--soft-black);
+            font-weight: 800;
+        }
+        .trust-badge {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;
+        }
+
+        /* Wizard Footer Navigation */
+        .wizard-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+
+        @media(max-width: 768px) {
+            .wizard-progress { gap: 0.5rem; padding: 1rem; }
+            .step-label { display: none; }
+            .wizard-footer { flex-direction: column-reverse; gap: 1rem; }
+            .wizard-footer button { width: 100%; }
+        }
+
         /* ========================================== */
         /* MOBILE RESPONSIVE (COMPACT MODE)           */
         /* ========================================== */
@@ -2105,7 +2280,7 @@
                             <li id="html-feat-no-support" class="maintenance-warning hidden">No maintenance or support included</li>
                             <li id="html-feat-content-charge" class="maintenance-warning hidden">Content changes are chargeable</li>
                         </ul>
-                        <button class="btn btn-glass" style="width: 100%;" onclick="attemptSelectPackage('Basic HTML Website', 'html')">Select</button>
+                        <button class="btn btn-glass" style="width: 100%;" onclick="selectPackage('Basic HTML Website', 'html')">Select</button>
                     </div>
                     <!-- Package 2: Front-End Website -->
                     <div class="glass-card" style="text-align: center; display:flex; flex-direction:column; border-color:rgba(30, 41, 59, 0.2);">
@@ -2125,7 +2300,7 @@
                             <li id="frontend-feat-no-support" class="maintenance-warning hidden">No maintenance or support included</li>
                             <li id="frontend-feat-content-charge" class="maintenance-warning hidden">Content changes are chargeable</li>
                         </ul>
-                        <button class="btn btn-primary" style="width: 100%;" onclick="attemptSelectPackage('Front-End Website', 'frontend')">Select Front-End</button>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="selectPackage('Front-End Website', 'frontend')">Select Front-End</button>
                     </div>
                     <!-- Package 3: Front-End + Portal -->
                     <div class="glass-card" style="text-align: center; display:flex; flex-direction:column; border-color:rgba(139, 92, 246, 0.3);">
@@ -2146,7 +2321,7 @@
                             <li id="bundle-feat-no-support" class="maintenance-warning hidden">No maintenance or support included</li>
                             <li id="bundle-feat-content-charge" class="maintenance-warning hidden">Portal and content changes are chargeable</li>
                         </ul>
-                        <button class="btn btn-glass" style="width: 100%; background: linear-gradient(45deg, #6366f1, #a855f7); border-color: transparent; color: white;" onclick="attemptSelectPackage('Front-End + Portal', 'bundle')">Select Bundle</button>
+                        <button class="btn btn-glass" style="width: 100%; background: linear-gradient(45deg, #6366f1, #a855f7); border-color: transparent; color: white;" onclick="selectPackage('Front-End + Portal', 'bundle')">Select Bundle</button>
                     </div>
                     <!-- Package 4: AI Powered -->
                     <div class="glass-card" style="text-align: center; display:flex; flex-direction:column; border-color:rgba(245, 158, 11, 0.3);">
@@ -2192,85 +2367,150 @@
             </div>
         </section>
 
-        <!-- PAGE: CHECKOUT -->
+        <!-- ========================================== -->
+        <!-- UPDATED PAGE: CHECKOUT (3-STEP WIZARD)   -->
+        <!-- ========================================== -->
         <section id="buynow" class="page-section">
-            <div class="text-center" style="margin-bottom: 2rem;"><h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Finalize Your Order</h2><p style="color: var(--text-secondary);">Secure your package and finalize details.</p></div>
-            <div class="profile-details-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
-                <!-- LEFT COLUMN -->
-                <div class="glass-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-glass);"><h3 style="font-size: 1rem; color: var(--text-main);">Order Summary</h3><span class="auth-link" style="font-size:0.85rem;" onclick="navigateTo('/pricing')">Change Package</span></div>
-                    <div style="background: rgba(241, 245, 249, 0.5); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(30, 41, 59, 0.1); margin-bottom: 1.5rem;">
-                        <h4 id="summary-pkg-name" style="color: var(--soft-black); margin-bottom: 0.5rem;">Select a Package</h4>
-                        <p id="summary-pkg-desc" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">Please select a package from Services page.</p>
-                        <div id="dynamic-price-area"></div>
+            <div class="text-center" style="margin-bottom: 2rem;"><h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Secure Checkout</h2><p style="color: var(--text-secondary);">Complete your subscription in 3 simple steps.</p></div>
+            
+            <div class="checkout-wizard-container">
+                <!-- Wizard Progress Bar -->
+                <div class="wizard-progress">
+                    <div class="step-indicator active" id="step-indicator-1">
+                        <div class="step-circle">1</div>
+                        <span class="step-label">Plan Review</span>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
-                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Setup Fee (One-time):</span><span id="summary-setup" style="color: var(--accent-warn); font-weight: 600;">RM 0</span></div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Recurring Price:</span><span id="summary-recurring" style="color: var(--text-main); font-weight: 600;">RM 0</span></div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Domain:</span><span id="summary-domain" style="color: var(--text-main); font-weight: 600;">RM 0</span></div>
-                        <div style="display:flex; justify-content:space-between; font-size:0.95rem;"><span style="color: var(--text-secondary);">Maintenance:</span><span id="summary-maintenance" style="color: var(--text-main); font-weight: 600;">None</span></div>
-                        <div id="row-discount" style="display:none; justify-content:space-between; font-size:0.95rem; color: var(--accent-success);"><span style="display:flex; align-items:center;">Discount: <strong id="summary-promo-code" style="margin: 0 5px;"></strong><i class="ri-close-circle-fill" style="margin-left:5px; cursor:pointer;" onclick="removeVoucher()"></i></span><span id="summary-discount-val">-RM 0</span></div>
+                    <div class="step-indicator" id="step-indicator-2">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Details & Domain</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; font-size: 1.5rem; font-weight: 800; color: var(--text-main); border-top: 1px solid var(--border-glass); padding-top: 20px; margin-top: 20px;"><span>Total Due</span><span id="summary-final-total" style="color: var(--soft-black);">RM 0</span></div>
-                    <div id="deposit-note-container" style="margin-top: 10px; text-align: right;">
-                        <div id="deposit-note" style="font-size: 0.8rem; color: var(--accent-warn); margin-bottom: 5px; font-weight: 600; display:none;">Deposit Required (50%): RM 0</div>
-                        <div class="payment-options" style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <button type="button" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" id="btn-pay-full" onclick="setPaymentMode('full')">Pay Full</button>
-                            <button type="button" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" id="btn-pay-deposit" onclick="setPaymentMode('deposit')">Pay Deposit</button>
-                        </div>
+                    <div class="step-indicator" id="step-indicator-3">
+                        <div class="step-circle">3</div>
+                        <span class="step-label">Payment</span>
                     </div>
                 </div>
-                <!-- RIGHT COLUMN -->
-                <div class="glass-card">
-                    <h3 style="margin-bottom: 2rem; color: var(--text-main);">Configuration</h3>
-                    <form id="checkoutForm" onsubmit="return false;">
-                        <div class="form-group">
-                            <label class="form-label">Personal Details <span id="auto-fill-label" style="font-size: 0.7rem; color: var(--soft-black); display: none;">(Auto-filled)</span></label>
-                            <div class="profile-details-grid">
-                                <input type="text" id="co-name" class="form-input" placeholder="Full Name" required>
-                                <input type="tel" id="co-phone" class="form-input" placeholder="Phone Number" required>
-                                <input type="email" id="co-email" class="form-input" placeholder="Email" required>
-                                <input type="text" id="co-company" class="form-input" placeholder="Company Name (Optional)">
+
+                <div class="wizard-content">
+                    <!-- STEP 1: PLAN REVIEW -->
+                    <div id="wizard-step-1" class="wizard-step active">
+                        <h3 style="margin-bottom: 1.5rem;">Review Your Plan</h3>
+                        <div class="plan-review-card">
+                            <h4 id="wiz-plan-name" style="color: var(--soft-black); font-size: 1.4rem; margin-bottom: 0.5rem;">Basic HTML Website</h4>
+                            <p id="wiz-plan-desc" style="color: var(--text-secondary); margin-bottom: 1rem;">1 Static Landing Page. Mobile Responsive. Basic SEO.</p>
+                            
+                            <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 1.5rem;">
+                                <div id="wiz-setup-fee-display" class="setup-fee-tag" style="display:inline-block; margin:0;">Setup Fee: RM 100</div>
+                                <div style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 500;">+ RM 39/month</div>
+                            </div>
+
+                            <div class="plan-price-large">
+                                RM <span id="wiz-first-charge">139</span>
+                            </div>
+                            <div class="plan-price-sub" style="margin-bottom: 1.5rem;">Charged Today (Setup + 1st Month)</div>
+                            <div style="padding-top: 1.5rem; border-top: 1px dashed var(--border-glass);">
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">After 1st month, you will be charged:</p>
+                                <div style="font-size: 1.2rem; font-weight: 700; color: var(--text-main);">RM 39 / month</div>
                             </div>
                         </div>
-                        <div id="checkout-voucher-section" style="display: none; margin-bottom: 2rem;">
-                            <div class="glass-card" style="padding: 1rem; margin-bottom:0; display:flex; justify-content:space-between; align-items:center; border-color: rgba(30, 41, 59, 0.2);">
-                                <div class="voucher-info"><h4 id="checkout-voucher-title" style="color:var(--text-main); font-size:0.9rem; margin-bottom:2px;">Gift Voucher Available</h4><p id="checkout-voucher-text" style="color:var(--soft-black); font-weight:700; font-size:0.8rem;">-</p></div>
-                                <button type="button" id="btn-apply-voucher" class="btn btn-primary" style="width: auto; padding: 0.6rem 1.5rem;" onclick="applyPersonalVoucher()">Apply</button>
+
+                        <div style="margin-bottom: 2rem;">
+                            <p style="font-weight: 700; margin-bottom: 1rem;">What's Included:</p>
+                            <ul class="feature-check-list" id="wiz-features-list">
+                                <!-- JS will populate this -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: DETAILS & DOMAIN -->
+                    <div id="wizard-step-2" class="wizard-step">
+                        <h3 style="margin-bottom: 1.5rem;">Your Details & Domain</h3>
+                        <form id="wiz-form">
+                            <div class="profile-details-grid" style="margin-bottom: 1.5rem;">
+                                <div class="form-group"><label class="form-label">First Name</label><input type="text" id="wiz-fname" class="form-input" placeholder="e.g. Ali" required></div>
+                                <div class="form-group"><label class="form-label">Last Name</label><input type="text" id="wiz-lname" class="form-input" placeholder="e.g. Abu" required></div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Domain Choice</label>
-                            <div class="radio-group">
-                                <div class="radio-option selected" onclick="updateDomain('sub', this)"><input type="radio" name="domain_type" value="sub" checked> <span style="font-size: 0.95rem; color: var(--text-main);">DDNetwork Subdomain (Free 1st Year)</span></div>
-                                <div class="radio-option" onclick="updateDomain('custom', this)"><input type="radio" name="domain_type" value="custom"> <span style="font-size: 0.95rem; color: var(--text-main);">I have my own domain</span></div>
+                            <div class="profile-details-grid" style="margin-bottom: 1.5rem;">
+                                <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="wiz-email" class="form-input" placeholder="hello@example.com" required></div>
+                                <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" id="wiz-phone" class="form-input" placeholder="0123456789" required></div>
                             </div>
-                            <div id="input-subdomain" style="margin-top: 10px;"><input type="text" id="subdomain-text" class="form-input" placeholder="yourname" oninput="updateSummaryText()"><span style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px; display: block;">URL: <span id="url-preview" style="color: var(--soft-black); font-weight: 700;">.ddnet.my</span></span></div>
-                            <div id="input-custom" style="display: none; margin-top: 10px;"><input type="text" id="custom-domain-text" class="form-input" placeholder="www.example.com" oninput="updateSummaryText()"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Maintenance Plan (Optional)</label>
-                            <div class="radio-group">
-                                <div class="radio-option selected" onclick="updateMaintenance('none', this)"><input type="radio" name="maint" value="none" checked> None</div>
-                                <div class="radio-option" onclick="updateMaintenance('basic', this)"><input type="radio" name="maint" value="basic"> Basic (+RM 50/mo)</div>
-                                <div class="radio-option" onclick="updateMaintenance('business', this)"><input type="radio" name="maint" value="business"> Business (+RM 100/mo)</div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;"><label class="form-label">Company Name <span style="font-weight:400; font-size: 0.7em; color:var(--text-tertiary);">(Optional)</span></label><input type="text" id="wiz-company" class="form-input" placeholder="e.g. Acme Corp"></div>
+                            
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label class="form-label">Choose Your Domain</label>
+                                <div class="radio-group">
+                                    <div class="radio-option selected" onclick="updateDomain('sub', this)"><input type="radio" name="wiz_domain_type" value="sub" checked> <span style="font-size: 0.95rem; color: var(--text-main);">Free Subdomain (username.ddnet.my)</span></div>
+                                    <div class="radio-option" onclick="updateDomain('custom', this)"><input type="radio" name="wiz_domain_type" value="custom"> <span style="font-size: 0.95rem; color: var(--text-main);">I have my own domain</span></div>
+                                </div>
+                                
+                                <div id="wiz-input-subdomain" style="margin-top: 10px;">
+                                    <input type="text" id="wiz-subdomain-text" class="form-input" placeholder="yourname" oninput="updateWizardSummary()">
+                                    <div class="domain-preview-box" id="wiz-url-preview">.ddnet.my</div>
+                                </div>
+                                <div id="wiz-input-custom" style="display: none; margin-top: 10px;">
+                                    <input type="text" id="wiz-custom-domain-text" class="form-input" placeholder="www.example.com" oninput="updateWizardSummary()">
+                                    <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 5px;">You will need to point your DNS to our servers after purchase.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group" style="margin-top: 2rem;">
-                            <label class="form-label">Promo Code (Optional)</label>
-                            <div style="display: flex; gap: 10px;"><input type="text" id="promo-input" class="form-input" placeholder="e.g. PROMO10%" style="text-transform: uppercase;"><button type="button" class="btn btn-glass" onclick="applyPromo()" style="padding: 0 1.5rem; min-width: 70px;">Apply</button></div>
-                            <p style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: 5px;">*Promo codes are for logged-in users only.</p>
-                        </div>
-                        <div style="border: 0; border-top: 1px solid var(--border-glass); margin: 2rem 0;"></div>
-                        <div class="form-group" style="background: rgba(255,255,255,0.8); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-glass);">
-                            <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 0.9rem; line-height: 1.5;">
-                                <input type="checkbox" id="terms-check" style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--soft-black);">
-                                <span style="color: var(--text-secondary);">I have read and agreed to <span class="auth-link" onclick="openTermsModal()">Terms & Conditions</span>.</span>
-                            </label>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-secondary); background: #f8fafc; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-glass);"><i class="ri-secure-payment-line" style="color: var(--accent-success);"></i> <strong>Secure Payment via Razorpay (Curlec)</strong></div>
-                        <div id="checkout-actions"><button type="button" id="btn-pay-now" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="initiateRazorpayPayment()"><i class="ri-credit-card-2-fill" style="margin-right:8px;"></i> Pay Now</button></div>
+
+                            <div class="form-group" style="margin-bottom: 1.5rem;">
+                                <label class="form-label">Promo Code (Optional)</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" id="wiz-promo" class="form-input" placeholder="e.g. PROMO10%" style="text-transform: uppercase;">
+                                    <button type="button" class="btn btn-glass" onclick="applyPromo()" style="padding: 0 1.5rem; min-width: 80px;">Apply</button>
+                                </div>
+                                <div id="wiz-promo-msg" style="font-size: 0.8rem; margin-top: 5px;"></div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 0.9rem; line-height: 1.5;">
+                                    <input type="checkbox" id="wiz-terms" style="margin-top: 4px; width: 18px; height: 18px; accent-color: var(--soft-black);">
+                                    <span style="color: var(--text-secondary);">I agree to the <span class="auth-link" onclick="openTermsModal()">Terms & Conditions</span> and <span class="auth-link" onclick="navigateTo('/privacy')">Privacy Policy</span>.</span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- STEP 3: ORDER SUMMARY & PAYMENT -->
+                    <div id="wizard-step-3" class="wizard-step">
+                        <h3 style="margin-bottom: 1.5rem;">Order Summary</h3>
                         
+                        <div class="glass-card" style="padding: 1.5rem; background: #f8fafc; border: 1px solid var(--border-glass);">
+                            <table class="summary-table">
+                                <tr>
+                                    <td>Selected Plan</td>
+                                    <td id="wiz-sum-plan-name">Basic HTML Website</td>
+                                </tr>
+                                <tr>
+                                    <td>Domain</td>
+                                    <td id="wiz-sum-domain">subdomain.ddnet.my</td>
+                                </tr>
+                                <tr>
+                                    <td>Setup Fee (One-time)</td>
+                                    <td id="wiz-sum-setup">RM 100</td>
+                                </tr>
+                                <tr>
+                                    <td>First Month</td>
+                                    <td id="wiz-sum-first-month">RM 39</td>
+                                </tr>
+                                <tr id="wiz-discount-row" style="display: none; color: var(--accent-success);">
+                                    <td>Discount (<span id="wiz-sum-discode"></span>)</td>
+                                    <td id="wiz-sum-discount-val">-RM 0</td>
+                                </tr>
+                                <tr class="summary-total">
+                                    <td>Total Due Today</td>
+                                    <td id="wiz-sum-total">RM 139</td>
+                                </tr>
+                            </table>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); text-align: center; margin-top: 1rem;">
+                                After the first month, you will be charged <strong id="wiz-sum-recurring">RM 39</strong> monthly.
+                            </p>
+                        </div>
+
+                        <div class="trust-badge">
+                            <i class="ri-shield-check-fill" style="color: var(--accent-success);"></i>
+                            <span>Secure payment powered by Razorpay (Curlec)</span>
+                        </div>
+
                         <!-- PAYMENT SUCCESS SECTION -->
                         <div id="manual-confirm-section">
                             <i class="ri-checkbox-circle-fill manual-confirm-icon"></i>
@@ -2289,8 +2529,13 @@
                                 <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="window.location.href='https://wa.me/60122600969'">Contact Support via WhatsApp</button>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                    </form>
+                <!-- Wizard Footer Navigation -->
+                <div class="wizard-footer">
+                    <button id="wiz-btn-back" class="btn btn-secondary" onclick="prevCheckoutStep()" style="display: none;">Back</button>
+                    <button id="wiz-btn-next" class="btn btn-primary" onclick="nextCheckoutStep()">Proceed to Your Details</button>
                 </div>
             </div>
         </section>
@@ -2338,7 +2583,7 @@
                 <h2 style="margin-bottom: 0.5rem;">Danial Danish</h2>
                 <p style="color: var(--soft-black); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1.5rem;">Founder & Lead Developer</p>
                 <p style="color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 1.5rem;">"My journey began with a curiosity for code. What started as late-night experiments grew into DD Cloud Network, a company built on simplicity, speed, and thoughtful digital design.<br><br>Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local businesses build a strong, modern presence in the digital world."</p>
-                <div style="display: flex; gap: 1rem;">
+                <div style="                display: flex; gap: 1rem;">
                     <a href="https://www.linkedin.com/in/muhammad-danial-danish-217bb82ba/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-linkedin-fill"></i></a>
                     <a href="https://www.instagram.com/danialddanish/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-instagram-line"></i></a>
                     <a href="https://www.tiktok.com/@ddnet.my/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-tiktok-line"></i></a>
@@ -2689,11 +2934,11 @@
     // PRICING DATA & TOGGLE LOGIC (FIXED BUG)
     // ==========================================
     let PRICING_DATA = {
-        html: { oneTime: 249, monthly: 39, setupFee: 100, desc: "1 Static Landing Page. Mobile Responsive. Basic SEO." },
-        frontend: { oneTime: 1399, monthly: 99, setupFee: 200, desc: "Up to 5 Pages. Animations & Interactive UI." },
-        bundle: { oneTime: 3499, monthly: 249, setupFee: 700, desc: "Full website & internal management." },
-        ai: { oneTime: 2499, monthly: 149, setupFee: 400, desc: "Advanced automation & chatbots." },
-        portal: { oneTime: 3999, monthly: 279, setupFee: 700, desc: "Internal portal for existing sites." }
+        html: { oneTime: 249, monthly: 39, setupFee: 100, desc: "1 Static Landing Page. Mobile Responsive. Basic SEO.", features: ["1 Static Landing Page", "Mobile Responsive Design", "Basic SEO Tags", "Contact Form", "Hosting based on your custom domain", "Free ddnet.my subdomain for 1 year (new customer)", "Maintenance and security updates included", "Minor content changes included"] },
+        frontend: { oneTime: 1399, monthly: 99, setupFee: 200, desc: "Up to 5 Pages. Animations & Interactive UI.", features: ["Up to 5 Pages", "Animations & Interactive UI", "Contact Forms", "WhatsApp Integration", "Basic SEO Setup", "Hosting based on your custom domain", "Free ddnet.my subdomain for 1 year (new customer)", "Maintenance and security updates included", "Content changes included (fair use)"] },
+        bundle: { oneTime: 3499, monthly: 249, setupFee: 700, desc: "Full website & internal management.", features: ["Everything in Front-End Website", "Multi-User Internal Portal Access", "Website Integration and Database Management", "Advanced Analytics", "Custom Dashboards", "Hosting based on your custom domain", "Free ddnet.my subdomain for 1 year (new customer)", "Maintenance and priority support included", "Content changes included (fair use)"] },
+        ai: { oneTime: 2499, monthly: 149, setupFee: 400, desc: "Advanced automation & chatbots.", features: ["All Front-End Website Features", "AI Chatbot Integration", "Lead Auto-Response", "Smart Analytics", "Hosting based on your custom domain", "Free ddnet.my subdomain for 1 year (new customer)", "Maintenance and AI tuning included", "Content changes included (fair use)"] },
+        portal: { oneTime: 3999, monthly: 279, setupFee: 700, desc: "Internal portal for existing sites.", features: ["Multi-User Internal Portal Access", "Website Integration & Database Management", "Advanced Analytics & Custom Dashboards", "Business Process Integration", "Hosting based on your custom domain", "Free ddnet.my subdomain for 1 year (new customer)", "Maintenance and monitoring included", "Content changes included (fair use)", "Enterprise-level technical support included"] }
     };
 
     let billingCycle = 'monthly'; 
@@ -2943,7 +3188,9 @@
         packageType: null, packagePrice: 0, setupFee: 0, domainPrice: 0, maintenancePrice: 0,
         discountRate: 0, discountFixed: 0, discountType: 'percent', discountCode: '',
         domainType: 'sub', domainName: '', domainNameValid: false, billingCycle: 'monthly',
-        isOneTime: false, paymentMode: 'full'
+        isOneTime: false, paymentMode: 'full',
+        // Wizard State
+        wizardStep: 1
     };
 
     // ==========================================
@@ -3342,11 +3589,30 @@
         db.collection("users").doc(uid).get().then((doc) => {
             if (doc.exists) {
                 const data = doc.data();
+                // Old checkout IDs
                 const coFields = ['co-name', 'co-phone', 'co-email', 'co-company', 'req-name', 'req-phone'];
-                const map = { 'co-name':'name', 'co-phone':'phone', 'co-email':'email', 'co-company':'company', 'req-name':'name', 'req-phone':'phone' };
+                // New Wizard IDs
+                const wizFields = ['wiz-fname', 'wiz-lname', 'wiz-email', 'wiz-phone', 'wiz-company'];
+                
+                const map = { 
+                    'co-name':'name', 'co-phone':'phone', 'co-email':'email', 'co-company':'company', 
+                    'req-name':'name', 'req-phone':'phone',
+                    'wiz-fname':'name', 'wiz-lname':'name', 'wiz-email':'email', 'wiz-phone':'phone', 'wiz-company':'company'
+                };
+                
+                // Populate Old Checkout
                 coFields.forEach(id => { if(data[map[id]]) document.getElementById(id).value = data[map[id]]; });
-                const autoFillLabel = document.getElementById('auto-fill-label');
-                if(data.name && data.phone && data.email && autoFillLabel) autoFillLabel.style.display = 'inline';
+                
+                // Populate Wizard (Split Name Logic if needed, but simple mapping works for Fname)
+                if(data.name) {
+                    const parts = data.name.split(' ');
+                    if(parts.length > 0) document.getElementById('wiz-fname').value = parts[0];
+                    if(parts.length > 1) document.getElementById('wiz-lname').value = parts.slice(1).join(' ');
+                }
+                if(data.email) document.getElementById('wiz-email').value = data.email;
+                if(data.phone) document.getElementById('wiz-phone').value = data.phone;
+                if(data.company) document.getElementById('wiz-company').value = data.company;
+
                 if(data.personalVoucher) { currentUserPersonalVoucher = data.personalVoucher; showCheckoutVoucher(data.personalVoucher); } 
                 else { hideCheckoutVoucher(); }
             }
@@ -3372,28 +3638,12 @@
     }
 
     function showCheckoutVoucher(voucher) {
-        const section = document.getElementById('checkout-voucher-section');
-        const text = document.getElementById('checkout-voucher-text');
-        const applyBtn = document.getElementById('btn-apply-voucher');
-        const displayVal = voucher.type === 'fixed' ? `RM ${voucher.value}` : `${voucher.value * 100}%`;
-        let expiryText = voucher.expiryDate ? ` | Exp: ${voucher.expiryDate.toDate().toLocaleDateString()}` : "";
-        text.innerText = `${voucher.code} (-${displayVal})${expiryText}`;
-        section.style.display = 'block';
-        const isApplied = (state.discountCode === voucher.code);
-        if (voucher.status === 'redeemed') {
-            document.getElementById('checkout-voucher-title').innerText = "Voucher Redeemed";
-            text.style.textDecoration = 'line-through';
-            applyBtn.disabled = true; applyBtn.innerText = "Redeemed"; applyBtn.classList.replace('btn-primary', 'btn-secondary');
-        } else {
-            document.getElementById('checkout-voucher-title').innerText = "Gift Voucher Available";
-            if(isApplied) { applyBtn.disabled = true; applyBtn.innerText = "Applied"; applyBtn.classList.replace('btn-secondary', 'btn-success'); }
-            else { applyBtn.disabled = false; applyBtn.innerText = "Apply"; applyBtn.classList.replace('btn-secondary', 'btn-primary'); }
-        }
+        // Note: The wizard might not need a separate "Apply" button if it auto-applies or shows in summary
+        // For consistency, we will handle voucher logic in the Wizard Summary step.
     }
 
     function hideVoucherCard() {
         document.getElementById('profile-voucher-section').style.display = 'none';
-        document.getElementById('checkout-voucher-section').style.display = 'none';
     }
 
     function handleLogin(e) {
@@ -3448,9 +3698,8 @@
     }
 
     function clearUserData() {
-        const inputs = ['prof-name', 'prof-phone', 'prof-email', 'prof-company', 'co-name', 'co-phone', 'co-email', 'co-company', 'req-name', 'req-phone'];
+        const inputs = ['prof-name', 'prof-phone', 'prof-email', 'prof-company', 'co-name', 'co-phone', 'co-email', 'co-company', 'req-name', 'req-phone', 'wiz-fname', 'wiz-lname', 'wiz-email', 'wiz-phone', 'wiz-company'];
         inputs.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-        const label = document.getElementById('auto-fill-label'); if(label) label.style.display = 'none';
     }
 
     function handleLogout() {
@@ -3628,153 +3877,181 @@
     }
 
     function selectPackage(name, type) {
+        // Initialize Wizard State
+        state.wizardStep = 1;
         state.packageType = type;
-        state.packagePrice = 0;
-        state.setupFee = 0;
         state.billingCycle = billingCycle;
         state.isOneTime = (billingCycle === 'onetime');
-        state.paymentMode = 'full';
 
-        document.getElementById('summary-pkg-name').innerText = name;
-        const priceArea = document.getElementById('dynamic-price-area');
-        priceArea.innerHTML = ''; 
-
-        let basePrice = 0;
-        let desc = "";
-        let setupFee = 0;
-
-        if(PRICING_DATA[type]) {
-            if (state.isOneTime) {
-                basePrice = PRICING_DATA[type].oneTime;
-                desc = "One-time purchase. No support.";
-                setupFee = 0; 
-            } else {
-                basePrice = PRICING_DATA[type].monthly;
-                setupFee = PRICING_DATA[type].setupFee;
-                desc = PRICING_DATA[type].desc;
-            }
-        }
-        state.packagePrice = basePrice;
-        state.setupFee = setupFee;
-
-        document.getElementById('summary-pkg-desc').innerText = desc;
-        let priceHTML = '';
-        if (state.isOneTime) priceHTML = `<div style="text-align:right; font-weight:700; color:var(--soft-black);">Price: RM ${basePrice}</div>`;
-        else priceHTML = `<div style="text-align:right; font-weight:700; color:var(--soft-black);">Price: RM ${basePrice} (Monthly)</div>`;
-        priceArea.innerHTML = priceHTML;
-
-        state.domainType = 'sub'; 
-        state.domainName = ''; 
-        state.domainNameValid = false; 
-        document.getElementById('subdomain-text').value = ''; 
-        document.getElementById('custom-domain-text').value = ''; 
-        updateDomain('sub', document.querySelector('input[name="domain_type"][value="sub"]').parentElement); 
-        state.maintenancePrice = 0;
-        state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = ''; state.paymentMethodId = null; 
-        document.getElementById('terms-check').checked = false;
+        // Reset Wizard UI
+        document.getElementById('wiz-form').reset();
+        document.getElementById('wiz-subdomain-text').value = '';
+        document.getElementById('wiz-custom-domain-text').value = '';
+        document.getElementById('wiz-promo').value = '';
+        document.getElementById('wiz-terms').checked = false;
+        document.getElementById('wiz-promo-msg').innerText = '';
         
-        document.getElementById('checkout-actions').style.display = 'block';
+        // Hide payment success/fail sections in wizard step 3
         document.getElementById('manual-confirm-section').style.display = 'none';
         document.getElementById('payment-failed-section').style.display = 'none';
 
-        if(auth && auth.currentUser) fetchAndSyncUserData(auth.currentUser.uid);
-        else { document.getElementById('auto-fill-label').style.display = 'none'; hideVoucherCard(); }
-        updateSummaryText(); updateUI(); 
-        updateTotal();
+        // Populate Step 1 Data
+        const pkgData = PRICING_DATA[type];
+        if(pkgData) {
+            document.getElementById('wiz-plan-name').innerText = name;
+            document.getElementById('wiz-plan-desc').innerText = pkgData.desc;
+            
+            // Logic for Setup Fee Display
+            const setupDisplay = document.getElementById('wiz-setup-fee-display');
+            if(state.isOneTime) {
+                setupDisplay.classList.add('hidden');
+                state.setupFee = 0;
+                state.packagePrice = pkgData.oneTime;
+                document.getElementById('wiz-first-charge').innerText = pkgData.oneTime;
+            } else {
+                setupDisplay.classList.remove('hidden');
+                setupDisplay.innerText = `Setup Fee: RM ${pkgData.setupFee}`;
+                state.setupFee = pkgData.setupFee;
+                state.packagePrice = pkgData.monthly;
+                document.getElementById('wiz-first-charge').innerText = pkgData.setupFee + pkgData.monthly;
+            }
 
-        const clientName = document.getElementById('co-name').value || 'Client';
-        const packageSlug = name.replace(/\s+/g, '-').toLowerCase();
-        const customPath = `/${packageSlug}/payment-checkout%${encodeURIComponent(clientName)}`;
-        window.history.pushState({ path: customPath }, "", customPath);
-        performTransition('buynow');
+            // Features List
+            const list = document.getElementById('wiz-features-list');
+            list.innerHTML = pkgData.features.map(f => `<li><i class="ri-checkbox-circle-fill" style="color:var(--accent-success); margin-right:8px;"></i> ${f}</li>`).join('');
+        }
+
+        // Domain Reset
+        state.domainType = 'sub';
+        state.domainName = '';
+        state.domainPrice = 0;
+        document.querySelector('input[name="wiz_domain_type"][value="sub"]').checked = true;
+        document.querySelector('input[name="wiz_domain_type"][value="sub"]').parentElement.classList.add('selected');
+        document.querySelector('input[name="wiz_domain_type"][value="custom"]').parentElement.classList.remove('selected');
+        document.getElementById('wiz-input-subdomain').style.display = 'block';
+        document.getElementById('wiz-input-custom').style.display = 'none';
+        document.getElementById('wiz-url-preview').innerText = '.ddnet.my';
+
+        // Pricing Logic
+        state.discountRate = 0; state.discountFixed = 0; state.discountType = 'percent'; state.discountCode = '';
+        document.getElementById('wiz-discount-row').style.display = 'none';
+
+        updateWizardStepUI();
+        navigateTo('/buynow');
     }
 
-    function updateDomain(type, element) {
-        state.domainType = type;
-        if(element) {
-            const options = element.parentElement.querySelectorAll('.radio-option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
+    // ==========================================
+    // NEW WIZARD LOGIC
+    // ==========================================
+    
+    function updateWizardStepUI() {
+        // Hide all steps
+        document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
+        // Show current step
+        document.getElementById(`wizard-step-${state.wizardStep}`).classList.add('active');
+        
+        // Update Progress Bar
+        document.querySelectorAll('.step-indicator').forEach((el, idx) => {
+            el.classList.remove('active', 'completed');
+            if(idx + 1 < state.wizardStep) el.classList.add('completed');
+            if(idx + 1 === state.wizardStep) el.classList.add('active');
+        });
+
+        // Update Buttons
+        const btnBack = document.getElementById('wiz-btn-back');
+        const btnNext = document.getElementById('wiz-btn-next');
+
+        if(state.wizardStep === 1) {
+            btnBack.style.display = 'none';
+            btnNext.innerText = "Proceed to Your Details";
+        } else if (state.wizardStep === 2) {
+            btnBack.style.display = 'inline-flex';
+            btnNext.innerText = "Review & Pay";
+        } else if (state.wizardStep === 3) {
+            btnBack.style.display = 'none';
+            btnNext.style.display = 'none'; // Payment button is inside step 3
+            updateWizardSummary();
+        }
+    }
+
+    function nextCheckoutStep() {
+        if(state.wizardStep === 2) {
+            // Validate Step 2
+            const fname = document.getElementById('wiz-fname').value;
+            const lname = document.getElementById('wiz-lname').value;
+            const email = document.getElementById('wiz-email').value;
+            const phone = document.getElementById('wiz-phone').value;
+            const terms = document.getElementById('wiz-terms').checked;
+
+            if(!fname || !lname || !email || !phone) {
+                showGlassModal("Missing Info", "Please fill in all required details.", "warning");
+                return;
+            }
+            if(!terms) {
+                showGlassModal("Terms Required", "You must agree to the Terms & Conditions.", "warning");
+                return;
+            }
+            
+            // Save Details to State
+            state.contactName = `${fname} ${lname}`;
+            state.contactEmail = email;
+            state.contactPhone = phone;
+            state.contactCompany = document.getElementById('wiz-company').value;
+
+            // Validate Domain
+            if(state.domainType === 'sub') {
+                const subVal = document.getElementById('wiz-subdomain-text').value.trim();
+                if(!subVal) { showGlassModal("Domain", "Please enter a subdomain name.", "warning"); return; }
+                state.domainName = `${subVal}.ddnet.my`;
+            } else {
+                const custVal = document.getElementById('wiz-custom-domain-text').value.trim();
+                if(!custVal) { showGlassModal("Domain", "Please enter your domain name.", "warning"); return; }
+                state.domainName = custVal;
+            }
         }
         
+        state.wizardStep++;
+        updateWizardStepUI();
+    }
+
+    function prevCheckoutStep() {
+        state.wizardStep--;
+        updateWizardStepUI();
+    }
+
+    // Domain Toggle for Wizard
+    function updateDomain(type, element) {
+        state.domainType = type;
+        const subInput = document.getElementById('wiz-input-subdomain');
+        const customInput = document.getElementById('wiz-input-custom');
+        
         if(type === 'sub') {
-            document.getElementById('input-subdomain').style.display = 'block';
-            document.getElementById('input-custom').style.display = 'none';
-            state.domainPrice = 0; 
+            subInput.style.display = 'block';
+            customInput.style.display = 'none';
+            state.domainPrice = 0;
         } else {
-            document.getElementById('input-subdomain').style.display = 'none';
-            document.getElementById('input-custom').style.display = 'block';
-            state.domainPrice = 0; 
-        }
-        updateSummaryText(); updateTotal();
-    }
-
-    function updateSummaryText() {
-        if(state.domainType === 'sub') {
-            const val = document.getElementById('subdomain-text').value.trim();
-            state.domainName = val ? `${val}.ddnet.my` : '';
-            document.getElementById('url-preview').innerText = state.domainName || '.ddnet.my';
-            document.getElementById('summary-domain').innerText = "Free (1st Year)";
-            state.domainNameValid = (val.length > 0);
-        } 
-        else {
-            const val = document.getElementById('custom-domain-text').value.trim();
-            state.domainName = val;
-            document.getElementById('summary-domain').innerText = val ? 'User Provided' : 'RM 0';
-            state.domainNameValid = (val.length > 0);
+            subInput.style.display = 'none';
+            customInput.style.display = 'block';
+            state.domainPrice = 0;
         }
     }
-
-    document.getElementById('subdomain-text').addEventListener('input', () => {
-        updateSummaryText();
-        const val = document.getElementById('subdomain-text').value.trim();
-        state.domainNameValid = (val.length > 0);
+    
+    // Live Preview for Subdomain
+    document.getElementById('wiz-subdomain-text').addEventListener('input', (e) => {
+        const val = e.target.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+        e.target.value = val;
+        document.getElementById('wiz-url-preview').innerText = val ? `${val}.ddnet.my` : '.ddnet.my';
     });
-
-    document.getElementById('custom-domain-text').addEventListener('input', () => {
-        updateSummaryText();
-        const val = document.getElementById('custom-domain-text').value.trim();
-        state.domainNameValid = (val.length > 0);
-    });
-
-    function setPaymentMode(mode) {
-        state.paymentMode = mode;
-        const btnFull = document.getElementById('btn-pay-full');
-        const btnDep = document.getElementById('btn-pay-deposit');
-        const depNote = document.getElementById('deposit-note');
-
-        if (mode === 'full') {
-            btnFull.classList.remove('btn-secondary'); btnFull.classList.add('btn-primary');
-            btnDep.classList.remove('btn-primary'); btnDep.classList.add('btn-secondary');
-            depNote.style.display = 'none';
-        } else {
-            btnFull.classList.remove('btn-primary'); btnFull.classList.add('btn-secondary');
-            btnDep.classList.remove('btn-secondary'); btnDep.classList.add('btn-primary');
-            depNote.style.display = 'block';
-        }
-        updateTotal();
-    }
-
-    function updateMaintenance(plan, element) {
-        const options = element.parentElement.querySelectorAll('.radio-option');
-        options.forEach(opt => opt.classList.remove('selected'));
-        element.classList.add('selected');
-        if(plan === 'none') state.maintenancePrice = 0;
-        if(plan === 'basic') state.maintenancePrice = 50;
-        if(plan === 'business') state.maintenancePrice = 100;
-        const label = plan === 'none' ? 'None' : (plan === 'basic' ? 'Basic (RM 50/mo)' : 'Business (RM 100/mo)');
-        document.getElementById('summary-maintenance').innerText = label;
-        updateTotal();
-    }
 
     function applyPromo() {
         if(!auth || !auth.currentUser) return showGlassModal("Error", "Please login to use Promo Codes.", "error");
-        const input = document.getElementById('promo-input');
+        const input = document.getElementById('wiz-promo');
         const code = input.value.trim().toUpperCase();
+        const msg = document.getElementById('wiz-promo-msg');
         
         if(!code || code === "") {
-            showGlassModal("Error", "Please enter a voucher code first.", "error");
-            input.focus(); 
+            msg.innerText = "Please enter a code.";
+            msg.style.color = "var(--accent-warn)";
             return;
         }
         
@@ -3782,125 +4059,68 @@
             state.discountType = 'percent';
             state.discountRate = PROMO_CODES[code];
             state.discountCode = code;
-            showGlassModal("Success", `Promo Applied: ${code}`, "success");
-            document.getElementById('row-discount').style.display = 'flex';
-            document.getElementById('summary-promo-code').innerText = code;
-            document.getElementById('summary-discount-val').innerText = `-${state.discountRate * 100}%`;
-            updateTotal();
+            msg.innerText = "Code Applied!";
+            msg.style.color = "var(--accent-success)";
         } else {
-            showGlassModal("Error", "Invalid code. Please check and try again.", "error");
+            msg.innerText = "Invalid code.";
+            msg.style.color = "var(--accent-danger)";
         }
     }
 
-    function applyPersonalVoucher() {
-        if(!currentUserPersonalVoucher) return; 
-        if(currentUserPersonalVoucher.status === 'redeemed') return showGlassModal("Error", "This voucher has already been used.", "error");
-        if(currentUserPersonalVoucher.expiryDate) {
-            const now = new Date();
-            const expiry = currentUserPersonalVoucher.expiryDate.toDate();
-            if(now > expiry) return showGlassModal("Error", "This voucher has expired.", "error");
-        }
-        state.discountType = currentUserPersonalVoucher.type;
-        state.discountCode = currentUserPersonalVoucher.code;
-        if(state.discountType === 'fixed') { state.discountFixed = currentUserPersonalVoucher.value; state.discountRate = 0; } 
-        else { state.discountRate = currentUserPersonalVoucher.value; state.discountFixed = 0; }
-        showGlassModal("Success", `Voucher ${state.discountCode} Applied!`, "success");
-        document.getElementById('row-discount').style.display = 'flex';
-        document.getElementById('summary-promo-code').innerText = state.discountCode;
-        const displayVal = state.discountType === 'fixed' ? `RM ${state.discountFixed}` : `${state.discountRate * 100}%`;
-        document.getElementById('summary-discount-val').innerText = `-${displayVal}`;
-        showCheckoutVoucher(currentUserPersonalVoucher);
-        updateTotal();
-    }
-
-    function deletePersonalVoucher() {
-        if(!auth || !auth.currentUser) return;
-        if(confirm("Are you sure you want to remove this voucher?")) {
-            db.collection("users").doc(auth.currentUser.uid).update({ personalVoucher: firebase.firestore.FieldValue.delete() }).then(() => {
-                currentUserPersonalVoucher = null;
-                loadProfilePageData();
-                fetchAndSyncUserData(auth.currentUser.uid);
-                showGlassModal("Success", "Voucher removed from account.", "success");
-            });
-        }
-    }
-
-    function removeVoucher() {
-        state.discountCode = ''; state.discountRate = 0; state.discountFixed = 0;
-        document.getElementById('row-discount').style.display = 'none';
-        showGlassModal("Info", "Voucher removed", "warning");
-        updateTotal();
-        if(currentUserPersonalVoucher) showCheckoutVoucher(currentUserPersonalVoucher);
-    }
-
-    function updateTotal() {
-        let subtotal = state.packagePrice + state.setupFee + state.maintenancePrice;
-        if(state.domainType === 'sub') subtotal += state.domainPrice; 
+    function updateWizardSummary() {
+        document.getElementById('wiz-sum-plan-name').innerText = document.getElementById('wiz-plan-name').innerText;
+        document.getElementById('wiz-sum-domain').innerText = state.domainName;
         
-        let discountAmt = 0;
-        if(state.discountType === 'fixed') discountAmt = state.discountFixed;
-        else discountAmt = subtotal * state.discountRate;
+        let setup = state.setupFee;
+        let firstMonth = state.packagePrice;
+        let total = setup + firstMonth;
+        let discount = 0;
+        let discountDisplay = "RM 0";
+
+        if(state.discountCode) {
+            document.getElementById('wiz-discount-row').style.display = 'table-row';
+            document.getElementById('wiz-sum-discode').innerText = state.discountCode;
+            
+            if(state.discountType === 'percent') {
+                discount = total * state.discountRate;
+                discountDisplay = `-${(state.discountRate * 100).toFixed(0)}%`;
+            } else {
+                discount = state.discountFixed;
+                discountDisplay = `-RM ${state.discountFixed}`;
+            }
+            document.getElementById('wiz-sum-discount-val').innerText = discountDisplay;
+        } else {
+            document.getElementById('wiz-discount-row').style.display = 'none';
+        }
+
+        const finalTotal = Math.max(0, total - discount);
         
-        const finalTotal = Math.max(0, Math.round(subtotal - discountAmt));
-        let paymentDue = finalTotal;
-        if(state.paymentMode === 'deposit') paymentDue = Math.round(finalTotal * 0.5);
+        document.getElementById('wiz-sum-setup').innerText = `RM ${setup}`;
+        document.getElementById('wiz-sum-first-month').innerText = `RM ${firstMonth}`;
+        document.getElementById('wiz-sum-total').innerText = `RM ${finalTotal}`;
+        document.getElementById('wiz-sum-recurring').innerText = `RM ${state.packagePrice}`;
 
-        document.getElementById('summary-final-total').innerText = `RM ${paymentDue}`;
-        document.getElementById('summary-recurring').innerText = `RM ${state.packagePrice} / ${state.isOneTime ? 'one-time' : 'month'}`;
-        document.getElementById('summary-setup').innerText = state.setupFee > 0 ? `RM ${state.setupFee}` : 'RM 0';
-        document.getElementById('deposit-note').innerText = `Deposit Required (50%): RM ${paymentDue}`;
-    }
-
-    function updateUI() {
-        document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
-        const subOpt = document.querySelector('input[name="domain_type"][value="sub"]').parentElement;
-        const noneOpt = document.querySelector('input[name="maint"][value="none"]').parentElement;
-        if(subOpt) subOpt.classList.add('selected');
-        if(noneOpt) noneOpt.classList.add('selected');
-        updateSummaryText(); updateTotal();
-        setPaymentMode('full');
+        // Store total for payment
+        state.totalPayment = finalTotal;
     }
 
     // ==========================================
     // RAZORPAY INTEGRATION LOGIC (UPDATED)
     // ==========================================
     function initiateRazorpayPayment() {
-        const termsCheck = document.getElementById('terms-check');
-        if(!termsCheck.checked) {
-            showGlassModal("Action Required", "Please agree to Terms & Conditions to proceed.", "warning", "I Agree", () => { document.getElementById('terms-check').checked = true; });
-            return;
-        }
-
-        if(!state.domainNameValid) {
-            if(state.domainType === 'sub') {
-                showGlassModal("Missing Input", "Please fill in your Subdomain Name.", "warning");
-                document.getElementById('subdomain-text').focus();
-            } else {
-                showGlassModal("Missing Input", "Please fill in your Custom Domain Name.", "warning");
-                document.getElementById('custom-domain-text').focus();
-            }
-            return;
-        }
-
-        const name = document.getElementById('co-name').value;
-        const phone = document.getElementById('co-phone').value;
-        const email = document.getElementById('co-email').value;
-        const company = document.getElementById('co-company').value;
-        if(!name || !phone || !email) return showGlassModal("Error", "Please enter Name, Phone, and Email.", "error");
-
-        const totalText = document.getElementById('summary-final-total').innerText;
+        const totalText = document.getElementById('wiz-sum-total').innerText;
         const amountNumeric = parseFloat(totalText.replace('RM ', ''));
         const amountInSubunits = Math.round(amountNumeric * 100);
 
         const pendingOrder = {
             userId: auth.currentUser ? auth.currentUser.uid : null,
-            name: name, phone: phone, email: email, company: company,
-            package: document.getElementById('summary-pkg-name').innerText,
+            name: state.contactName, phone: state.contactPhone, email: state.contactEmail, company: state.contactCompany,
+            package: document.getElementById('wiz-plan-name').innerText,
             domainType: state.domainType, domainName: state.domainName, domainPrice: state.domainPrice,
             packagePrice: state.packagePrice, setupFee: state.setupFee, maintenancePrice: state.maintenancePrice,
             total: `RM ${amountNumeric}`, 
             discountCode: state.discountCode || null, paymentMethod: 'Razorpay (Curlec)',
-            paymentMode: state.paymentMode, billingCycle: state.isOneTime ? 'One-Time' : 'Monthly',
+            paymentMode: 'full', billingCycle: state.isOneTime ? 'One-Time' : 'Monthly',
             status: 'Pending', timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
@@ -3909,7 +4129,7 @@
         const options = {
             "key": RAZORPAY_KEY_ID, "amount": amountInSubunits, "currency": RAZORPAY_CURRENCY, 
             "name": "DDNetwork One",
-            "description": document.getElementById('summary-pkg-name').innerText + (state.paymentMode === 'deposit' ? " (Deposit)" : ""),
+            "description": document.getElementById('wiz-plan-name').innerText,
             "image": "https://raw.githubusercontent.com/ddnetwork-one/ddnetwork-store/refs/heads/main/crop_ddnlogo.png",
             "handler": function(response){ 
                 handlePaymentSuccess(response.razorpay_payment_id);
@@ -3917,20 +4137,18 @@
             "modal": { 
                 "ondismiss": function(){ 
                     console.log('Checkout form closed/cancelled by user');
-                    document.getElementById('checkout-actions').style.display = 'none';
                     document.getElementById('manual-confirm-section').style.display = 'none';
                     document.getElementById('payment-failed-section').style.display = 'block';
                 }
             },
-            "prefill": { "name": name, "email": email, "contact": phone },
-            "notes": { "address": company || "Malaysia", "package": state.packageType, "domain": state.domainName, "payment_mode": state.paymentMode },
+            "prefill": { "name": state.contactName, "email": state.contactEmail, "contact": state.contactPhone },
+            "notes": { "address": state.contactCompany || "Malaysia", "package": state.packageType, "domain": state.domainName, "payment_mode": "full" },
             "theme": { "color": "#1e293b" }
         };
 
         try {
             const rzp1 = new Razorpay(options);
             rzp1.open(); 
-            document.getElementById('checkout-actions').style.display = 'none';
             document.getElementById('manual-confirm-section').style.display = 'block';
             document.getElementById('payment-failed-section').style.display = 'none';
         } catch (error) {
