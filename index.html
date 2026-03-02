@@ -585,22 +585,27 @@
         .portfolio-info h4 { font-size: 1.1rem; margin-bottom: 0.5rem; text-transform: none; }
         .portfolio-info p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
 
-        /* Home Lead Form */
-        .home-lead-section {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 6rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .home-lead-section::before {
-            content:''; position: absolute; top: -50px; left: -50px; width: 300px; height: 300px;
-            background: rgba(30, 41, 59, 0.05); border-radius: 50%; filter: blur(60px);
-        }
+/* --- Home Lead Form (NO BACKGROUND - JUST FORM) --- */
+.home-lead-section {
+    /* REMOVED background-color, gradients, and decorations */
+    padding: 6rem 0; /* Keeps spacing so it doesn't touch sections above/below */
+    position: relative;
+    color: var(--text-main);
+}
+
+/* REMOVED .home-lead-section::before and ::after blocks */
+
         .lead-form-card {
-            background: white; border-radius: 24px; padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid var(--border-glass);
+            background: white; 
+            border-radius: 24px; 
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2); /* Stronger shadow for contrast */
             max-width: 600px; margin: 0 auto; position: relative; z-index: 2;
+            color: var(--text-main); /* Reset text color for content inside card */
         }
+        /* Dark mode adjustments for the form header */
+        .lead-form-card .section-header h2 { color: var(--soft-black); }
+        .lead-form-card .section-header p { color: var(--text-secondary); }
 
         /* --- GLASS CARDS & AUTH --- */
         .glass-card {
@@ -864,9 +869,9 @@
         /* Card Container */
         .animated-notification-container {
             display: flex;
-            flex-direction: column,
+            flex-direction: column;
             align-items: center;
-            justify-content: center,
+            justify-content: center;
             text-align: center;
             
             /* Card Styling */
@@ -1133,7 +1138,7 @@
         .about-section-wrapper {
             display: flex;
             flex-direction: column;
-            align-items: center,
+            align-items: center;
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
@@ -1551,6 +1556,71 @@
         }
         
         /* ========================================== */
+        /* PROFILE PLAN STYLES (NEW)                  */
+        /* ========================================== */
+        .profile-plan-status {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .status-card {
+            background: white;
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            transition: 0.3s;
+        }
+        
+        .status-card.active-plan {
+            border-left: 4px solid var(--accent-success);
+            background: #f0fdf4; /* Very light green */
+        }
+        
+        .status-card.expired-plan {
+            border-left: 4px solid var(--accent-danger);
+            background: #fef2f2; /* Very light red */
+            opacity: 0.8;
+        }
+
+        .status-info h4 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        
+        .status-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .status-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+        
+        .badge-active { background: #dcfce7; color: #166534; }
+        .badge-expired { background: #fee2e2; color: #991b1b; }
+
+        /* ========================================== */
         /* MOBILE RESPONSIVE (COMPACT MODE)           */
         /* ========================================== */
         @media(max-width: 991px) {
@@ -1890,14 +1960,38 @@
             <div class="home-lead-section">
                 <div class="container">
                     <div class="lead-form-card glass-card">
-                        <div class="text-center" style="margin-bottom: 2rem;"><h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Get In Touch</h2><p style="color: var(--text-secondary);">Have a custom project in mind? Send us a direct message.</p></div>
+                        <div class="text-center" style="margin-bottom: 2rem;">
+                            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text-main);">Get In Touch</h2>
+                            <p style="color: var(--text-secondary);">Have a custom project in mind? Send us a direct message.</p>
+                        </div>
                         <form onsubmit="handleHomeLeadSubmit(event)">
-                            <div class="form-group"><label class="form-label">Name</label><input type="text" id="lead-name" class="form-input" placeholder="Your Name" required></div>
-                            <div class="form-group"><label class="form-label">Email</label><input type="email" id="lead-email" class="form-input" placeholder="hello@example.com" required></div>
-                            <div class="form-group"><label class="form-label">Message</label><textarea id="lead-message" class="form-input" rows="4" placeholder="Tell us about your project..." required></textarea></div>
+                            <div class="form-group"><label class="form-label" style="color:var(--text-secondary)">Name</label><input type="text" id="lead-name" class="form-input" placeholder="Your Name" required></div>
+                            <div class="form-group"><label class="form-label" style="color:var(--text-secondary)">Email</label><input type="email" id="lead-email" class="form-input" placeholder="hello@example.com" required></div>
+                            
+                            <!-- NEW: Source Dropdown -->
+                            <div class="form-group">
+                                <label class="form-label" style="color:var(--text-secondary)">Where did you hear about us?</label>
+                                <select id="lead-source" class="form-select" required>
+                                    <option value="" disabled selected>Select an option...</option>
+                                    <option value="TikTok">TikTok</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="YouTube">YouTube</option>
+                                    <option value="Google">Google</option>
+                                    <option value="ChatGPT">ChatGPT</option>
+                                    <option value="Grok">Grok</option>
+                                    <option value="Referral">Referral</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group"><label class="form-label" style="color:var(--text-secondary)">Message</label><textarea id="lead-message" class="form-input" rows="4" placeholder="Tell us about your project..." required></textarea></div>
                             <button class="btn btn-primary" style="width: 100%;">Send Message</button>
                         </form>
-                        <div style="margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem; text-align: center;"><p style="color: var(--text-main); font-weight: 700; margin-bottom: 0.5rem;">Email Us</p><a href="mailto:sales@ddnet.my" style="color: var(--soft-black); font-size: 1.2rem;">sales@ddnet.my</a></div>
+                        <div style="margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem; text-align: center;">
+                            <p style="color: var(--text-main); font-weight: 700; margin-bottom: 0.5rem;">Email Us</p>
+                            <a href="mailto:sales@ddnet.my" style="color: var(--soft-black); font-size: 1.2rem;">sales@ddnet.my</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2029,7 +2123,48 @@
                     <i class="ri-user-settings-fill" style="font-size: 3rem; color: var(--soft-black); margin-bottom: 1rem;"></i>
                     <h2>My Profile</h2>
                     <p>View and update your personal details.</p>
-                    <form onsubmit="handleProfileUpdate(event)">
+                    
+                    <!-- NEW: PLAN STATUS SECTION -->
+                    <div id="profile-plan-section" class="profile-plan-status">
+                        <!-- Active Plans Box -->
+                        <div id="active-plan-box" class="status-card active-plan hidden">
+                            <div class="status-info">
+                                <h4><i class="ri-checkbox-circle-line" style="color:var(--accent-success); margin-right:8px;"></i>Active Plan</h4>
+                                <p id="active-plan-name">Loading...</p>
+                                <p id="active-plan-expiry" style="font-size:0.8rem; color:var(--text-tertiary);">Loading...</p>
+                            </div>
+                            <div class="status-action">
+                                <span class="status-badge badge-active">Active</span>
+                                <button class="btn btn-glass" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Manage</button>
+                            </div>
+                        </div>
+
+                        <!-- No Active Plan Box -->
+                        <div id="no-active-plan-box" class="status-card hidden">
+                            <div class="status-info">
+                                <h4><i class="ri-shopping-bag-3-line" style="color:var(--text-secondary); margin-right:8px;"></i>Subscriptions</h4>
+                                <p>You currently do not have an active plan.</p>
+                            </div>
+                            <div class="status-action">
+                                <button class="btn btn-primary" onclick="navigateTo('/pricing')" style="padding: 0.6rem 1.2rem; font-size: 0.8rem;">Purchase Plan</button>
+                            </div>
+                        </div>
+
+                        <!-- Expired Plans Box -->
+                        <div id="expired-plan-box" class="status-card expired-plan hidden">
+                            <div class="status-info">
+                                <h4><i class="ri-time-line" style="color:var(--accent-danger); margin-right:8px;"></i>Expired / Past Due</h4>
+                                <p id="expired-plan-name">Loading...</p>
+                                <p id="expired-plan-date" style="font-size:0.8rem; color:var(--text-tertiary);">Loading...</p>
+                            </div>
+                            <div class="status-action">
+                                <span class="status-badge badge-expired">Expired</span>
+                                <button class="btn btn-secondary" onclick="navigateTo('/updates')" style="padding: 0.4rem 1rem; font-size: 0.75rem;">Renew Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleProfileUpdate(event)" style="margin-top: 2rem;">
                         <div class="profile-details-grid">
                             <div class="form-group"><label class="form-label">Full Name</label><input type="text" id="prof-name" class="form-input" placeholder="Loading..." required></div>
                             <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="prof-email" class="form-input" placeholder="Loading..." readonly></div>
@@ -2038,6 +2173,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Update Profile</button>
                     </form>
+
                     <div id="profile-voucher-section" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 2rem;">
                         <div class="glass-card" style="padding: 1.5rem; display:flex; justify-content:space-between; align-items:center; margin-bottom:0; border-color: rgba(30, 41, 59, 0.2);">
                             <div class="voucher-info">
@@ -2048,7 +2184,7 @@
                         </div>
                     </div>
                     <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem;">
-                        <button type="button" class="btn btn-glass" style="width: 100%;" onclick="navigateTo('/profile-website-describe')"><i class="ri-edit-2-fill" style="margin-right:8px;"></i> Describe Your Website Ideas</button>
+                         <button type="button" class="btn btn-glass" style="width: 100%;" onclick="navigateTo('/profile-website-describe')"><i class="ri-edit-2-fill" style="margin-right:8px;"></i> Describe Your Website Ideas</button>
                     </div>
                     <div id="profile-history-section" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 2rem; text-align: left;">
                         <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-main);">Purchase History</h3>
@@ -2500,7 +2636,7 @@
                 <p style="color: var(--soft-black); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1.5rem;">Founder & Lead Developer</p>
                 <p style="color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 1.5rem;">"My journey began with a curiosity for code. What started as late-night experiments grew into DD Cloud Network, a company built on simplicity, speed, and thoughtful digital design.<br><br>Through DD Cloud Network, I created DDNetwork as a dedicated brand to help local businesses build a strong, modern presence in the digital world."</p>
                 <div style="display: flex; gap: 1rem;">
-                    <a href="https://www.linkedin.com/in/muhammad-danial-danish-217bb82ba/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-linkedin-fill"></i></a>
+                    <a href="https://www.linkedin.com/in/muhammad-danial-danish-217bb82ba/" style="width:                 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-linkedin-fill"></i></a>
                     <a href="https://www.instagram.com/danialddanish/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-instagram-line"></i></a>
                     <a href="https://www.tiktok.com/@ddnet.my/" style="width: 40px; height: 40px; background: var(--bg-surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; border:1px solid var(--border-glass);"><i class="ri-tiktok-line"></i></a>
                 </div>
@@ -3486,9 +3622,65 @@
                 if(data.company) document.getElementById('prof-company').value = data.company;
                 if(data.personalVoucher) showVoucherCard(data.personalVoucher); else hideVoucherCard();
                 loadOrderHistory(auth.currentUser.uid);
+                checkUserPlanStatus(auth.currentUser.uid); // NEW: Check plan status
             }
         }).catch((error) => showGlassModal("Error", "Error loading profile data.", "error"));
     }
+
+    // ==========================================
+    // NEW: PROFILE PLAN STATUS CHECK LOGIC
+    // ==========================================
+    function checkUserPlanStatus(uid) {
+        if(!db) return;
+        
+        const activePlanBox = document.getElementById('active-plan-box');
+        const noActivePlanBox = document.getElementById('no-active-plan-box');
+        const expiredPlanBox = document.getElementById('expired-plan-box');
+
+        // Hide all initially
+        activePlanBox.classList.add('hidden');
+        noActivePlanBox.classList.add('hidden');
+        expiredPlanBox.classList.add('hidden');
+
+        // Logic: Look at most recent order
+        db.collection("orders").where("userId", "==", uid).orderBy("timestamp", "desc").limit(1)
+            .onSnapshot((snapshot) => {
+                if (snapshot.empty) {
+                    noActivePlanBox.classList.remove('hidden');
+                    return;
+                }
+
+                const doc = snapshot.docs[0];
+                const data = doc.data();
+                const status = data.status || 'Pending';
+                const pkgName = data.package || 'Unknown Package';
+
+                // Determine if active or expired based on simple status logic
+                // Since we don't have real expiry dates in the order doc, we infer from status or assume last order is active if Paid
+                if (status === 'Paid' || status === 'Completed') {
+                    // Show Active
+                    document.getElementById('active-plan-name').innerText = pkgName;
+                    // Fake expiry date for visual purposes (e.g. 1 year from now)
+                    // In a real app, calculate based on timestamp
+                    const nextYear = new Date();
+                    nextYear.setFullYear(nextYear.getFullYear() + 1);
+                    document.getElementById('active-plan-expiry').innerText = `Renews on ${nextYear.toLocaleDateString()}`;
+                    
+                    activePlanBox.classList.remove('hidden');
+                } else if (status === 'Cancelled' || status === 'Expired') {
+                    // Show Expired
+                    document.getElementById('expired-plan-name').innerText = pkgName;
+                    const orderDate = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'N/A';
+                    document.getElementById('expired-plan-date').innerText = `Order Date: ${orderDate}`;
+                    
+                    expiredPlanBox.classList.remove('hidden');
+                } else {
+                    // Pending or other
+                    noActivePlanBox.classList.remove('hidden');
+                }
+            });
+    }
+
 
     function loadOrderHistory(uid) {
         if(!db) return;
@@ -4438,6 +4630,50 @@
                 });
         } else {
             showGlassModal("Error", "System offline. Please try again later.", "error");
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+    }
+    
+    // ==========================================
+    // HOME LEAD FORM SUBMISSION (UPDATED)
+    // ==========================================
+    function handleHomeLeadSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('lead-name').value;
+        const email = document.getElementById('lead-email').value;
+        const source = document.getElementById('lead-source').value;
+        const message = document.getElementById('lead-message').value;
+
+        if(!name || !email || !message) return showGlassModal("Error", "Please fill in all required fields.", "error");
+
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Sending...';
+
+        const data = {
+            name: name, email: email, source: source || 'Home Lead Form', message: message, type: 'Contact Inquiry', status: 'Pending',
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            userId: auth.currentUser ? auth.currentUser.uid : null
+        };
+
+        if(db) {
+            db.collection("customer_requests").add(data)
+                .then(() => {
+                    showGlassModal("Success", "Message sent successfully!", "success");
+                    e.target.reset();
+                })
+                .catch((error) => {
+                    console.error(error);
+                    showGlassModal("Error", "Failed to send message.", "error");
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                });
+        } else {
+            showGlassModal("Error", "System offline.", "error");
             btn.disabled = false;
             btn.innerText = originalText;
         }
